@@ -3,7 +3,10 @@ import type {
     ParentalLockService,
     XtreamPendingRestoreService,
 } from '@iptvnator/services';
-import type { XtreamContentType } from '@iptvnator/shared/interfaces';
+import {
+    withForeignCategoriesHidden,
+    type XtreamContentType,
+} from '@iptvnator/shared/interfaces';
 import type {
     CategoryType,
     XtreamApiService,
@@ -59,7 +62,9 @@ export async function loadRemoteCategories(
             playlistId,
             remoteData,
             dbType,
-            hiddenIds,
+            // NaviTV: categories tagged for countries outside the content
+            // filter start hidden; explicit user choices still win in the DB.
+            withForeignCategoriesHidden(hiddenIds, remoteData),
             services.locks.lockedXtreamIds(playlistId, dbType)
         );
     }
