@@ -232,16 +232,16 @@ describe('SettingsComponent form', () => {
         it('stages cover size without writing to the store until Save', () => {
             setSettingsSection('appearance');
             fixture.detectChanges();
-            const largeCoverButton = (
+            const smallCoverButton = (
                 fixture.nativeElement as HTMLElement
             ).querySelector(
-                '[data-test-id="cover-size-large"]'
+                '[data-test-id="cover-size-small"]'
             ) as HTMLButtonElement;
 
-            largeCoverButton.click();
+            smallCoverButton.click();
             fixture.detectChanges();
 
-            expect(component.settingsForm.value.coverSize).toBe('large');
+            expect(component.settingsForm.value.coverSize).toBe('small');
             expect(component.settingsForm.dirty).toBe(true);
             // An eager write here would make Discard unable to revert it
             expect(settingsStore.updateSettings).not.toHaveBeenCalled();
@@ -820,18 +820,18 @@ describe('SettingsComponent form', () => {
         it('discard reverts a staged cover size (regression: eager persist made it stick)', () => {
             setSettingsSection('appearance');
             fixture.detectChanges();
-            const largeCoverButton = (
+            const smallCoverButton = (
                 fixture.nativeElement as HTMLElement
             ).querySelector(
-                '[data-test-id="cover-size-large"]'
+                '[data-test-id="cover-size-small"]'
             ) as HTMLButtonElement;
-            largeCoverButton.click();
+            smallCoverButton.click();
             fixture.detectChanges();
-            expect(component.settingsForm.value.coverSize).toBe('large');
+            expect(component.settingsForm.value.coverSize).toBe('small');
 
             component.discardChanges();
 
-            expect(component.settingsForm.value.coverSize).toBe('medium');
+            expect(component.settingsForm.value.coverSize).toBe('large');
             expect(component.settingsForm.pristine).toBe(true);
             expect(settingsStore.updateSettings).not.toHaveBeenCalled();
         });
