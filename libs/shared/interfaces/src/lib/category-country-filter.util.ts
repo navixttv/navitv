@@ -154,3 +154,44 @@ export function withForeignCategoriesHidden(
     ]);
     return merged.size > 0 ? [...merged] : hiddenIds ? [...hiddenIds] : undefined;
 }
+
+type GroupedItem = { group?: { title?: string | null } | null };
+
+/** Unique M3U group titles tagged for countries outside `allowed`. */
+export function foreignGroupTitles(
+    items: readonly GroupedItem[] | null | undefined,
+    allowed: readonly string[] = DEFAULT_CONTENT_COUNTRIES
+): string[] {
+    const titles = new Set<string>();
+    for (const item of items ?? []) {
+        const title = item.group?.title;
+        if (title && isCategoryOutsideCountries(title, allowed)) {
+            titles.add(title);
+        }
+    }
+    return [...titles];
+}
+
+/**
+ * Hidden M3U groups after a refresh: the user's current list is kept as is,
+ * plus foreign groups that did not exist before. Groups the user un-hid stay
+ * visible. When the previous groups are unknown, nothing is added.
+ */
+export function refreshedHiddenGroupTitles(
+    current: {
+        hiddenGroupTitles?: string[];
+        playlist?: { items?: readonly GroupedItem[] } | null;
+    },
+    updatedItems: readonly GroupedItem[] | null | undefined,
+    allowed: readonly string[] = DEFAULT_CONTENT_COUNTRIES
+): string[] | undefined {
+    const previousItems = current.playlist?.items ?? [];
+    if (previousItems.length === 0) return current.hiddenGroupTitles;
+
+    const known = new Set(previousItems.map((item) => item.group?.title ?? ''));
+    const added = foreignGroupTitles(updatedItems, allowed).filter(
+        (title) => !known.has(title)
+    );
+    if (added.length === 0) return current.hiddenGroupTitles;
+    return [...new Set([...(current.hiddenGroupTitles ?? []), ...added])];
+}

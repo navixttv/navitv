@@ -2,7 +2,9 @@ import {
     categoryCountry,
     DEFAULT_CONTENT_COUNTRIES,
     foreignCategoryXtreamIds,
+    foreignGroupTitles,
     isCategoryOutsideCountries,
+    refreshedHiddenGroupTitles,
     withForeignCategoriesHidden,
 } from './category-country-filter.util';
 
@@ -86,5 +88,47 @@ describe('category country filter', () => {
             withForeignCategoriesHidden(undefined, [categories[1]])
         ).toBeUndefined();
         expect(withForeignCategoriesHidden([], [categories[1]])).toEqual([]);
+    });
+});
+
+describe('M3U group country filter', () => {
+    const item = (title: string) => ({ group: { title } });
+
+    it('lists unique foreign group titles', () => {
+        expect(
+            foreignGroupTitles([
+                item('US | News'),
+                item('FR | Cinema'),
+                item('FR | Cinema'),
+                item('Kids'),
+                { group: undefined },
+            ])
+        ).toEqual(['FR | Cinema']);
+    });
+
+    it('keeps the user list and adds only new foreign groups on refresh', () => {
+        const current = {
+            hiddenGroupTitles: ['US | Shopping'],
+            playlist: { items: [item('US | News'), item('DE | Sport')] },
+        };
+        expect(
+            refreshedHiddenGroupTitles(current, [
+                item('US | News'),
+                // Existing foreign group the user un-hid stays visible.
+                item('DE | Sport'),
+                item('ES | Futbol'),
+            ])
+        ).toEqual(['US | Shopping', 'ES | Futbol']);
+    });
+
+    it('adds nothing when the previous groups are unknown', () => {
+        expect(
+            refreshedHiddenGroupTitles({ hiddenGroupTitles: ['A'] }, [
+                item('ES | Futbol'),
+            ])
+        ).toEqual(['A']);
+        expect(
+            refreshedHiddenGroupTitles({}, [item('ES | Futbol')])
+        ).toBeUndefined();
     });
 });

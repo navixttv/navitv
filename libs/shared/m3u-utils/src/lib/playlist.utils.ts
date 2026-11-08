@@ -1,6 +1,7 @@
 import {
     Channel,
     createRandomId,
+    foreignGroupTitles,
     isRemoteEpgSourceUrl,
     ParsedPlaylist,
     ParsedPlaylistItem,
@@ -364,6 +365,8 @@ export const createPlaylistObject = (
         detectedEpgUrls,
         enabledEpgUrls,
     });
+    // NaviTV: groups tagged for countries outside US/UK start hidden.
+    const hiddenGroupTitles = foreignGroupTitles(playlist.items);
 
     return {
         _id: createRandomId(),
@@ -393,6 +396,7 @@ export const createPlaylistObject = (
             : {}),
         ...(uploadType === 'URL' ? { url: urlOrPath } : {}),
         ...(uploadType === 'FILE' ? { filePath: urlOrPath } : {}),
+        ...(hiddenGroupTitles.length > 0 ? { hiddenGroupTitles } : {}),
     };
 };
 

@@ -1,5 +1,6 @@
 import {
     PlaylistUpdateState,
+    refreshedHiddenGroupTitles,
     type Playlist,
 } from '@iptvnator/shared/interfaces';
 import { applySourceDefinition } from '@iptvnator/shared/interfaces/source-definition';
@@ -61,6 +62,17 @@ export function mergeRefreshedPlaylist(
         autoRefresh:
             currentPlaylist?.autoRefresh ?? updatedPlaylist.autoRefresh,
     };
+    // NaviTV country filter: a refresh keeps the user's hidden groups and
+    // adds only foreign groups that are new, never re-hiding ones the user
+    // turned back on.
+    if (currentPlaylist) {
+        const hiddenGroupTitles = refreshedHiddenGroupTitles(
+            currentPlaylist,
+            updatedPlaylist.playlist?.items
+        );
+        if (hiddenGroupTitles === undefined) delete merged.hiddenGroupTitles;
+        else merged.hiddenGroupTitles = hiddenGroupTitles;
+    }
     const accepted = currentPlaylist?.sourceSyncBase
         ? applySourceDefinition(currentPlaylist.sourceSyncBase, {
               ...merged,

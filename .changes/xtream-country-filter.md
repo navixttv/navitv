@@ -4,4 +4,4 @@ area: xtream
 highlight: US and UK content by default
 ---
 
-Categories your provider tags for other countries (like "FR |" or "|DE|") now start hidden, so only US, UK and untagged categories show by default. Turn any of them back on in Manage categories.
+Categories and M3U groups your provider tags for other countries (like "FR |" or "|DE|") now start hidden, so only US, UK and untagged ones show by default. Turn any of them back on in Manage categories or the groups view.
