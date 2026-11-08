@@ -70,7 +70,7 @@ export function applicationMenuTemplate(
         ...(mac
             ? [
                   {
-                      label: 'IPTVnator',
+                      label: 'NaviTV',
                       submenu: [
                           { role: 'about' },
                           { type: 'separator' },

@@ -1,4 +1,16 @@
-# IPTVnator
+# NaviTV
+
+NaviTV is a personal IPTV player with a streaming-app style home screen, built for desktop, web and Android TV / Fire TV.
+
+**NaviTV is a fork of [IPTVnator](https://github.com/4gray/iptvnator) by 4gray**, used under the MIT License (see [LICENSE.md](LICENSE.md)). It is not the official IPTVnator and is not affiliated with or endorsed by the IPTVnator project. "IPTVnator" and its logo are trademarks of their owner; see [TRADEMARK.md](TRADEMARK.md).
+
+NaviTV does not provide any playlists or other digital content.
+
+---
+
+The original IPTVnator documentation follows.
+
+## IPTVnator (upstream)
 
 <p align="center">
   <img src="./apps/web/src/assets/icons/favicon.256x256.png" width="96" height="96" alt="IPTVnator icon" />

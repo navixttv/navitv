@@ -1,6 +1,6 @@
 {
-    "appId": "com.fourgray.iptvnator",
-    "productName": "IPTVnator",
+    "appId": "com.navixttv.navitv",
+    "productName": "NaviTV",
     "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
     "fileAssociations": [
         {
@@ -21,8 +21,8 @@
     "publish": [
         {
             "provider": "github",
-            "owner": "4gray",
-            "repo": "iptvnator"
+            "owner": "navixttv",
+            "repo": "navitv"
         }
     ],
     "directories": {
@@ -62,9 +62,9 @@
         "**/embedded-mpv-runtime.json"
     ],
     "extraMetadata": {
-        "name": "iptvnator",
-        "productName": "IPTVnator",
-        "desktopName": "iptvnator",
+        "name": "navitv",
+        "productName": "NaviTV",
+        "desktopName": "navitv",
         "main": "electron-backend/main.js"
     },
     "extraResources": ["dist/apps/electron-backend/workers"],
@@ -124,9 +124,9 @@
     "appImage": {
         "desktop": {
             "entry": {
-                "X-AppImage-Name": "IPTVnator",
-                "X-AppImage-Homepage": "https://github.com/4gray/iptvnator",
-                "X-AppImage-UpdateURL": "https://github.com/4gray/iptvnator"
+                "X-AppImage-Name": "NaviTV",
+                "X-AppImage-Homepage": "https://github.com/navixttv/navitv",
+                "X-AppImage-UpdateURL": "https://github.com/navixttv/navitv"
             }
         }
     },

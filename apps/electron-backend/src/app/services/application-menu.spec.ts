@@ -56,7 +56,7 @@ describe('application menu', () => {
                     'windowMenu',
                 ])
             );
-            expect(template[0].label === 'IPTVnator').toBe(
+            expect(template[0].label === 'NaviTV').toBe(
                 platform === 'darwin'
             );
         }
