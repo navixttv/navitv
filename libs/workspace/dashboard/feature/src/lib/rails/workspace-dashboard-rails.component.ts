@@ -4,6 +4,7 @@ import {
     computed,
     effect,
     inject,
+    signal,
     untracked,
 } from '@angular/core';
 import {
@@ -40,6 +41,10 @@ import {
 import {
     DashboardDataService,
     DashboardLiveSportsService,
+    DashboardSportsPreferencesService,
+    DashboardUpcomingGamesService,
+    orderChannelsForGuide,
+    type DashboardSport,
     DashboardFavoriteItem,
     DashboardRecentlyAddedItem,
     buildDashboardPortalLiveEpgKey,
@@ -65,8 +70,10 @@ import { DashboardHeroComponent } from './dashboard-hero.component';
 import { buildLiveEpgCardsForEnabledRails } from './dashboard-live-epg.utils';
 import {
     buildLiveSportsCard,
+    buildUpcomingGameCard,
     rankLiveSportsRail,
 } from './dashboard-live-sports.cards';
+import { DashboardSportsPickerComponent } from './dashboard-sports-picker.component';
 import { DashboardLiveEpgPresenter } from './dashboard-live-epg.presenter';
 import { DashboardLiveEpgClock } from './dashboard-live-epg-clock';
 import { createSourceExpiryClock } from './dashboard-source-expiry-clock';
@@ -100,6 +107,7 @@ import type {
         DashboardHeroComponent,
         DashboardRailComponent,
         DashboardRailSkeletonComponent,
+        DashboardSportsPickerComponent,
         EmptyStateComponent,
         TranslatePipe,
     ],
@@ -120,6 +128,10 @@ export class WorkspaceDashboardRailsComponent {
     /** One facade for both live-EPG sources: uploaded XMLTV and the portal. */
     readonly liveEpg = inject(DashboardLiveEpgPresenter);
     private readonly liveSports = inject(DashboardLiveSportsService);
+    private readonly upcomingGames = inject(DashboardUpcomingGamesService);
+    readonly sportsPreferences = inject(DashboardSportsPreferencesService);
+    /** The viewer reopened the sports picker with "Choose sports". */
+    private readonly editingSports = signal(false);
     private readonly dialog = inject(MatDialog);
     private readonly dialogService = inject(DialogService);
     private readonly playlistDeleteAction = inject(PlaylistDeleteActionService);
@@ -217,8 +229,49 @@ export class WorkspaceDashboardRailsComponent {
 
     /** NaviTV "Live sports" candidates, before guide ranking. */
     readonly liveSportsCards = computed<DashboardRailCard[]>(() =>
-        this.liveSports.items().slice(0, 30).map(buildLiveSportsCard)
+        orderChannelsForGuide(
+            this.liveSports.items(),
+            this.sportsPreferences.sports()
+        )
+            .slice(0, 30)
+            .map(buildLiveSportsCard)
     );
+
+    /** NaviTV "Upcoming games": games in the sports channels' guide. */
+    readonly upcomingGameCards = computed<DashboardRailCard[]>(() => {
+        this.languageTick();
+        const now = Date.now();
+        const labels = {
+            live: this.translate.instant('WORKSPACE.DASHBOARD.UPCOMING.LIVE'),
+            today: this.translate.instant('WORKSPACE.DASHBOARD.UPCOMING.TODAY'),
+            tomorrow: this.translate.instant(
+                'WORKSPACE.DASHBOARD.UPCOMING.TOMORROW'
+            ),
+            locale:
+                this.translate.currentLang ||
+                this.translate.defaultLang ||
+                'en',
+        };
+        return this.upcomingGames
+            .games()
+            .map((game) => buildUpcomingGameCard(game, now, labels));
+    });
+
+    /** First visit with sports channels, or "Choose sports" was pressed. */
+    readonly showSportsPicker = computed(
+        () =>
+            this.liveSports.items().length > 0 &&
+            (this.sportsPreferences.sports() === null || this.editingSports())
+    );
+
+    onSportsSaved(sports: DashboardSport[]): void {
+        this.sportsPreferences.save(sports);
+        this.editingSports.set(false);
+    }
+
+    editSports(): void {
+        this.editingSports.set(true);
+    }
 
     /** Games on now first, then other programmes, then the rest. */
     readonly liveSportsCardsEnriched = computed<DashboardRailCard[]>(() =>
@@ -355,6 +408,11 @@ export class WorkspaceDashboardRailsComponent {
         effect(() =>
             this.liveEpg.setVisibleCards('sports', this.liveSportsCards())
         );
+        effect(() => {
+            const channels = this.liveSports.items();
+            const sports = this.sportsPreferences.sports();
+            untracked(() => void this.upcomingGames.load(channels, sports));
+        });
 
         // Refresh when Xtream playlist count changes so a newly added provider
         // populates the rail without a manual dashboard reload. The Xtream

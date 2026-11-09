@@ -7,8 +7,11 @@ import type { PortalActivityItem } from '@iptvnator/shared/interfaces';
  * skipped, so the rail never shows what the catalog hides.
  */
 
-/** Most channels the rail keeps per playlist, before guide ranking. */
-export const LIVE_SPORTS_PER_PLAYLIST_LIMIT = 24;
+/**
+ * Most channels kept per playlist: the pool the "Live sports" rail and the
+ * "Upcoming games" guide reads pick their channels from.
+ */
+export const LIVE_SPORTS_PER_PLAYLIST_LIMIT = 120;
 
 const SPORTS_CATEGORY_PATTERN =
     /\b(?:sports?|espn|nfl|nba|wnba|mlb|nhl|mls|ncaa|ncaaf|ncaab|ufc|wwe|aew|boxing|ppv|fight|football|soccer|f1|formula ?1|golf|tennis|cricket|rugby|racing|nascar|motorsport|premier league|bein|dazn|game ?pass|sunday ticket|nba league pass|mlb\.tv)\b/i;

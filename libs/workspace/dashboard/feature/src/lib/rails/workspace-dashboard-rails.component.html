@@ -40,6 +40,36 @@
             />
         }
 
+        <!-- NaviTV Upcoming games: games in the sports channels' guide, live first. -->
+        @if (showSportsPicker()) {
+            <lib-dashboard-sports-picker
+                [initial]="sportsPreferences.sports()"
+                (saved)="onSportsSaved($event)"
+            />
+        }
+        @if (upcomingGameCards().length > 0) {
+            <lib-dashboard-rail
+                [label]="'WORKSPACE.DASHBOARD.UPCOMING_GAMES' | translate"
+                [items]="upcomingGameCards()"
+                layout="channel"
+                [testId]="'dashboard-upcoming-games-rail'"
+            />
+            @if (!showSportsPicker()) {
+                <div class="rails-sports-edit">
+                    <button
+                        type="button"
+                        class="rails-sports-edit__button"
+                        data-test-id="dashboard-edit-sports"
+                        (click)="editSports()"
+                    >
+                        {{
+                            'WORKSPACE.DASHBOARD.SPORTS_PICKER.EDIT' | translate
+                        }}
+                    </button>
+                </div>
+            }
+        }
+
         <!-- NaviTV Live sports: channels in visible sports categories, games first. -->
         @if (liveSportsCardsEnriched().length > 0) {
             <lib-dashboard-rail

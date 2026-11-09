@@ -3,6 +3,7 @@ import {
     DatabaseService,
     RuntimeCapabilitiesService,
 } from '@iptvnator/services';
+import { XtreamApiService } from '@iptvnator/portal/xtream/data-access';
 import { DashboardLiveSportsService } from './dashboard-live-sports.service';
 
 describe('DashboardLiveSportsService', () => {
@@ -10,12 +11,17 @@ describe('DashboardLiveSportsService', () => {
         getXtreamCategories: jest.fn(),
         getXtreamContent: jest.fn(),
     };
+    const api = {
+        getCategories: jest.fn(),
+        getLiveStreams: jest.fn(),
+    };
 
     function setup(supportsSqlite = true) {
         TestBed.resetTestingModule();
         TestBed.configureTestingModule({
             providers: [
                 { provide: DatabaseService, useValue: db },
+                { provide: XtreamApiService, useValue: api },
                 {
                     provide: RuntimeCapabilitiesService,
                     useValue: {
@@ -90,14 +96,52 @@ describe('DashboardLiveSportsService', () => {
         expect(db.getXtreamCategories).toHaveBeenCalledTimes(2);
     });
 
-    it('stays empty without the local SQLite catalog', async () => {
+    it('asks the provider for kept sports categories without the local catalog', async () => {
+        api.getCategories.mockResolvedValue([
+            { category_id: '7', category_name: 'US| Sports Network' },
+            { category_id: '8', category_name: 'AR| Sports' },
+            { category_id: '9', category_name: 'US| News' },
+        ]);
+        api.getLiveStreams.mockResolvedValue([
+            { stream_id: 70, name: 'US| Sports One', stream_icon: '' },
+        ]);
+        const service = setup(false);
+
+        await service.load([
+            {
+                _id: 'xt',
+                title: 'Provider',
+                serverUrl: 'https://xt.example.test',
+                username: 'user',
+                password: 'pass',
+            },
+        ]);
+
+        expect(db.getXtreamCategories).not.toHaveBeenCalled();
+        expect(api.getLiveStreams).toHaveBeenCalledTimes(1);
+        expect(api.getLiveStreams).toHaveBeenCalledWith(
+            expect.objectContaining({ serverUrl: 'https://xt.example.test' }),
+            { categoryId: '7' }
+        );
+        expect(service.items()).toEqual([
+            expect.objectContaining({
+                title: 'US| Sports One',
+                playlist_id: 'xt',
+                category_id: 7,
+                xtream_id: 70,
+                source: 'xtream',
+            }),
+        ]);
+    });
+
+    it('stays empty without the local catalog when the source has no login', async () => {
         const service = setup(false);
 
         await service.load([
             { _id: 'xt', serverUrl: 'https://xt.example.test' },
         ]);
 
-        expect(db.getXtreamCategories).not.toHaveBeenCalled();
+        expect(api.getCategories).not.toHaveBeenCalled();
         expect(service.items()).toEqual([]);
     });
 

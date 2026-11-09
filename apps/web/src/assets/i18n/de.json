@@ -1884,6 +1884,27 @@
             "SEE_ALL_COUNT": "Alle {{count}} anzeigen",
             "RECENTLY_WATCHED": "Zuletzt angesehen",
             "LIVE_SPORTS": "Live-Sport",
+            "UPCOMING_GAMES": "Upcoming games",
+            "UPCOMING": {
+                "LIVE": "Live",
+                "TODAY": "Today",
+                "TOMORROW": "Tomorrow"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "Which sports do you want on Home?",
+                "HINT": "Games from these sports show up first, with their start times.",
+                "SAVE": "Save",
+                "ALL": "Show all sports",
+                "EDIT": "Choose sports"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Football",
+                "BASKETBALL": "Basketball",
+                "FIGHTS": "Boxing & UFC",
+                "SOCCER": "Soccer",
+                "BASEBALL": "Baseball",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "Neu auf Xtream",
             "TMDB_TRENDING": "Diese Woche im Trend",
             "TMDB_RECOMMENDED": "Empfehlungen für Sie",

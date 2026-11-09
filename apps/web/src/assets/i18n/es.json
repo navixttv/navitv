@@ -1884,6 +1884,27 @@
             "SEE_ALL_COUNT": "Ver todos ({{count}})",
             "RECENTLY_WATCHED": "Vistos recientemente",
             "LIVE_SPORTS": "Deportes en vivo",
+            "UPCOMING_GAMES": "Próximos partidos",
+            "UPCOMING": {
+                "LIVE": "En vivo",
+                "TODAY": "Hoy",
+                "TOMORROW": "Mañana"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "¿Qué deportes quieres en Inicio?",
+                "HINT": "Los partidos de estos deportes aparecen primero, con su hora de inicio.",
+                "SAVE": "Guardar",
+                "ALL": "Mostrar todos los deportes",
+                "EDIT": "Elegir deportes"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Fútbol americano",
+                "BASKETBALL": "Baloncesto",
+                "FIGHTS": "Boxeo y UFC",
+                "SOCCER": "Fútbol",
+                "BASEBALL": "Béisbol",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "Añadidos recientemente en Xtream",
             "TMDB_TRENDING": "Tendencias de la semana",
             "TMDB_RECOMMENDED": "Recomendaciones para ti",

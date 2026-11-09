@@ -1884,6 +1884,27 @@
             "SEE_ALL_COUNT": "Смотреть все {{count}}",
             "RECENTLY_WATCHED": "Недавно просмотренные",
             "LIVE_SPORTS": "Спорт в прямом эфире",
+            "UPCOMING_GAMES": "Upcoming games",
+            "UPCOMING": {
+                "LIVE": "Live",
+                "TODAY": "Today",
+                "TOMORROW": "Tomorrow"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "Which sports do you want on Home?",
+                "HINT": "Games from these sports show up first, with their start times.",
+                "SAVE": "Save",
+                "ALL": "Show all sports",
+                "EDIT": "Choose sports"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Football",
+                "BASKETBALL": "Basketball",
+                "FIGHTS": "Boxing & UFC",
+                "SOCCER": "Soccer",
+                "BASEBALL": "Baseball",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "Недавно добавленные на Xtream",
             "TMDB_TRENDING": "В тренде на этой неделе",
             "TMDB_RECOMMENDED": "Рекомендации для вас",

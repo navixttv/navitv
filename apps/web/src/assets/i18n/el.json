@@ -1884,6 +1884,27 @@
             "SEE_ALL_COUNT": "Δείτε όλα {{count}}",
             "RECENTLY_WATCHED": "Πρόσφατα προβληθέντα",
             "LIVE_SPORTS": "Αθλητικά ζωντανά",
+            "UPCOMING_GAMES": "Upcoming games",
+            "UPCOMING": {
+                "LIVE": "Live",
+                "TODAY": "Today",
+                "TOMORROW": "Tomorrow"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "Which sports do you want on Home?",
+                "HINT": "Games from these sports show up first, with their start times.",
+                "SAVE": "Save",
+                "ALL": "Show all sports",
+                "EDIT": "Choose sports"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Football",
+                "BASKETBALL": "Basketball",
+                "FIGHTS": "Boxing & UFC",
+                "SOCCER": "Soccer",
+                "BASEBALL": "Baseball",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "Πρόσφατα προστέθηκαν στο Xtream",
             "TMDB_TRENDING": "Δημοφιλή αυτής της εβδομάδας",
             "TMDB_RECOMMENDED": "Προτάσεις για εσάς",
