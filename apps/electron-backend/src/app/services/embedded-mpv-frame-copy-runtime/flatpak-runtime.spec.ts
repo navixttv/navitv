@@ -46,11 +46,7 @@ describe('Flatpak embedded MPV frame-copy runtime', () => {
 
     it.each([
         ['wrong app id', 'com.example.other', '/app/iptvnator/native'],
-        [
-            'helper outside /app',
-            'com.navixttv.navitv',
-            '/opt/iptvnator/native',
-        ],
+        ['helper outside /app', 'com.navixttv.navitv', '/opt/iptvnator/native'],
     ])(
         'does not reconstruct Flatpak GL metadata for %s',
         (_label, flatpakId, nativeDir) => {

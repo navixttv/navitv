@@ -93,7 +93,9 @@ const LEADING_TAG_PATTERN =
  * "EN" for English-language categories, a region name (e.g. "ARABIC"), or
  * null when the name carries no recognizable country tag.
  */
-export function categoryCountry(name: string | null | undefined): string | null {
+export function categoryCountry(
+    name: string | null | undefined
+): string | null {
     const match = LEADING_TAG_PATTERN.exec(name ?? '');
     if (!match) return null;
 
@@ -156,7 +158,11 @@ export function withForeignCategoriesHidden(
         ...(hiddenIds ?? []),
         ...foreignCategoryXtreamIds(categories, allowed),
     ]);
-    return merged.size > 0 ? [...merged] : hiddenIds ? [...hiddenIds] : undefined;
+    return merged.size > 0
+        ? [...merged]
+        : hiddenIds
+          ? [...hiddenIds]
+          : undefined;
 }
 
 type GroupedItem = { group?: { title?: string | null } | null };

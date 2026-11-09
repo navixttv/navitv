@@ -56,9 +56,7 @@ describe('application menu', () => {
                     'windowMenu',
                 ])
             );
-            expect(template[0].label === 'NaviTV').toBe(
-                platform === 'darwin'
-            );
+            expect(template[0].label === 'NaviTV').toBe(platform === 'darwin');
         }
     );
 
