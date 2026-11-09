@@ -640,8 +640,10 @@ jobs:
                   override_branch: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' && format('dependabot:{0}', github.head_ref) || '' }}
                   token: ${{ secrets.CODECOV_TOKEN }}
 
+            # NaviTV: Codecov needs the upstream project's token, so only
+            # upload from the upstream repository.
             - name: Upload unit coverage to Codecov
-              if: ${{ !cancelled() && steps.unit-coverage.outcome == 'success' }}
+              if: ${{ !cancelled() && steps.unit-coverage.outcome == 'success' && github.repository == '4gray/iptvnator' }}
               uses: codecov/codecov-action@v7
               with:
                   files: ./coverage/merged/lcov.info,./coverage/merged/cobertura-coverage.xml
