@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>com.fourgray.iptvnator</id>
+  <id>com.navixttv.navitv</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MIT</project_license>
-  <name>IPTVnator</name>
-  <developer_name>4gray</developer_name>
+  <name>NaviTV</name>
+  <developer_name>navixttv</developer_name>
   <update_contact>fourgray@proton.me</update_contact>
   <summary>Open-source IPTV player for M3U, Xtream Codes, and Stalker portals</summary>
-  <launchable type="desktop-id">com.fourgray.iptvnator.desktop</launchable>
+  <launchable type="desktop-id">com.navixttv.navitv.desktop</launchable>
 
   <description>
-    <p>IPTVnator is a cross-platform IPTV player for user-supplied playlists and portal connections.</p>
+    <p>NaviTV is a cross-platform IPTV player for user-supplied playlists and portal connections, based on IPTVnator by 4gray.</p>
     <p>It supports M3U and M3U8 playlists, Xtream Codes API, and Stalker portals with EPG, catch-up, favorites, and external player integration.</p>
     <p>The app does not include channels, playlists, or media catalogs. Any IPTV sources, logos, metadata, and programme information come from services the user configures.</p>
   </description>
@@ -30,8 +30,8 @@
     <keyword>Stalker</keyword>
   </keywords>
 
-  <url type="homepage">https://4gray.github.io/iptvnator/</url>
-  <url type="bugtracker">https://github.com/4gray/iptvnator/issues</url>
+  <url type="homepage">https://github.com/navixttv/navitv</url>
+  <url type="bugtracker">https://github.com/navixttv/navitv/issues</url>
   <url type="help">https://4gray.github.io/iptvnator/blog/</url>
   <url type="donation">https://github.com/sponsors/4gray</url>
 

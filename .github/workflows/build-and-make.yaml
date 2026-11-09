@@ -731,7 +731,7 @@ jobs:
 
             - name: Validate AppStream metadata
               if: matrix.os == 'linux'
-              run: appstreamcli validate --pedantic --no-net apps/electron-backend/linux/com.fourgray.iptvnator.metainfo.xml
+              run: appstreamcli validate --pedantic --no-net apps/electron-backend/linux/com.navixttv.navitv.metainfo.xml
 
             - name: Build website
               if: matrix.os == 'linux'
@@ -910,10 +910,10 @@ jobs:
 
                   case "${{ matrix.arch }}" in
                       x64)
-                          APP_PATH="dist/executables/mac/IPTVnator.app"
+                          APP_PATH="dist/executables/mac/NaviTV.app"
                           ;;
                       arm64)
-                          APP_PATH="dist/executables/mac-arm64/IPTVnator.app"
+                          APP_PATH="dist/executables/mac-arm64/NaviTV.app"
                           ;;
                       *)
                           echo "::error::Unsupported macOS arch: ${{ matrix.arch }}"
@@ -1287,10 +1287,10 @@ jobs:
                           --artifact "${FLATPAK_BUNDLE}" --profile flatpak
                   flatpak install --user --noninteractive -y "${FLATPAK_BUNDLE}"
                   xvfb-run -a env LIBGL_ALWAYS_SOFTWARE=1 \
-                      flatpak run --command=sh com.fourgray.iptvnator -c '
+                      flatpak run --command=sh com.navixttv.navitv -c '
                       set -euo pipefail
 
-                      test -f /app/share/metainfo/com.fourgray.iptvnator.metainfo.xml
+                      test -f /app/share/metainfo/com.navixttv.navitv.metainfo.xml
                       test -L /app/bin/iptvnator
 
                       LAUNCHER_PATH="$(readlink -f /app/bin/iptvnator)"
@@ -1321,7 +1321,7 @@ jobs:
                       xvfb-run -a dbus-run-session -- timeout --verbose -k 10 300 flatpak run \
                           --env=LIBGL_ALWAYS_SOFTWARE=1 \
                           --env=ELECTRON_ENABLE_LOGGING=1 \
-                          com.fourgray.iptvnator \
+                          com.navixttv.navitv \
                           --embedded-mpv-runtime-probe 2>&1
                   )"
                   PROBE_STATUS=$?

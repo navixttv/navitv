@@ -101,7 +101,7 @@ export function createSettingsForm(
         updateChannel: DEFAULT_APP_UPDATE_CHANNEL as AppUpdateChannel,
         showExternalPlaybackBar: true,
         stripCountryPrefix: false,
-        theme: Theme.DarkTheme,
+        theme: Theme.SystemTheme,
         mpvPlayerPath: '',
         mpvPlayerArguments: '',
         mpvReuseInstance: false,
