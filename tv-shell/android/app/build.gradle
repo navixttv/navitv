@@ -7,7 +7,8 @@ android {
     compileSdk 35
 
     defaultConfig {
-        applicationId 'org.tvshell.iptvnator'
+        // NaviTV's own install id; the Java package (namespace) stays as is.
+        applicationId 'com.navixttv.navitv.tv'
         minSdk 25          // Fire OS 6 (Android 7.1) and newer
         targetSdk 35
         // CI derives this from the commit time (minutes since the epoch) so every published

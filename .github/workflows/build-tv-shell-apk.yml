@@ -1,6 +1,6 @@
 name: Build TV shell APK
 
-# Builds the IPTVnator PWA from this repository, bundles it into the Fire TV /
+# Builds the NaviTV PWA from this repository, bundles it into the Fire TV /
 # Android TV shell (tv-shell/), runs the shell's backend tests and publishes the
 # APK as a workflow artifact and, on manual dispatch with `create_release`
 # ticked, as a GitHub release.
@@ -98,9 +98,13 @@ jobs:
           # Settings > About shows "<version> (<sha>)" like the Docker and desktop
           # builds; on a PR the head SHA, not the ephemeral merge commit.
           BUILD_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          # NaviTV: bundle the repository's TMDB key like the desktop builds
+          # (no-op when the secret is unavailable).
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
           set -euo pipefail
           node tools/build/inject-build-commit.mjs
+          node tools/tmdb/inject-tmdb-key.mjs
           pnpm nx build web --configuration=pwa --skip-nx-cache
           test -f dist/apps/web/index.html
 
@@ -203,7 +207,7 @@ jobs:
           APK=app/build/outputs/apk/release/app-release.apk
           test -f "$APK"
           VERSION=$(grep -oP "versionName '\K[^']+" app/build.gradle)
-          OUT="iptvnator-tv-shell-${VERSION}-${HEAD_SHA::7}.apk"
+          OUT="NaviTV-TV-${VERSION}-${HEAD_SHA::7}.apk"
           mkdir -p ../../dist && cp "$APK" "../../dist/$OUT"
           echo "APK $OUT: versionCode $TVSHELL_VERSION_CODE, signed with the $SIGNER key"
           echo "name=$OUT" >> "$GITHUB_OUTPUT"
@@ -249,6 +253,6 @@ jobs:
           gh release create "$TAG" "dist/${APK_NAME}" \
             --target "$GITHUB_SHA" \
             "${FLAGS[@]}" \
-            --title "IPTVnator Android TV ${APK_VERSION} (build ${GITHUB_RUN_NUMBER})" \
-            --notes "IPTVnator for Fire TV / Android TV (experimental). Install with the Downloader app (APK link below) or with \`adb install -r\`. Unless the repository provides a release key, the APK is signed with the versioned debug key (tv-shell/android/app/debug.keystore), so newer builds install over older ones. See tv-shell/README.md."
+            --title "NaviTV Android TV ${APK_VERSION} (build ${GITHUB_RUN_NUMBER})" \
+            --notes "NaviTV for Fire TV / Android TV (experimental). Install with the Downloader app (APK link below) or with \`adb install -r\`. Unless the repository provides a release key, the APK is signed with the versioned debug key (tv-shell/android/app/debug.keystore), so newer builds install over older ones. See tv-shell/README.md."
           echo "Release: https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG}"
