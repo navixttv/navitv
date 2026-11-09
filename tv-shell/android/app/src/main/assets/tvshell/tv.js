@@ -925,10 +925,16 @@
         return null;
     }
 
-    /** "Add from phone": the QR code screen; the source returns as `navitv:add-source`. */
-    api.openPairing = function () {
-        native('openPairing');
-    };
+    /**
+     * "Add from phone": the QR code screen; the source returns as `navitv:add-source`.
+     * Defined only inside the Android app, the one place the screen exists: the
+     * page shows its button when this function is present.
+     */
+    if (isAndroid) {
+        api.openPairing = function () {
+            native('openPairing');
+        };
+    }
 
     /** The built-in player closed: leave the page's player instead of retrying. */
     api.nativePlayerClosed = function (info) {
