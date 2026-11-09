@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "توثق فشهادة ما صالحة؟",
             "TRUST_TLS_HOST_WARNING": "كمل غير إلا كنتي كتوثق فهاد مضيف قائمة التشغيل. NaviTV غادي يسمح بشهادات TLS ما صالحةش لهد المضيف، ولكن باقي المضيفين خاصهم شهادات صالحة."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "دخل قائمة تشغيل m3u(8) على شكل نص"
         },

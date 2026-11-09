@@ -41,6 +41,9 @@ final class TvShellBridge {
                 if (command.equals("openExternal")) activity.openExternal(url, title);
                 else activity.offerExternal(url, title, command.equals("onPlaybackError"));
                 break;
+            case "openPairing":
+                activity.openPairing();
+                break;
             case "playNative":
                 String nativeUrl = stringAt(args, 1);
                 String nativeTitle = stringAt(args, 2);

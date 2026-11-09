@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "Megbízik ebben a kiszolgálóban az érvénytelen tanúsítvány ellenére?",
             "TRUST_TLS_HOST_WARNING": "Csak akkor folytassa, ha megbízik a lejátszási lista kiszolgálójában. Az NaviTV ennél a kiszolgálónál engedélyezi az érvénytelen TLS-tanúsítványokat, más kiszolgálóknál azonban továbbra is érvényes tanúsítványt követel meg."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "M3U/M3U8-lejátszási lista beillesztése szövegként"
         },

@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "Ongeldig certificaat vertrouwen?",
             "TRUST_TLS_HOST_WARNING": "Ga alleen verder als u deze afspeellijsthost vertrouwt. NaviTV staat ongeldige TLS-certificaten voor deze host toe, maar andere hosts moeten nog steeds geldige certificaten gebruiken."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "Voer een m3u(8)-afspeellijst in als tekst"
         },

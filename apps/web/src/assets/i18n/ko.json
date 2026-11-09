@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "유효하지 않은 인증서를 신뢰할까요?",
             "TRUST_TLS_HOST_WARNING": "이 플레이리스트 호스트를 신뢰하는 경우에만 계속하세요. NaviTV는 이 호스트의 유효하지 않은 TLS 인증서를 허용하지만, 다른 호스트에는 계속 유효한 인증서가 필요합니다."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "m3u(8) 재생목록을 텍스트로 붙여넣기"
         },

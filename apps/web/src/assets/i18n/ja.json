@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "無効な証明書を信頼しますか？",
             "TRUST_TLS_HOST_WARNING": "このプレイリストホストを信頼できる場合のみ続行してください。NaviTV はこのホストの無効な TLS 証明書を許可しますが、他のホストには引き続き有効な証明書が必要です。"
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "m3u(8)プレイリストをテキストとして挿入"
         },

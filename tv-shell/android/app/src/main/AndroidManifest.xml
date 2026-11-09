@@ -56,6 +56,12 @@
         </activity>
 
         <activity
+            android:name=".ui.PairingActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation|uiMode|density"
+            android:exported="false"
+            android:theme="@style/Theme.TvShell" />
+
+        <activity
             android:name=".ui.NativePlayerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation|uiMode|density"
             android:exported="false"

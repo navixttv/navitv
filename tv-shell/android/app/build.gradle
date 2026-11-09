@@ -79,6 +79,8 @@ dependencies {
     implementation 'androidx.media3:media3-exoplayer-hls:1.5.1'
     implementation 'androidx.media3:media3-exoplayer-dash:1.5.1'
     implementation 'androidx.media3:media3-ui:1.5.1'
+    // QR code on the "Add from phone" screen.
+    implementation 'com.google.zxing:core:3.5.3'
     implementation 'androidx.annotation:annotation:1.9.1'
     implementation 'androidx.annotation:annotation-experimental:1.4.1'
     // Last published NanoHTTPD. Known advisories do not apply: CVE-2020-13697 is in

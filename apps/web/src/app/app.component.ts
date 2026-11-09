@@ -8,6 +8,7 @@ import {
     ChangeDetectionStrategy,
 } from '@angular/core';
 import { LazySnackBar } from '@iptvnator/services/lazy-snack-bar';
+import { RemoteSourceIntakeService } from './services/remote-source-intake.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -108,6 +109,7 @@ export class AppComponent implements OnInit {
         ParentalLockEnforcementService
     );
     private playlistOpenRequests = inject(PlaylistOpenRequestService);
+    private readonly remoteSourceIntake = inject(RemoteSourceIntakeService);
     private runtime = inject(RuntimeCapabilitiesService);
     private readonly workspaceShellActions = inject(WORKSPACE_SHELL_ACTIONS);
     private readonly contextDrawer = inject(WorkspaceShellContextDrawerService);
@@ -130,6 +132,9 @@ export class AppComponent implements OnInit {
         // queued there until the renderer subscribes. Start listening as early
         // as possible so a first-launch file is not delayed behind app init.
         this.playlistOpenRequests.start();
+
+        // NaviTV "Add from phone": sources a phone sends to the TV app.
+        this.remoteSourceIntake.start();
 
         // Keep the display awake while a built-in player is playing video
         // (Electron powerSaveBlocker / PWA Screen Wake Lock, issue #1095).

@@ -1,5 +1,23 @@
 <div class="apd">
     <app-dialog-shell [heading]="'HOME.URL_UPLOAD.ADD_PLAYLIST' | translate">
+        @if (canAddFromPhone) {
+            <button
+                type="button"
+                class="apd-from-phone"
+                data-test-id="add-from-phone"
+                (click)="addFromPhone()"
+            >
+                <mat-icon aria-hidden="true">qr_code_2</mat-icon>
+                <span class="apd-from-phone__text">
+                    <span class="apd-from-phone__title">
+                        {{ 'HOME.ADD_FROM_PHONE.BUTTON' | translate }}
+                    </span>
+                    <span class="apd-from-phone__hint">
+                        {{ 'HOME.ADD_FROM_PHONE.HINT' | translate }}
+                    </span>
+                </span>
+            </button>
+        }
         <div
             class="apd-method-grid"
             appRadioGroup

@@ -925,6 +925,11 @@
         return null;
     }
 
+    /** "Add from phone": the QR code screen; the source returns as `navitv:add-source`. */
+    api.openPairing = function () {
+        native('openPairing');
+    };
+
     /** The built-in player closed: leave the page's player instead of retrying. */
     api.nativePlayerClosed = function (info) {
         nativePlayer.open = false;

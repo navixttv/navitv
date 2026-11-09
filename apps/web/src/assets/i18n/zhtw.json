@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "信任無效憑證？",
             "TRUST_TLS_HOST_WARNING": "僅在您信任此播放清單主機時繼續。NaviTV 將允許此主機使用無效 TLS 憑證，但其他主機仍需要有效憑證。"
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "將 m3u（8）播放清單以純文字的方式插入"
         },

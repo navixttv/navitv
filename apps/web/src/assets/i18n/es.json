@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "¿Confiar en un certificado no válido?",
             "TRUST_TLS_HOST_WARNING": "Continúa solo si confías en este host de la lista de reproducción. NaviTV permitirá certificados TLS no válidos para este host, pero seguirá exigiendo certificados válidos para los demás."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Agregar desde el teléfono",
+            "HINT": "Escanea un código QR y escribe tus datos en el teléfono en lugar de usar el control remoto.",
+            "ADDED": "Se agregó {{title}}",
+            "FAILED": "No se pudo agregar la fuente enviada desde el teléfono. Revisa los datos e inténtalo de nuevo."
+        },
         "TEXT_IMPORT": {
             "LABEL": "Inserte la playlist m3u(8) como texto"
         },

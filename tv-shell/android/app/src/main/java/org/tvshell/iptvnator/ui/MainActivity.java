@@ -84,6 +84,7 @@ public class MainActivity extends Activity {
     private boolean menuLongPressFired;
     private String lastOfferedUrl;
     private static final int REQUEST_NATIVE_PLAYER = 1301;
+    private static final int REQUEST_PAIRING = 1302;
     /** The stream the built-in player last failed on: an error there falls back to the prompt. */
     private String nativeFailedUrl;
     private boolean nativePlayerOpen;
@@ -616,6 +617,16 @@ public class MainActivity extends Activity {
             .show();
     }
 
+    /** Opens the "Add from phone" QR code screen. */
+    void openPairing() {
+        if (isFinishing()) return;
+        try {
+            startActivityForResult(new Intent(this, PairingActivity.class), REQUEST_PAIRING);
+        } catch (RuntimeException e) {
+            Log.w(ShellApp.TAG, "pairing screen launch failed");
+        }
+    }
+
     static boolean isVodUrl(String url) {
         return url != null && url.matches("(?i).*/(movie|series)/.*");
     }
@@ -733,6 +744,16 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_NATIVE_PLAYER) {
             onNativePlayerClosed(data);
+            return;
+        }
+        if (requestCode == REQUEST_PAIRING) {
+            String source = data == null ? null : data.getStringExtra(PairingActivity.RESULT_SOURCE);
+            if (resultCode == RESULT_OK && source != null) {
+                // A JSON object literal is a valid JS expression; it carries the
+                // login to the page only, never to the log.
+                js("window.dispatchEvent(new CustomEvent('navitv:add-source',{detail:" + source + "}))");
+            }
+            if (webView != null) webView.requestFocus(View.FOCUS_DOWN);
             return;
         }
         if (!fileChooser.onActivityResult(requestCode, resultCode, data)) {

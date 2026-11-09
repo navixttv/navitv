@@ -46,4 +46,18 @@
     <string name="native_player_retry">Try again</string>
     <string name="native_player_open_external">Open in another player</string>
     <string name="native_player_close">Close</string>
+    <string name="pairing_title">Add a source from your phone</string>
+    <string name="pairing_step_scan">1. Scan this code with your phone\'s camera (same Wi-Fi as the TV).</string>
+    <string name="pairing_step_type">2. Type your Xtream login or M3U link on the phone.</string>
+    <string name="pairing_step_send">3. Tap Send to TV.</string>
+    <string name="pairing_manual">No camera? Open %1$s in the phone\'s browser and enter the code:</string>
+    <string name="pairing_code_label">Code</string>
+    <string name="pairing_waiting">Waiting for your phone…</string>
+    <string name="pairing_received">Received! Adding the source…</string>
+    <string name="pairing_received_named">Received %1$s! Adding the source…</string>
+    <string name="pairing_locked">Too many wrong codes. Press Back and open Add from phone again.</string>
+    <string name="pairing_back_hint">Press Back to cancel.</string>
+    <string name="pairing_no_network">This TV is not connected to a home network. Connect it to Wi-Fi or Ethernet and try again.</string>
+    <string name="pairing_unavailable">Add from phone could not start on this TV. Restart NaviTV and try again.</string>
+    <string name="pairing_qr_description">QR code that opens the Add a source page on your phone</string>
 </resources>

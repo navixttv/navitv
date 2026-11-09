@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "Geçersiz sertifikaya güvenilsin mi?",
             "TRUST_TLS_HOST_WARNING": "Yalnızca bu oynatma listesi ana bilgisayarına güveniyorsanız devam edin. NaviTV bu ana bilgisayar için geçersiz TLS sertifikalarına izin verir, ancak diğer ana bilgisayarlar için geçerli sertifika gerekmeye devam eder."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "m3u(8) oynatma listesini metin olarak girin"
         },

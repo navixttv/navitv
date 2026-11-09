@@ -230,6 +230,12 @@
             "TRUST_TLS_HOST_TITLE": "Довіряти недійсному сертифікату?",
             "TRUST_TLS_HOST_WARNING": "Продовжуйте лише якщо ви довіряєте цьому хосту плейлиста. NaviTV дозволить недійсні TLS-сертифікати для цього хосту, але інші хости все одно потребують дійсних сертифікатів."
         },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
+        },
         "TEXT_IMPORT": {
             "LABEL": "Вставте m3u(8) плейлист як текст"
         },
