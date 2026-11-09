@@ -1189,6 +1189,32 @@
             if (!url || !armPrompt(url, root)) return;
             native('onPlaybackError', url, document.title || '', '4');
         });
+        // Sound without picture: the WebView plays the audio track of a video it
+        // cannot decode (HEVC / 10-bit films on many sticks) and raises no error.
+        // A few seconds of advancing playback with no decoded frame is that case.
+        document.addEventListener('playing', function (e) {
+            var t = e.target;
+            if (!t || t.tagName !== 'VIDEO' || t.__tvPictureWatch) return;
+            t.__tvPictureWatch = true;
+            var attempt = t.__tvLoadAttempt || 0;
+            var startedAt = t.currentTime;
+            setTimeout(function () {
+                t.__tvPictureWatch = false;
+                if (!t.isConnected || t.paused || (t.__tvLoadAttempt || 0) !== attempt) return;
+                if (t.currentTime - startedAt < 2) return; // stalled, not playing
+                var url = api.currentStreamUrl();
+                if (!url) return;
+                var quality = t.getVideoPlaybackQuality ? t.getVideoPlaybackQuality() : null;
+                var noFrames = !!quality && quality.totalVideoFrames === 0;
+                // A stream without a video track at all (radio) also reports width 0:
+                // only films and episodes count then.
+                var noTrack = t.videoWidth === 0 && /\/(movie|series)\//i.test(url);
+                if (!(noFrames && t.videoWidth > 0) && !noTrack) return;
+                if (!armPrompt(url, t.closest ? t.closest('.video-js') : null)) return;
+                lastMediaTitle = document.title;
+                native('onPlaybackError', url, lastMediaTitle || '', '4');
+            }, 5000);
+        }, true);
         // video.js never sets the <video> src when no tech accepts the source
         // (raw .ts streams): it flags its root with `vjs-error` instead.
         var vjsObserver = new MutationObserver(function (mutations) {
