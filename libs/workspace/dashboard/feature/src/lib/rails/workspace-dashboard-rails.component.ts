@@ -39,6 +39,7 @@ import {
 } from '@iptvnator/services';
 import {
     DashboardDataService,
+    DashboardLiveSportsService,
     DashboardFavoriteItem,
     DashboardRecentlyAddedItem,
     buildDashboardPortalLiveEpgKey,
@@ -62,6 +63,10 @@ import type { PlaylistMeta } from '@iptvnator/shared/interfaces';
 import { DashboardPortalLiveEpgPresenter } from './dashboard-portal-live-epg.presenter';
 import { DashboardHeroComponent } from './dashboard-hero.component';
 import { buildLiveEpgCardsForEnabledRails } from './dashboard-live-epg.utils';
+import {
+    buildLiveSportsCard,
+    rankLiveSportsRail,
+} from './dashboard-live-sports.cards';
 import { DashboardLiveEpgPresenter } from './dashboard-live-epg.presenter';
 import { DashboardLiveEpgClock } from './dashboard-live-epg-clock';
 import { createSourceExpiryClock } from './dashboard-source-expiry-clock';
@@ -114,6 +119,7 @@ export class WorkspaceDashboardRailsComponent {
     readonly data = inject(DashboardDataService);
     /** One facade for both live-EPG sources: uploaded XMLTV and the portal. */
     readonly liveEpg = inject(DashboardLiveEpgPresenter);
+    private readonly liveSports = inject(DashboardLiveSportsService);
     private readonly dialog = inject(MatDialog);
     private readonly dialogService = inject(DialogService);
     private readonly playlistDeleteAction = inject(PlaylistDeleteActionService);
@@ -200,12 +206,23 @@ export class WorkspaceDashboardRailsComponent {
 
     // The live cards whose rails are enabled; the presenter adds the hero's
     // live candidates and looks the programmes up per XMLTV source scope.
-    private readonly enabledLiveCards = computed(() =>
-        buildLiveEpgCardsForEnabledRails(
+    private readonly enabledLiveCards = computed(() => [
+        ...buildLiveEpgCardsForEnabledRails(
             this.dashboardRails(),
             this.liveFavoriteCards(),
             this.recentLiveCards()
-        )
+        ),
+        ...this.liveSportsCards(),
+    ]);
+
+    /** NaviTV "Live sports" candidates, before guide ranking. */
+    readonly liveSportsCards = computed<DashboardRailCard[]>(() =>
+        this.liveSports.items().slice(0, 30).map(buildLiveSportsCard)
+    );
+
+    /** Games on now first, then other programmes, then the rest. */
+    readonly liveSportsCardsEnriched = computed<DashboardRailCard[]>(() =>
+        rankLiveSportsRail(this.liveEpg.enrich(this.liveSportsCards()))
     );
 
     private readonly playbackPositionReloadKey = computed(() =>
@@ -326,6 +343,18 @@ export class WorkspaceDashboardRailsComponent {
         void this.data.reloadGlobalFavorites();
 
         this.liveEpg.connect(this.enabledLiveCards);
+
+        // NaviTV Live sports: re-read the local catalog on every visit (a
+        // playlist may have been imported or refreshed meanwhile), and ask
+        // the guide for every candidate so the rail can rank games first.
+        this.liveSports.invalidate();
+        effect(() => {
+            if (!this.data.playlistsLoaded()) return;
+            void this.liveSports.load(this.data.playlists());
+        });
+        effect(() =>
+            this.liveEpg.setVisibleCards('sports', this.liveSportsCards())
+        );
 
         // Refresh when Xtream playlist count changes so a newly added provider
         // populates the rail without a manual dashboard reload. The Xtream

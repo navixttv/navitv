@@ -40,6 +40,16 @@
             />
         }
 
+        <!-- NaviTV Live sports: channels in visible sports categories, games first. -->
+        @if (liveSportsCardsEnriched().length > 0) {
+            <lib-dashboard-rail
+                [label]="'WORKSPACE.DASHBOARD.LIVE_SPORTS' | translate"
+                [items]="liveSportsCardsEnriched()"
+                layout="channel"
+                [testId]="'dashboard-live-sports-rail'"
+            />
+        }
+
         <!-- Live favorites: no fallback. Recently watched live gets its own rail. -->
         @if (
             dashboardRails().liveFavorites &&
