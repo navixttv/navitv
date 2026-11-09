@@ -175,8 +175,25 @@ function tagCountry(tag: string): string | null {
 const LETTER = /\p{L}/gu;
 const LATIN_LETTER = /\p{Script=Latin}/gu;
 
+/** Format words that say nothing about a name's language ("4K DOLBY AUDIO"). */
+const FORMAT_WORDS =
+    /\b(?:\d{3,4}p|\d+k|\d+fps|uhd|fhd|hd|sd|hdr\d*|hevc|h26[45]|dolby|audio|atmos|vision|multi|sub|subs)\b/gi;
+
+/**
+ * Providers mix dash and bar styles: en/em dashes, full-width bars and
+ * colons, non-breaking spaces. Fold them to the ASCII separators the tag
+ * pattern reads.
+ */
+function normalizeSeparators(name: string): string {
+    return name
+        .normalize('NFKC')
+        .replace(/[\u2010-\u2015\u2212\uFE58\uFE63]/g, '-')
+        .replace(/[\u00A6\u2223\u2502]/g, '|');
+}
+
 /** True when most letters of the name are outside the Latin script. */
-function isMostlyNonLatin(name: string): boolean {
+function isMostlyNonLatin(rawName: string): boolean {
+    const name = rawName.replace(FORMAT_WORDS, ' ');
     const letters = name.match(LETTER)?.length ?? 0;
     if (letters === 0) return false;
     const latin = name.match(LATIN_LETTER)?.length ?? 0;
@@ -192,7 +209,7 @@ function isMostlyNonLatin(name: string): boolean {
 export function categoryCountry(
     name: string | null | undefined
 ): string | null {
-    const text = name ?? '';
+    const text = normalizeSeparators(name ?? '');
     const match = LEADING_TAG_PATTERN.exec(text);
     const tag = match?.[1] ?? match?.[2] ?? match?.[3] ?? match?.[4];
     const fromTag = tag ? tagCountry(tag.trim()) : null;
