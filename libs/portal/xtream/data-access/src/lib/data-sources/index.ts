@@ -1,8 +1,10 @@
 import { inject, Injector, Provider } from '@angular/core';
 import {
+    CATALOG_TITLE_MATCH_FALLBACK,
     PLAYLIST_DELETE_CLEANUP,
     RuntimeCapabilitiesService,
 } from '@iptvnator/services';
+import { PwaXtreamCatalogIndexService } from './pwa-xtream-catalog-index.service';
 import { ElectronXtreamDataSource } from './electron-xtream-data-source';
 import { PwaXtreamDataSource } from './pwa-xtream-data-source';
 import {
@@ -14,6 +16,7 @@ import {
 export * from './xtream-data-source.interface';
 export { ElectronXtreamDataSource } from './electron-xtream-data-source';
 export { PwaXtreamDataSource } from './pwa-xtream-data-source';
+export * from './pwa-xtream-catalog-index.service';
 
 /**
  * Factory function that returns the appropriate data source based on environment.
@@ -43,6 +46,16 @@ export function provideXtreamDataSource(
         {
             provide: XTREAM_DATA_SOURCE,
             useFactory: factory,
+        },
+        {
+            // NaviTV TV / browser build: title matching over the catalogs
+            // read this session (the desktop app matches in its DB worker).
+            provide: CATALOG_TITLE_MATCH_FALLBACK,
+            useFactory: () =>
+                inject(RuntimeCapabilitiesService)
+                    .supportsXtreamSqliteDataSource
+                    ? null
+                    : inject(PwaXtreamCatalogIndexService),
         },
         {
             provide: PLAYLIST_DELETE_CLEANUP,

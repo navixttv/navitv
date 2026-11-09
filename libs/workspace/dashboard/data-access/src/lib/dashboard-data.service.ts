@@ -13,6 +13,7 @@ import {
     effect,
     inject,
     signal,
+    untracked,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -30,8 +31,10 @@ import {
     injectTranslationTick,
 } from '@iptvnator/services';
 import {
+    PwaXtreamCatalogIndexService,
     XTREAM_DATA_SOURCE,
     XtreamRecentItem,
+    type CatalogIndexEntry,
 } from '@iptvnator/portal/xtream/data-access';
 import {
     buildPlaylistRecentItems,
@@ -102,6 +105,9 @@ export class DashboardDataService {
     private readonly xtreamDataSource = inject(XTREAM_DATA_SOURCE);
     private readonly playlistsService = inject(PlaylistsService);
     private readonly runtime = inject(RuntimeCapabilitiesService);
+    /** NaviTV TV / browser build: films and series read in the background. */
+    private readonly catalogIndex = inject(PwaXtreamCatalogIndexService);
+    private recentlyAddedLimit = 20;
     private readonly translate = inject(TranslateService);
     private readonly playbackPositions = inject(PORTAL_PLAYBACK_POSITIONS);
     private readonly favoritesAutoRefreshEnabled = signal(false);
@@ -484,6 +490,35 @@ export class DashboardDataService {
             this.xtreamRecentlyAddedLoadingState.set(false);
             this.xtreamRecentlyAddedLoadedState.set(true);
         });
+
+        // NaviTV TV / browser build: "Recently added" (and the hero) follow
+        // the background catalog index as each catalog lands.
+        effect(() => {
+            this.catalogIndex.revision();
+            if (this.hasPortalActivityStorage) return;
+            untracked(() =>
+                this.xtreamRecentlyAddedItemsState.set(
+                    this.indexRecentlyAdded(this.recentlyAddedLimit)
+                )
+            );
+        });
+    }
+
+    private indexRecentlyAdded(limit: number): DashboardRecentlyAddedItem[] {
+        return this.catalogIndex
+            .recentlyAdded(limit)
+            .map((entry: CatalogIndexEntry) => ({
+                id: entry.xtreamId,
+                title: entry.title,
+                type: entry.type,
+                playlist_id: entry.playlistId,
+                playlist_name: entry.playlistName,
+                added_at: new Date(entry.addedMs).toISOString(),
+                category_id: entry.categoryId,
+                xtream_id: entry.xtreamId,
+                poster_url: entry.posterUrl ?? undefined,
+                source: 'xtream',
+            })) as DashboardRecentlyAddedItem[];
     }
 
     readonly stats = computed(() => {
@@ -601,7 +636,8 @@ export class DashboardDataService {
         limit = 20
     ): Promise<DashboardRecentlyAddedItem[]> {
         if (!this.hasPortalActivityStorage) {
-            return [];
+            await this.catalogIndex.ready();
+            return this.indexRecentlyAdded(limit);
         }
 
         // NaviTV: providers tag titles too ("IR - Show", "NL - Film") inside
@@ -625,7 +661,13 @@ export class DashboardDataService {
         }
 
         if (!this.hasPortalActivityStorage) {
-            this.xtreamRecentlyAddedItemsState.set([]);
+            // Home does not wait for the catalogs: the rail fills in as the
+            // background index lands (see the revision effect).
+            this.recentlyAddedLimit = limit;
+            void this.catalogIndex.warm(this.getXtreamPlaylists());
+            this.xtreamRecentlyAddedItemsState.set(
+                this.indexRecentlyAdded(limit)
+            );
             this.xtreamRecentlyAddedLoadingState.set(false);
             this.xtreamRecentlyAddedLoadedState.set(true);
             return;
