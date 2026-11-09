@@ -310,13 +310,14 @@ describe('settings form utils — EPG display without XMLTV sources', () => {
 });
 
 describe('settings form utils — age rating country', () => {
-    it('defaults to automatic and saves the selected country without enabling TMDB', () => {
+    it('defaults to automatic and saves the selected country without changing TMDB', () => {
         const form = createSettingsForm(new FormBuilder(), true);
         expect(form.get('ageRatingCountry')?.value).toBe('auto');
         form.patchValue({ ageRatingCountry: 'de' });
         const saved = createSettingsFromFormValue(form, {} as Settings);
         expect(saved.ageRatingCountry).toBe('DE');
-        expect(saved.tmdb?.enabled).toBe(false);
+        // NaviTV: TMDB is on by default; the country does not change it.
+        expect(saved.tmdb?.enabled).toBe(true);
     });
 
     it('normalizes invalid imported countries to automatic', () => {

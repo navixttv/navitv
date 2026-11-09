@@ -24,6 +24,8 @@ mkdirSync(SHOTS, { recursive: true });
 
 const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, hasTouch: false });
+// NaviTV enables TMDB by default and release builds embed a key: keep the suites off the real TMDB API.
+await context.route(/^https:\/\/(?:api\.themoviedb\.org|image\.tmdb\.org)\//, (route) => route.abort());
 const page = await context.newPage();
 const consoleErrors = [];
 const bridgeLogs = [];

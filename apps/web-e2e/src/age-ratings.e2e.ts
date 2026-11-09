@@ -35,10 +35,10 @@ test('@web @metadata age-rating country saves independently of TMDB', async ({
     await expect(
         page.locator('[data-test-id="age-rating-country"]')
     ).toContainText('Germany');
+    // NaviTV turns TMDB on by default; saving a country leaves it as it was.
     await expect(
         page.locator('[data-test-id="tmdb-enabled"] [role="switch"]')
-    ).not.toBeChecked();
-    await expect(page.locator('[data-test-id="tmdb-api-key"]')).toHaveCount(0);
+    ).toBeChecked();
 });
 
 for (const type of ['vod', 'series'] as const) {
