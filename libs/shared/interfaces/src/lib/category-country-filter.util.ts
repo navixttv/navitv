@@ -133,13 +133,17 @@ export function foreignCategoryXtreamIds(
     }[],
     allowed: readonly string[] = DEFAULT_CONTENT_COUNTRIES
 ): number[] {
-    return categories.flatMap((category) => {
+    // A plain loop: the web build compiles this lib with lib=es2018, which
+    // has no Array#flatMap.
+    const ids: number[] = [];
+    for (const category of categories) {
         const id = Number(category.category_id);
-        if (category.category_id == null || Number.isNaN(id)) return [];
-        return isCategoryOutsideCountries(category.category_name, allowed)
-            ? [id]
-            : [];
-    });
+        if (category.category_id == null || Number.isNaN(id)) continue;
+        if (isCategoryOutsideCountries(category.category_name, allowed)) {
+            ids.push(id);
+        }
+    }
+    return ids;
 }
 
 /** Default hidden ids merged with the country filter, without duplicates. */
