@@ -35,6 +35,17 @@ const COUNTRY_CODES = new Set(
     ).split(' ')
 );
 
+/**
+ * Two-letter language codes providers tag categories with that are not
+ * already country codes ("KU - Kids" is Kurdish, "FA | Movies" Persian).
+ */
+const LANGUAGE_CODES = new Set(
+    (
+        'KU FA UR HI TA TE KN MR GU PA BN HE EL ZH JA KO SQ CS DA SV VI PS ' +
+        'SI MS'
+    ).split(' ')
+);
+
 /** Longer tags providers use, mapped to a country (or a foreign region). */
 const TAG_ALIASES: Readonly<Record<string, string>> = {
     USA: 'US',
@@ -59,12 +70,45 @@ const TAG_ALIASES: Readonly<Record<string, string>> = {
     PRT: 'PT',
     BRA: 'BR',
     NLD: 'NL',
+    NED: 'NL',
+    DUT: 'NL',
     TUR: 'TR',
     POL: 'PL',
     RUS: 'RU',
     IND: 'IN',
     INDIA: 'IN',
+    HIN: 'IN',
     PAK: 'PK',
+    URD: 'PK',
+    KUR: 'KU',
+    KURD: 'KU',
+    PER: 'IR',
+    FAR: 'IR',
+    IRN: 'IR',
+    AFG: 'AF',
+    GRE: 'GR',
+    GRK: 'GR',
+    ALB: 'AL',
+    SRB: 'RS',
+    CRO: 'HR',
+    BUL: 'BG',
+    ROM: 'RO',
+    HUN: 'HU',
+    CZE: 'CZ',
+    SWE: 'SE',
+    DAN: 'DK',
+    NOR: 'NO',
+    FIN: 'FI',
+    CHN: 'CN',
+    CHI: 'CN',
+    JPN: 'JP',
+    KOR: 'KR',
+    PHI: 'PH',
+    VIE: 'VN',
+    THA: 'TH',
+    KSA: 'SA',
+    UAE: 'AE',
+    EGY: 'EG',
     ARA: 'ARABIC',
     ARAB: 'ARABIC',
     ARABIC: 'ARABIC',
@@ -75,38 +119,86 @@ const TAG_ALIASES: Readonly<Record<string, string>> = {
     AFRICA: 'AFRICA',
     ASIA: 'ASIA',
     EXYU: 'EXYU',
-    'EX-YU': 'EXYU',
     CARIB: 'CARIBBEAN',
     CARIBBEAN: 'CARIBBEAN',
 };
 
 /**
- * A leading tag followed by a separator: "US | x", "US|x", "|US| x",
- * "US: x", "US - x", "[US] x", "(US) x". A tag without any separator
- * ("USA Today") is never treated as a country.
+ * Quality and format words that ride along in a tag ("4K-AR", "FHD | US"):
+ * skipped when reading the tag, never treated as a country.
  */
-const LEADING_TAG_PATTERN =
-    /^\s*(?:\|\s*([A-Za-z-]{2,9})\s*\||\[\s*([A-Za-z-]{2,9})\s*\]|\(\s*([A-Za-z-]{2,9})\s*\)|([A-Za-z-]{2,9})\s*(?:\||:|\s-\s|-\s|\s-))/;
+const QUALITY_TOKENS = new Set(
+    '4K 8K UHD FHD HD HQ HEVC H265 H264 60FPS 50FPS RAW VIP PLUS'.split(' ')
+);
+
+/** Leading network names that only carry one region's content. */
+const REGIONAL_NETWORK_PATTERN = /^\s*(?:OSN|MBC|ROTANA|SHAHID)\b/i;
+
+/** Region code for a name written mostly in a non-Latin script. */
+const NON_LATIN = 'NON-LATIN';
 
 /**
- * The country a category name is tagged for: an uppercase country code,
- * "EN" for English-language categories, a region name (e.g. "ARABIC"), or
- * null when the name carries no recognizable country tag.
+ * A leading tag followed by a separator: "US | x", "US|x", "|US| x",
+ * "US: x", "US - x", "[US] x", "(US) x", "4K-AR - x". A tag without any
+ * separator ("USA Today") is never treated as a country.
+ */
+const LEADING_TAG_PATTERN =
+    /^\s*(?:\|\s*([\w+ -]{2,12}?)\s*\||\[\s*([\w+ -]{2,12}?)\s*\]|\(\s*([\w+ -]{2,12}?)\s*\)|([\w+ -]{2,12}?)\s*(?:\||:|\s-\s|-\s|\s-))/;
+
+function tokenCountry(token: string): string | null {
+    const alias = TAG_ALIASES[token];
+    if (alias) return alias;
+    if (token.length !== 2) return null;
+    return COUNTRY_CODES.has(token) || LANGUAGE_CODES.has(token) ? token : null;
+}
+
+/**
+ * The country a tag names. Every token must be a country, language, region
+ * or quality word ("4K-AR" reads as AR); a tag with any other word ("MY
+ * LIST", "TOP 10") is not a country tag.
+ */
+function tagCountry(tag: string): string | null {
+    const upper = tag.toUpperCase();
+    // Whole-tag aliases that contain separators themselves ("EX-YU").
+    const whole = TAG_ALIASES[upper.replace(/[\s_+-]+/g, '')];
+    if (whole) return whole;
+    let country: string | null = null;
+    for (const token of upper.split(/[\s_+-]+/)) {
+        if (!token || QUALITY_TOKENS.has(token)) continue;
+        const match = tokenCountry(token);
+        if (!match) return null;
+        country ??= match;
+    }
+    return country;
+}
+
+const LETTER = /\p{L}/gu;
+const LATIN_LETTER = /\p{Script=Latin}/gu;
+
+/** True when most letters of the name are outside the Latin script. */
+function isMostlyNonLatin(name: string): boolean {
+    const letters = name.match(LETTER)?.length ?? 0;
+    if (letters === 0) return false;
+    const latin = name.match(LATIN_LETTER)?.length ?? 0;
+    return latin / letters < 0.5;
+}
+
+/**
+ * The country a category name is tagged for: an uppercase country or
+ * language code, "EN" for English-language categories, a region name (e.g.
+ * "ARABIC", or "NON-LATIN" for a name written in another script), or null
+ * when nothing in the name points at a country.
  */
 export function categoryCountry(
     name: string | null | undefined
 ): string | null {
-    const match = LEADING_TAG_PATTERN.exec(name ?? '');
-    if (!match) return null;
-
-    const tag = (match[1] ?? match[2] ?? match[3] ?? match[4] ?? '')
-        .trim()
-        .toUpperCase();
-    if (!tag) return null;
-
-    const alias = TAG_ALIASES[tag];
-    if (alias) return alias;
-    return tag.length === 2 && COUNTRY_CODES.has(tag) ? tag : null;
+    const text = name ?? '';
+    const match = LEADING_TAG_PATTERN.exec(text);
+    const tag = match?.[1] ?? match?.[2] ?? match?.[3] ?? match?.[4];
+    const fromTag = tag ? tagCountry(tag.trim()) : null;
+    if (fromTag) return fromTag;
+    if (REGIONAL_NETWORK_PATTERN.test(text)) return 'ARABIC';
+    return isMostlyNonLatin(text) ? NON_LATIN : null;
 }
 
 /**

@@ -22,6 +22,17 @@ describe('category country filter', () => {
         ['ARABIC | Series', 'ARABIC'],
         ['LAT - Novelas', 'LATINO'],
         ['EX-YU | Sport', 'EXYU'],
+        ['KU - Kids', 'KU'],
+        ['FA | Movies', 'FA'],
+        ['KUR | Series', 'KU'],
+        ['4K-AR - Movies', 'AR'],
+        ['FHD | US Sports', null],
+        ['4K-US | Movies', 'US'],
+        ['OSN+ Movies 4K', 'ARABIC'],
+        ['MBC Drama', 'ARABIC'],
+        ['أفلام عربية', 'NON-LATIN'],
+        ['Фильмы', 'NON-LATIN'],
+        ['電影', 'NON-LATIN'],
     ])('reads the country tag of %p as %p', (name, country) => {
         expect(categoryCountry(name)).toBe(country);
     });
@@ -37,6 +48,11 @@ describe('category country filter', () => {
         'TV | Shows',
         'SD | Kids',
         'USA Today',
+        'TOP 10 | Movies',
+        'MY LIST | Movies',
+        'Netflix Movies',
+        'Pokémon Séries',
+        'For Adults',
         '',
         null,
         undefined,
@@ -55,7 +71,16 @@ describe('category country filter', () => {
     });
 
     it('hides categories tagged for other countries', () => {
-        for (const name of ['FR | A', 'CA: B', 'ARABIC - C', '|DE| D']) {
+        for (const name of [
+            'FR | A',
+            'CA: B',
+            'ARABIC - C',
+            '|DE| D',
+            'KU - E',
+            '4K-AR - F',
+            'أفلام',
+            'OSN+ G',
+        ]) {
             expect(isCategoryOutsideCountries(name)).toBe(true);
         }
     });
