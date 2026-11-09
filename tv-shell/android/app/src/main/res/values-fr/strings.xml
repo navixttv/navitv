@@ -41,4 +41,9 @@
     <string name="reset_done">Données effacées</string>
     <string name="setting_diagnostics">Diagnostic</string>
     <string name="diagnostics">WebView (moteur Chrome) : %1$s %2$s\nAppareil : %3$s — Android %4$s\nPort du serveur embarqué : %5$s\nÉcran : %6$s</string>
+    <string name="native_player_error_title">Lecture impossible</string>
+    <string name="native_player_error_message">NaviTV n\'a pas pu lire %1$s. Le flux est peut-être hors ligne ou son format n\'est pas pris en charge par cet appareil.</string>
+    <string name="native_player_retry">Réessayer</string>
+    <string name="native_player_open_external">Ouvrir dans un autre lecteur</string>
+    <string name="native_player_close">Fermer</string>
 </resources>

@@ -53,6 +53,7 @@
     var heldArrow = null; // arrow pressed and not released yet: only its keydowns can be queued repeats
     var movePainted = true; // the last D-pad move has reached the screen (a held key waits for it)
     var keepScreenOn = false;
+    var nativePlayer = { open: false, url: null, video: null, closedAt: 0 }; // built-in player session
 
     // --------------------------------------------------------------- bridge
     function native(method) {
@@ -924,6 +925,28 @@
         return null;
     }
 
+    /** The built-in player closed: leave the page's player instead of retrying. */
+    api.nativePlayerClosed = function (info) {
+        nativePlayer.open = false;
+        nativePlayer.closedAt = Date.now();
+        var video = nativePlayer.video;
+        nativePlayer.video = null;
+        if (video && video.isConnected) {
+            try { video.pause(); } catch (e) { /* ignore */ }
+        }
+        // Close the page's inline player, so Back and the details page are where the
+        // user left them.
+        var close = Array.prototype.filter.call(
+            document.querySelectorAll('app-portal-inline-player button'),
+            function (button) {
+                var icon = button.querySelector('mat-icon');
+                return icon && icon.textContent.trim() === 'close';
+            })[0];
+        if (close && isVisible(close)) close.click();
+        scheduleRefocus();
+        return info || null;
+    };
+
     api.currentStreamUrl = function () {
         var fromVjs = videoJsSource();
         if (fromVjs) return fromVjs;
@@ -1189,6 +1212,46 @@
             if (!url || !armPrompt(url, root)) return;
             native('onPlaybackError', url, document.title || '', '4');
         });
+        // Films and episodes play in NaviTV's built-in player (Media3): it decodes MKV,
+        // HEVC / 10-bit and AC3 through the device, which the WebView often cannot.
+        // The page's own load is stopped right away, so single-connection accounts
+        // are not busy twice. Live TV stays in the page (guide, previews); its
+        // failures reach the built-in player through onPlaybackError.
+        document.addEventListener('loadstart', function (e) {
+            var t = e.target;
+            if ((!isAndroid && !window.__tvShellForceNativePlayer) || !t || t.tagName !== 'VIDEO') return;
+            // Own counter: the shared __tvLoadAttempt is bumped by a later listener.
+            var attempt = t.__tvNativeSeq = (t.__tvNativeSeq || 0) + 1;
+            setTimeout(function () {
+                if (!t.isConnected || t.__tvNativeSeq !== attempt) return;
+                var src = t.currentSrc || t.getAttribute('src') || '';
+                var url = /^https?:/i.test(src) ? src : api.currentStreamUrl();
+                if (!url || !/\/(movie|series)\//i.test(url)) return;
+                var now = Date.now();
+                if (nativePlayer.open) return;
+                // Coming back from the built-in player, the page may retry the same
+                // stream: that is not a new request to play it.
+                if (url === nativePlayer.url && now - nativePlayer.closedAt < 15000) {
+                    try { t.pause(); } catch (err) { /* ignore */ }
+                    return;
+                }
+                nativePlayer.open = true;
+                nativePlayer.url = url;
+                nativePlayer.video = t;
+                try {
+                    t.pause();
+                    t.muted = true;
+                    if (/^https?:/i.test(src)) {
+                        t.removeAttribute('src');
+                        t.load();
+                    }
+                } catch (err) {
+                    /* the page's player may own the element */
+                }
+                lastMediaTitle = document.title;
+                native('playNative', url, lastMediaTitle || '', false);
+            }, 250);
+        }, true);
         // Sound without picture: the WebView plays the audio track of a video it
         // cannot decode (HEVC / 10-bit films on many sticks) and raises no error.
         // A few seconds of advancing playback with no decoded frame is that case.

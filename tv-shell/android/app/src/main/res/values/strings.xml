@@ -41,4 +41,9 @@
     <string name="reset_done">Data erased</string>
     <string name="setting_diagnostics">Diagnostics</string>
     <string name="diagnostics">WebView (Chrome engine): %1$s %2$s\nDevice: %3$s — Android %4$s\nEmbedded server port: %5$s\nScreen: %6$s</string>
+    <string name="native_player_error_title">This video could not be played</string>
+    <string name="native_player_error_message">NaviTV could not play %1$s. The stream may be offline, or its format is not supported on this device.</string>
+    <string name="native_player_retry">Try again</string>
+    <string name="native_player_open_external">Open in another player</string>
+    <string name="native_player_close">Close</string>
 </resources>
