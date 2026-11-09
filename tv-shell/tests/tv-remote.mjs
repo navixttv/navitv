@@ -439,6 +439,8 @@ console.log('9. under the Android bridge: the screen follows playback, error cod
     await bridged.addInitScript(() => {
         window.__calls = [];
         window.TvShell = { postMessage: (data) => { window.__calls.push(JSON.parse(data).map(String).join(' ')); } };
+        // These checks drive the page's own player; films normally go to the built-in player.
+        window.__tvShellDisableNativePlayer = true;
     });
     await bridged.goto(URL_, { waitUntil: 'networkidle' });
     await bridged.waitForTimeout(1500);
@@ -587,6 +589,32 @@ console.log('9. under the Android bridge: the screen follows playback, error cod
     check(r.backgroundPause === 1, 'backgrounding pauses existing media');
     check(r.backgroundRetry === 2, 'backgrounding blocks a late playback retry');
     check(r.foregroundPlay === 2, 'returning to foreground permits explicit playback');
+    const handoff = await bridged.evaluate(async (provider) => {
+        window.__tvShellDisableNativePlayer = false;
+        const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        const load = async (path) => {
+            const n = window.__calls.length;
+            const video = document.createElement('video');
+            video.muted = true;
+            video.src = provider + path;
+            document.body.appendChild(video);
+            await wait(600);
+            const calls = window.__calls.slice(n).filter((c) => c.startsWith('playNative '));
+            const released = !video.getAttribute('src');
+            video.remove();
+            return { calls, released };
+        };
+        const film = await load('/movie/user/pass/handoff.webm');
+        window.__tvShell.nativePlayerClosed({ positionMs: 0 });
+        const retry = await load('/movie/user/pass/handoff.webm');
+        const live = await load('/live/user/pass/handoff.ts');
+        window.__tvShellDisableNativePlayer = true;
+        return { film, retry, live };
+    }, PROVIDER);
+    check(handoff.film.calls.length === 1 && / false$/.test(handoff.film.calls[0]) && handoff.film.released,
+        'a film opens in the built-in player and the page releases its request: ' + handoff.film.calls.join(' | '));
+    check(handoff.retry.calls.length === 0, 'the page retrying the same film after the built-in player closed does not reopen it');
+    check(handoff.live.calls.length === 0, 'live channels stay in the page');
     const bridgeFailures = [];
     bridged.on('console', (message) => {
         if (message.text().startsWith('[tvshell]')) bridgeFailures.push(message.text());

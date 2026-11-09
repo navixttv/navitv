@@ -1219,7 +1219,8 @@
         // failures reach the built-in player through onPlaybackError.
         document.addEventListener('loadstart', function (e) {
             var t = e.target;
-            if ((!isAndroid && !window.__tvShellForceNativePlayer) || !t || t.tagName !== 'VIDEO') return;
+            if ((!isAndroid && !window.__tvShellForceNativePlayer) || window.__tvShellDisableNativePlayer) return;
+            if (!t || t.tagName !== 'VIDEO') return;
             // Own counter: the shared __tvLoadAttempt is bumped by a later listener.
             var attempt = t.__tvNativeSeq = (t.__tvNativeSeq || 0) + 1;
             setTimeout(function () {
