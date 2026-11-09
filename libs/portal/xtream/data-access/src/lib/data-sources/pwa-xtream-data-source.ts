@@ -51,6 +51,10 @@ import {
 import { PwaCollectionStorage } from './pwa-collection-storage';
 import { PwaCollectionCatalog } from './pwa-collection-catalog';
 import type { XtreamCachedContentItem } from './pwa-cached-content';
+import {
+    fetchCatalogByCategory,
+    keptCatalogCategories,
+} from './pwa-country-catalog';
 
 /**
  * Storage keys for PWA persistence
@@ -339,7 +343,7 @@ export class PwaXtreamDataSource implements IXtreamDataSource {
             return this.withoutLockedCategories(
                 playlistId,
                 type,
-                cachedCategories
+                keptCatalogCategories(cachedCategories)
             );
         }
 
@@ -352,10 +356,14 @@ export class PwaXtreamDataSource implements IXtreamDataSource {
         );
         options?.signal?.throwIfAborted();
 
-        // Cache in memory
+        // Cache in memory (the raw list: the lock editor reads it too)
         this.categoryCache.set(cacheKey, categories);
 
-        return this.withoutLockedCategories(playlistId, type, categories);
+        return this.withoutLockedCategories(
+            playlistId,
+            type,
+            keptCatalogCategories(categories)
+        );
     }
 
     /**
@@ -520,12 +528,12 @@ export class PwaXtreamDataSource implements IXtreamDataSource {
         );
         options?.signal?.throwIfAborted();
         const content = await this.normalizeContentItems(
-            await this.apiService.getStreams(
+            await this.fetchKeptCatalog(
+                playlistId,
                 credentials,
                 type,
-                ...(options?.signal
-                    ? ([{ signal: options.signal }] as const)
-                    : [])
+                options?.signal,
+                onProgress
             ),
             type
         );
@@ -543,6 +551,66 @@ export class PwaXtreamDataSource implements IXtreamDataSource {
         this.contentCache.set(cacheKey, content);
 
         return this.withoutLockedContent(playlistId, type, content);
+    }
+
+    /**
+     * NaviTV: the catalog of the categories the country filter keeps. When
+     * the filter drops nothing, this is the usual single request; otherwise
+     * each kept category is requested on its own, so foreign catalogs are
+     * never downloaded (see `pwa-country-catalog.ts`).
+     */
+    private async fetchKeptCatalog(
+        playlistId: string,
+        credentials: XtreamCredentials,
+        type: StreamType,
+        signal?: AbortSignal,
+        onProgress?: (count: number) => void
+    ): Promise<XtreamLiveStream[] | XtreamVodStream[] | XtreamSerieItem[]> {
+        const requestOptions = signal ? { signal } : {};
+        const categoryType: CategoryType = type === 'movie' ? 'vod' : type;
+        const cacheKey = `${playlistId}-${categoryType}-categories`;
+        let categories = this.categoryCache.get(cacheKey);
+        if (!categories) {
+            try {
+                const fetched = await this.apiService.getCategories(
+                    credentials,
+                    categoryType,
+                    ...(signal ? ([{ signal }] as const) : [])
+                );
+                if (Array.isArray(fetched)) {
+                    categories = fetched;
+                    this.categoryCache.set(cacheKey, fetched);
+                }
+            } catch (error) {
+                signal?.throwIfAborted();
+                // Without the category list there is nothing to filter by:
+                // read the whole catalog, as before.
+                this.logger.warn(
+                    'Category list unavailable for filtering',
+                    error
+                );
+            }
+        }
+        const kept = categories ? keptCatalogCategories(categories) : [];
+        if (!categories || kept.length === categories.length) {
+            return this.apiService.getStreams(
+                credentials,
+                type,
+                ...(signal ? ([{ signal }] as const) : [])
+            );
+        }
+        if (kept.length === 0) {
+            return [];
+        }
+        return (await fetchCatalogByCategory(
+            kept.map((category) => category.category_id),
+            async (categoryId) =>
+                (await this.apiService.getStreams(credentials, type, {
+                    ...requestOptions,
+                    categoryId,
+                })) as (XtreamLiveStream | XtreamVodStream | XtreamSerieItem)[],
+            { signal, onProgress }
+        )) as XtreamLiveStream[] | XtreamVodStream[] | XtreamSerieItem[];
     }
 
     async getCachedContent(
