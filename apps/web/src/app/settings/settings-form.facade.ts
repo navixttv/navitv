@@ -17,6 +17,7 @@ import {
     CoverSize,
     EpgViewMode,
     Language,
+    DEFAULT_THEME,
     Theme,
 } from '@iptvnator/shared/interfaces';
 import { SettingsSnackbarService } from './settings-snackbar.service';
@@ -299,7 +300,7 @@ export class SettingsFormFacade {
         // Theme selections preview immediately; an older save must not undo one.
         if (this.form.value.theme === this.savedSnapshot.theme) {
             this.settingsService.changeTheme(
-                this.savedSnapshot.theme ?? Theme.SystemTheme
+                this.savedSnapshot.theme ?? DEFAULT_THEME
             );
         }
     }

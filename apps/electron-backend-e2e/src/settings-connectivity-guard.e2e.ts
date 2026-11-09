@@ -129,7 +129,8 @@ test('@settings @electron saves the portal cooldown preference and applies it wi
             pausedMessage
         );
         await app.mainWindow.getByTestId('settings-section-appearance').click();
-        await app.mainWindow.getByTestId('DARK_THEME').click();
+        // NaviTV starts in Dark, so Light is the theme change here.
+        await app.mainWindow.getByTestId('LIGHT_THEME').click();
         await saveSettings(app.mainWindow);
         await expect(
             app.mainWindow.locator('mat-snack-bar-container')
@@ -138,7 +139,7 @@ test('@settings @electron saves the portal cooldown preference and applies it wi
         await app.mainWindow
             .getByTestId('portal-connectivity-setting')
             .screenshot({
-                path: test.info().outputPath('portal-connections-dark.png'),
+                path: test.info().outputPath('portal-connections-light.png'),
             });
         // Unrelated saves (such as theme changes) must preserve the cooldown.
         expect(await requestFailure(app.mainWindow, origin)).toContain(

@@ -38,7 +38,7 @@ import {
     Language,
     Settings,
     STORE_KEY,
-    Theme,
+    DEFAULT_THEME,
     createDevLogger,
     normalizeAppLanguage,
 } from '@iptvnator/shared/interfaces';
@@ -184,7 +184,9 @@ export class AppComponent implements OnInit {
                     // Settings are stored in IndexedDB and loaded by the settings store
                     // Only specific Electron settings (MPV/VLC paths) are sent when changed in settings component
 
-                    const resolvedLang = normalizeAppLanguage(settings.language);
+                    const resolvedLang = normalizeAppLanguage(
+                        settings.language
+                    );
                     // The switch re-renders every date with the new locale;
                     // its data is a lazy chunk that must be registered first.
                     void this.dateLocales.use(resolvedLang);
@@ -209,10 +211,10 @@ export class AppComponent implements OnInit {
     }
 
     /**
-     * Applies the operating system color scheme when no explicit theme is set
+     * Applies the default theme (Dark) when no explicit theme is set
      */
     detectDarkMode(): void {
-        this.settingsService.changeTheme(Theme.SystemTheme);
+        this.settingsService.changeTheme(DEFAULT_THEME);
     }
 
     /**

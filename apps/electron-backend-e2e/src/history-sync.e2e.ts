@@ -9,6 +9,7 @@ import {
     openSettings,
     openSettingsSection,
     openSources,
+    saveSettings,
     sourceRowByTitle,
     openGlobalRecent,
     clearCurrentUnifiedCollection,
@@ -166,6 +167,11 @@ test('shares confirmed synthetic M3U history and preserves import, ordering, cle
         await settings(page, true);
         expect(await visible()).toHaveLength(0);
         await settings(native, true);
+        // NaviTV starts in Dark; the layout checks below follow the OS.
+        await openSettingsSection(page, 'appearance');
+        await page.getByTestId('SYSTEM_THEME').click();
+        await saveSettings(page);
+        await openSettingsSection(page, 'server');
         const originalViewport = page.viewportSize()!;
         await page.setViewportSize({ width: 390, height: 844 });
         for (const colorScheme of ['light', 'dark'] as const) {

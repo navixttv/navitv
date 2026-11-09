@@ -34,7 +34,8 @@ test('@settings @web radio choices follow arrows, Home/End and Discard', async (
     await system.press('ArrowRight');
     await expectRovingGroup(group, light);
     await page.locator('[data-test-id="discard-settings"]').click();
-    await expectRovingGroup(group, system);
+    // NaviTV starts in the Dark theme.
+    await expectRovingGroup(group, dark);
 
     const covers = page.locator('[data-test-id="select-cover-size"]');
     const medium = covers.getByRole('radio', { name: 'Medium', exact: true });
