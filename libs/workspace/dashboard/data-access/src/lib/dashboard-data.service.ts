@@ -2,7 +2,10 @@ import { HISTORY_PLAYLIST_BRIDGE } from '@iptvnator/services/history-events';
 import { FAVORITES_PLAYLIST_BRIDGE } from '@iptvnator/services/favorites-events';
 import { observeActivityChanges } from '@iptvnator/services/activity-changes';
 import { StalkerCollectionMetadataService } from '@iptvnator/portal/stalker/data-access';
-import { isCatalogUnavailable } from '@iptvnator/shared/interfaces';
+import {
+    isCatalogUnavailable,
+    isCategoryOutsideCountries,
+} from '@iptvnator/shared/interfaces';
 import {
     DestroyRef,
     Injectable,
@@ -601,14 +604,19 @@ export class DashboardDataService {
             return [];
         }
 
+        // NaviTV: providers tag titles too ("IR - Show", "NL - Film") inside
+        // untagged categories. Read extra rows and drop titles tagged for a
+        // language outside the content filter, so the rail and hero stay full.
         const items = await this.dbService.getGlobalRecentlyAdded(
             'all',
-            limit,
+            limit * 4,
             'xtream'
         );
         return items
             .map((item) => mapDbRecentlyAddedToItem(item))
-            .sort((a, b) => toTimestamp(b.added_at) - toTimestamp(a.added_at));
+            .filter((item) => !isCategoryOutsideCountries(item.title))
+            .sort((a, b) => toTimestamp(b.added_at) - toTimestamp(a.added_at))
+            .slice(0, limit);
     }
 
     async reloadXtreamRecentlyAddedItems(limit = 20): Promise<void> {

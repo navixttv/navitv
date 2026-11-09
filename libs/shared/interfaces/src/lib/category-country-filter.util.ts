@@ -9,8 +9,17 @@
  * database applies explicit visibility after these defaults.
  */
 
-/** Countries whose categories are visible by default. */
-export const DEFAULT_CONTENT_COUNTRIES: readonly string[] = ['US', 'UK'];
+/**
+ * Countries and regions whose categories are visible by default: English
+ * (US, UK and "EN" tags) and Spanish (Spain, Latin America, Mexico).
+ */
+export const DEFAULT_CONTENT_COUNTRIES: readonly string[] = [
+    'US',
+    'UK',
+    'ES',
+    'LATINO',
+    'MX',
+];
 
 /** Tag for English-language categories that name no single country. */
 const ENGLISH = 'EN';
@@ -66,6 +75,9 @@ const TAG_ALIASES: Readonly<Record<string, string>> = {
     ESP: 'ES',
     SPA: 'ES',
     SPAIN: 'ES',
+    SPANISH: 'ES',
+    ESPANOL: 'ES',
+    LATAM: 'LATINO',
     POR: 'PT',
     PRT: 'PT',
     BRA: 'BR',

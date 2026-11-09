@@ -67,8 +67,26 @@ describe('category country filter', () => {
         expect(categoryCountry(name)).toBeNull();
     });
 
-    it('defaults to US and UK', () => {
-        expect(DEFAULT_CONTENT_COUNTRIES).toEqual(['US', 'UK']);
+    it('defaults to English and Spanish', () => {
+        expect(DEFAULT_CONTENT_COUNTRIES).toEqual([
+            'US',
+            'UK',
+            'ES',
+            'LATINO',
+            'MX',
+        ]);
+    });
+
+    it('keeps Spanish-language categories visible by default', () => {
+        for (const name of [
+            'ES | Series',
+            'LAT - Novelas',
+            'MX: Noticias',
+            'SPANISH | Kids',
+            'LATAM | Movies',
+        ]) {
+            expect(isCategoryOutsideCountries(name)).toBe(false);
+        }
     });
 
     it('keeps allowed, English and untagged categories visible', () => {
@@ -148,19 +166,19 @@ describe('M3U group country filter', () => {
                 item('US | News'),
                 // Existing foreign group the user un-hid stays visible.
                 item('DE | Sport'),
-                item('ES | Futbol'),
+                item('FR | Football'),
             ])
-        ).toEqual(['US | Shopping', 'ES | Futbol']);
+        ).toEqual(['US | Shopping', 'FR | Football']);
     });
 
     it('adds nothing when the previous groups are unknown', () => {
         expect(
             refreshedHiddenGroupTitles({ hiddenGroupTitles: ['A'] }, [
-                item('ES | Futbol'),
+                item('FR | Football'),
             ])
         ).toEqual(['A']);
         expect(
-            refreshedHiddenGroupTitles({}, [item('ES | Futbol')])
+            refreshedHiddenGroupTitles({}, [item('FR | Football')])
         ).toBeUndefined();
     });
 });
