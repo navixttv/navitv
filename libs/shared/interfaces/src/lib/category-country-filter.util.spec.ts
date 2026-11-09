@@ -17,6 +17,8 @@ describe('category country filter', () => {
         ['[GB] Drama', 'UK'],
         ['EN - Movies', 'EN'],
         ['FR: Cinema', 'FR'],
+        ['BEE| Sample Sports', 'ARABIC'],
+        ['MENA | Kids', 'ARABIC'],
         ['|DE| Football', 'DE'],
         ['(IN) Bollywood', 'IN'],
         ['ARABIC | Series', 'ARABIC'],

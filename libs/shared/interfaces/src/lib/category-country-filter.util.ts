@@ -122,6 +122,9 @@ const TAG_ALIASES: Readonly<Record<string, string>> = {
     UAE: 'AE',
     EGY: 'EG',
     ARA: 'ARABIC',
+    // beIN Entertainment / MENA bouquets ("BEE| OSN", "BEE| SHAHID ...").
+    BEE: 'ARABIC',
+    MENA: 'ARABIC',
     ARAB: 'ARABIC',
     ARABIC: 'ARABIC',
     LAT: 'LATINO',
