@@ -1,7 +1,7 @@
 {
     "appId": "com.navixttv.navitv",
     "productName": "NaviTV",
-    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
+    "artifactName": "NaviTV-${version}-${os}-${arch}.${ext}",
     "fileAssociations": [
         {
             "ext": "m3u",
@@ -198,10 +198,10 @@
                 "arch": ["x64", "ia32"]
             }
         ],
-        "artifactName": "${name}-${version}-windows-${arch}-setup.${ext}",
+        "artifactName": "NaviTV-${version}-windows-${arch}-setup.${ext}",
         "icon": "apps/web/src/assets/icons/icon.png"
     },
     "nsis": {
-        "artifactName": "${name}-${version}-windows-${arch}-setup.${ext}"
+        "artifactName": "NaviTV-${version}-windows-${arch}-setup.${ext}"
     }
 }
