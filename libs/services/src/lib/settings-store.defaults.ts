@@ -49,7 +49,7 @@ export const DEFAULT_SETTINGS: Settings = {
     embeddedMpvExtraOptions: '',
     embeddedMpvAutoReconnect: true,
     portalConnectivityGuard: true,
-    coverSize: 'large',
+    coverSize: 'medium',
     showCoverTitles: true,
     epgViewMode: 'timeline',
     epgOffsetMinutes: 0,

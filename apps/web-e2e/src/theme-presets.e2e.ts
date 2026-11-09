@@ -69,7 +69,7 @@ test.describe('PWA theme presets', () => {
         await prefix.click();
         await section('appearance').click();
         await themeOption(page, 'night-owl').click();
-        await page.locator('[data-test-id="cover-size-small"]').click();
+        await page.locator('[data-test-id="cover-size-large"]').click();
         await titles.click();
         await expect(message).toHaveText('4 unsaved changes');
         await expect(dirty('general')).toBeVisible();
@@ -90,7 +90,7 @@ test.describe('PWA theme presets', () => {
         await prefix.click();
         await section('appearance').click();
         await themeOption(page, 'night-owl').click();
-        await page.locator('[data-test-id="cover-size-small"]').click();
+        await page.locator('[data-test-id="cover-size-large"]').click();
         await titles.click();
         await section('general').click();
         await page.keyboard.press('Control+s');
@@ -100,7 +100,7 @@ test.describe('PWA theme presets', () => {
         await openSettings(page);
         await expect(titles).not.toBeChecked();
         await expect(
-            page.locator('[data-test-id="cover-size-small"]')
+            page.locator('[data-test-id="cover-size-large"]')
         ).toHaveAttribute('aria-checked', 'true');
         await section('general').click();
         await expect(prefix).toBeChecked({ checked: !savedPrefix });

@@ -123,7 +123,7 @@ export function createSettingsForm(
         embeddedMpvExtraOptions: ['', [embeddedMpvExtraOptionsValidator]],
         embeddedMpvAutoReconnect: true,
         portalConnectivityGuard: true,
-        coverSize: 'large' as CoverSize,
+        coverSize: 'medium' as CoverSize,
         showCoverTitles: true,
         ...(supportsEpg ? { preferUploadedEpgOverXtream: false } : {}),
         // View mode and offset shape every guide, a portal's own included.
@@ -238,7 +238,7 @@ export function createSettingsFromFormValue(
         ),
         embeddedMpvAutoReconnect: value.embeddedMpvAutoReconnect ?? true,
         portalConnectivityGuard: value.portalConnectivityGuard !== false,
-        coverSize: value.coverSize ?? 'large',
+        coverSize: value.coverSize ?? 'medium',
         showCoverTitles: value.showCoverTitles !== false,
         epgEnabled: value.epgEnabled ?? currentSettings.epgEnabled ?? true,
         epgUrl,

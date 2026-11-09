@@ -62,9 +62,9 @@
         "**/embedded-mpv-runtime.json"
     ],
     "extraMetadata": {
-        "name": "navitv",
+        "name": "iptvnator",
         "productName": "NaviTV",
-        "desktopName": "navitv",
+        "desktopName": "iptvnator",
         "main": "electron-backend/main.js"
     },
     "extraResources": ["dist/apps/electron-backend/workers"],
