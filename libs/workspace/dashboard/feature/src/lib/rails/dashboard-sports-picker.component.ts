@@ -114,7 +114,7 @@ import {
             color: inherit;
         }
         button:focus-visible {
-            outline: 3px solid var(--mat-sys-primary, #f5a623);
+            outline: 3px solid var(--app-focus-ring);
             outline-offset: 2px;
         }
         .sports-picker__choice--on,
