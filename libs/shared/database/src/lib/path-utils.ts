@@ -31,7 +31,9 @@ export function getIptvnatorDataRoot(): string {
         return ensureDirectory(dataDir);
     }
 
-    return ensureDirectory(join(homedir(), '.iptvnator'));
+    // NaviTV keeps its own data root so it never shares the SQLite catalog,
+    // sources or history with an IPTVnator install on the same machine.
+    return ensureDirectory(join(homedir(), '.navitv'));
 }
 
 export function getIptvnatorDatabaseDirectory(): string {

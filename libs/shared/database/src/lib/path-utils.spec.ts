@@ -63,12 +63,23 @@ describe('path-utils', () => {
         process.env['IPTVNATOR_SOURCE_PROFILE'] = profile;
         process.env[IPTVNATOR_DATA_DIR_ENV] = tempRoot;
         try {
-            expect(getIptvnatorDatabasePath()).toBe(join(tempRoot, 'server-profiles', profile, 'databases', 'iptvnator.db'));
+            expect(getIptvnatorDatabasePath()).toBe(
+                join(
+                    tempRoot,
+                    'server-profiles',
+                    profile,
+                    'databases',
+                    'iptvnator.db'
+                )
+            );
             expect(getIptvnatorDataRoot()).toBe(tempRoot);
             process.env['IPTVNATOR_SOURCE_PROFILE'] = '../outside';
-            expect(getIptvnatorDatabasePath()).toBe(join(tempRoot, 'databases', 'iptvnator.db'));
+            expect(getIptvnatorDatabasePath()).toBe(
+                join(tempRoot, 'databases', 'iptvnator.db')
+            );
         } finally {
-            if (previous === undefined) delete process.env['IPTVNATOR_SOURCE_PROFILE'];
+            if (previous === undefined)
+                delete process.env['IPTVNATOR_SOURCE_PROFILE'];
             else process.env['IPTVNATOR_SOURCE_PROFILE'] = previous;
         }
     });
@@ -84,9 +95,7 @@ describe('path-utils', () => {
     it('ignores a blank IPTVNATOR_DATA_DIR', () => {
         process.env[IPTVNATOR_DATA_DIR_ENV] = '   ';
 
-        expect(getIptvnatorDataRoot()).toBe(
-            join(tempRoot, 'home', '.iptvnator')
-        );
+        expect(getIptvnatorDataRoot()).toBe(join(tempRoot, 'home', '.navitv'));
     });
 
     it('uses and creates the E2E data dir override when the env variable is set', () => {
@@ -97,10 +106,10 @@ describe('path-utils', () => {
         expect(existsSync(e2eDataDir)).toBe(true);
     });
 
-    it('falls back to ~/.iptvnator when the env override is blank', () => {
+    it('falls back to ~/.navitv when the env override is blank', () => {
         process.env[IPTVNATOR_E2E_DATA_DIR_ENV] = '   ';
 
-        const expectedRoot = join(tempRoot, 'home', '.iptvnator');
+        const expectedRoot = join(tempRoot, 'home', '.navitv');
 
         expect(getIptvnatorDataRoot()).toBe(expectedRoot);
         expect(existsSync(expectedRoot)).toBe(true);
