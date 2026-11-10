@@ -44,4 +44,4 @@ jobs:
                     --jq "[.[] | select(.tag_name == \"$TAG\" and .draft)][0].id")
                   test -n "$id"
                   gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$id" \
-                    -F draft=false -F prerelease=false -F make_latest=true --jq .html_url
+                    -F draft=false -F prerelease=false -f make_latest=true --jq .html_url

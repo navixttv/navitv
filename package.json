@@ -1,6 +1,6 @@
 {
     "name": "iptvnator",
-    "version": "1.0.0",
+    "version": "0.25.0",
     "engines": {
         "node": "^22.23.4 || ^24.22.1"
     },
@@ -166,7 +166,7 @@
         "electron-updater": "6.8.9",
         "epg-parser": "^0.5.0",
         "hls.js": "1.7.3",
-        "iptv-playlist-parser": "github:4gray/iptv-playlist-parser#v0.15.2-iptvnator.2",
+        "iptv-playlist-parser": "0.15.2",
         "marked": "18.1.0",
         "mpegts.js": "1.8.2",
         "ms": "2.1.3",
