@@ -14,8 +14,8 @@ const activity = () => adb('shell', 'dumpsys', 'activity', 'activities').split('
 const device = (await _android.devices({ omitDriverInstall: true })).find((value) => value.serial() === serial);
 assert.ok(device, 'Emulator was not found.');
 try {
-    adb('shell', 'am', 'start', '-n', 'org.tvshell.iptvnator/.ui.MainActivity');
-    const page = await (await device.webView({ pkg: 'org.tvshell.iptvnator' })).page();
+    adb('shell', 'am', 'start', '-n', 'com.navixttv.navitv.tv/org.tvshell.iptvnator.ui.MainActivity');
+    const page = await (await device.webView({ pkg: 'com.navixttv.navitv.tv' })).page();
     await page.waitForFunction(() => window.__tvShell && !document.getElementById('initial-splash'));
     await page.evaluate(() => {
         const opaque = document.createElement('iframe');

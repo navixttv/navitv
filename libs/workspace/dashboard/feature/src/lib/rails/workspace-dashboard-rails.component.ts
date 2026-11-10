@@ -4,6 +4,7 @@ import {
     computed,
     effect,
     inject,
+    signal,
     untracked,
 } from '@angular/core';
 import {
@@ -39,6 +40,15 @@ import {
 } from '@iptvnator/services';
 import {
     DashboardDataService,
+    DashboardLiveSportsService,
+    DashboardNetworksService,
+    DashboardSportsPreferencesService,
+    DashboardTastePreferencesService,
+    DashboardTasteRailsService,
+    DashboardUpcomingGamesService,
+    type DashboardTaste,
+    orderChannelsForGuide,
+    type DashboardSport,
     DashboardFavoriteItem,
     DashboardRecentlyAddedItem,
     buildDashboardPortalLiveEpgKey,
@@ -62,6 +72,13 @@ import type { PlaylistMeta } from '@iptvnator/shared/interfaces';
 import { DashboardPortalLiveEpgPresenter } from './dashboard-portal-live-epg.presenter';
 import { DashboardHeroComponent } from './dashboard-hero.component';
 import { buildLiveEpgCardsForEnabledRails } from './dashboard-live-epg.utils';
+import {
+    buildLiveSportsCard,
+    buildUpcomingGameCard,
+    rankLiveSportsRail,
+} from './dashboard-live-sports.cards';
+import { DashboardSportsPickerComponent } from './dashboard-sports-picker.component';
+import { DashboardTastePickerComponent } from './dashboard-taste-picker.component';
 import { DashboardLiveEpgPresenter } from './dashboard-live-epg.presenter';
 import { DashboardLiveEpgClock } from './dashboard-live-epg-clock';
 import { createSourceExpiryClock } from './dashboard-source-expiry-clock';
@@ -95,6 +112,8 @@ import type {
         DashboardHeroComponent,
         DashboardRailComponent,
         DashboardRailSkeletonComponent,
+        DashboardSportsPickerComponent,
+        DashboardTastePickerComponent,
         EmptyStateComponent,
         TranslatePipe,
     ],
@@ -114,6 +133,27 @@ export class WorkspaceDashboardRailsComponent {
     readonly data = inject(DashboardDataService);
     /** One facade for both live-EPG sources: uploaded XMLTV and the portal. */
     readonly liveEpg = inject(DashboardLiveEpgPresenter);
+    private readonly liveSports = inject(DashboardLiveSportsService);
+    private readonly upcomingGames = inject(DashboardUpcomingGamesService);
+    readonly sportsPreferences = inject(DashboardSportsPreferencesService);
+    /** The viewer reopened the sports picker with "Choose sports". */
+    private readonly editingSports = signal(false);
+    readonly tastePreferences = inject(DashboardTastePreferencesService);
+    private readonly networksService = inject(DashboardNetworksService);
+
+    /** NaviTV "Networks": one tile per streaming service the catalog covers. */
+    readonly networkCards = computed<DashboardRailCard[]>(() =>
+        this.networksService.networks().map((network) => ({
+            id: `network-${network.id}`,
+            title: network.name,
+            imageUrl: network.logoUrl ?? undefined,
+            icon: 'subscriptions',
+            link: ['/workspace/networks', network.id],
+        }))
+    );
+    private readonly tasteRails = inject(DashboardTasteRailsService);
+    /** The viewer reopened "Make Home yours" with "Edit your picks". */
+    private readonly editingTaste = signal(false);
     private readonly dialog = inject(MatDialog);
     private readonly dialogService = inject(DialogService);
     private readonly playlistDeleteAction = inject(PlaylistDeleteActionService);
@@ -200,12 +240,104 @@ export class WorkspaceDashboardRailsComponent {
 
     // The live cards whose rails are enabled; the presenter adds the hero's
     // live candidates and looks the programmes up per XMLTV source scope.
-    private readonly enabledLiveCards = computed(() =>
-        buildLiveEpgCardsForEnabledRails(
+    private readonly enabledLiveCards = computed(() => [
+        ...buildLiveEpgCardsForEnabledRails(
             this.dashboardRails(),
             this.liveFavoriteCards(),
             this.recentLiveCards()
+        ),
+        ...this.liveSportsCards(),
+    ]);
+
+    /** NaviTV "Live sports" candidates, before guide ranking. */
+    readonly liveSportsCards = computed<DashboardRailCard[]>(() =>
+        orderChannelsForGuide(
+            this.liveSports.items(),
+            this.sportsPreferences.sports()
         )
+            .slice(0, 30)
+            .map(buildLiveSportsCard)
+    );
+
+    /** NaviTV "Upcoming games": games in the sports channels' guide. */
+    readonly upcomingGameCards = computed<DashboardRailCard[]>(() => {
+        this.languageTick();
+        const now = Date.now();
+        const labels = {
+            live: this.translate.instant('WORKSPACE.DASHBOARD.UPCOMING.LIVE'),
+            today: this.translate.instant('WORKSPACE.DASHBOARD.UPCOMING.TODAY'),
+            tomorrow: this.translate.instant(
+                'WORKSPACE.DASHBOARD.UPCOMING.TOMORROW'
+            ),
+            locale:
+                this.translate.currentLang ||
+                this.translate.defaultLang ||
+                'en',
+        };
+        return this.upcomingGames
+            .games()
+            .map((game) => buildUpcomingGameCard(game, now, labels));
+    });
+
+    /** "Make Home yours": first visit with an Xtream source, or reopened. */
+    readonly showTastePicker = computed(
+        () =>
+            this.xtreamPlaylistCount() > 0 &&
+            (this.tastePreferences.taste() === null || this.editingTaste())
+    );
+
+    /** NaviTV genre rows ("Reality TV for you"), shows first. */
+    readonly tasteRows = computed(() => {
+        this.languageTick();
+        return this.tasteRails.rows().map((row) => ({
+            genre: row.genre,
+            label: this.translate.instant('WORKSPACE.DASHBOARD.TASTE.ROW', {
+                genre: this.translate.instant(
+                    'WORKSPACE.DASHBOARD.TASTE.GENRES.' +
+                        row.genre.toUpperCase()
+                ),
+            }),
+            cards: row.items.map((item) => this.toRecommendationCard(item)),
+        }));
+    });
+
+    /** "Live TV for you": channels of the chosen Live TV picks. */
+    readonly tasteLiveCards = computed<DashboardRailCard[]>(() =>
+        this.tasteRails.liveChannels().map(buildLiveSportsCard)
+    );
+    readonly tasteLiveCardsEnriched = computed<DashboardRailCard[]>(() =>
+        this.liveEpg.enrich(this.tasteLiveCards())
+    );
+
+    onTasteSaved(taste: DashboardTaste): void {
+        this.tastePreferences.save(taste);
+        this.editingTaste.set(false);
+    }
+
+    editTaste(): void {
+        this.editingTaste.set(true);
+    }
+
+    /** First visit with sports channels, or "Choose sports" was pressed. */
+    readonly showSportsPicker = computed(
+        () =>
+            !this.showTastePicker() &&
+            this.liveSports.items().length > 0 &&
+            (this.sportsPreferences.sports() === null || this.editingSports())
+    );
+
+    onSportsSaved(sports: DashboardSport[]): void {
+        this.sportsPreferences.save(sports);
+        this.editingSports.set(false);
+    }
+
+    editSports(): void {
+        this.editingSports.set(true);
+    }
+
+    /** Games on now first, then other programmes, then the rest. */
+    readonly liveSportsCardsEnriched = computed<DashboardRailCard[]>(() =>
+        rankLiveSportsRail(this.liveEpg.enrich(this.liveSportsCards()))
     );
 
     private readonly playbackPositionReloadKey = computed(() =>
@@ -326,6 +458,54 @@ export class WorkspaceDashboardRailsComponent {
         void this.data.reloadGlobalFavorites();
 
         this.liveEpg.connect(this.enabledLiveCards);
+
+        // NaviTV Live sports: re-read the local catalog on every visit (a
+        // playlist may have been imported or refreshed meanwhile), and ask
+        // the guide for every candidate so the rail can rank games first.
+        this.liveSports.invalidate();
+        effect(() => {
+            if (!this.data.playlistsLoaded()) return;
+            void this.liveSports.load(this.data.playlists());
+        });
+        effect(() =>
+            this.liveEpg.setVisibleCards('sports', this.liveSportsCards())
+        );
+        effect(() => {
+            const channels = this.liveSports.items();
+            const sports = this.sportsPreferences.sports();
+            untracked(() => void this.upcomingGames.load(channels, sports));
+        });
+
+        // NaviTV Networks: re-read on every visit (categories may change).
+        this.networksService.invalidate();
+        effect(() => {
+            if (!this.data.playlistsLoaded()) return;
+            const playlists = this.data.playlists();
+            untracked(() => void this.networksService.load(playlists));
+        });
+
+        // NaviTV "Make Home yours" rows. Genre rows re-run as the catalog
+        // grows (the TV build indexes it in the background) and after the
+        // recently-added rail settles, so they never delay first paint.
+        this.tasteRails.invalidate();
+        effect(() => {
+            const taste = this.tastePreferences.taste();
+            if (!taste || !this.data.playlistsLoaded()) return;
+            const playlists = this.data.playlists();
+            untracked(
+                () => void this.tasteRails.loadLive(playlists, taste.live)
+            );
+        });
+        effect(() => {
+            const taste = this.tastePreferences.taste();
+            this.languageTick();
+            this.data.xtreamRecentlyAddedItems();
+            if (!taste || !this.data.continueWatchingSettled()) return;
+            untracked(() => void this.tasteRails.loadGenres(taste.genres));
+        });
+        effect(() =>
+            this.liveEpg.setVisibleCards('taste', this.tasteLiveCards())
+        );
 
         // Refresh when Xtream playlist count changes so a newly added provider
         // populates the rail without a manual dashboard reload. The Xtream

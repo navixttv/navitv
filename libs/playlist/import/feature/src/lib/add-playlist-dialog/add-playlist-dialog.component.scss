@@ -142,3 +142,48 @@
         line-height: 1.45;
     }
 }
+
+// NaviTV TV app: "Add from phone" (QR code) above the methods.
+.apd-from-phone {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--app-widget-border, transparent);
+    border-radius: 12px;
+    background: var(--mat-sys-primary-container, transparent);
+    color: var(--mat-sys-on-primary-container, inherit);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 3px solid var(--app-focus-ring);
+        outline-offset: 2px;
+    }
+
+    mat-icon {
+        flex: none;
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+    }
+}
+
+.apd-from-phone__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.apd-from-phone__title {
+    font-weight: 600;
+}
+
+.apd-from-phone__hint {
+    font-size: 0.85em;
+    opacity: 0.8;
+}

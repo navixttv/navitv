@@ -17,7 +17,7 @@
         "EMPTY": "ما لقينا حتى عنوان",
         "SEARCH_HINT": "دخل جوج حروف على الأقل",
         "EMPTY_HELP": "جرب العنوان الأصلي ولا خلي معلومات المزوّد.",
-        "AUTO_HELP": "حيد التصحيح وخلي IPTVnator يقلب على المعلومات تلقائيًا من جديد.",
+        "AUTO_HELP": "حيد التصحيح وخلي NaviTV يقلب على المعلومات تلقائيًا من جديد.",
         "PROVIDER_HELP": "خلي الصورة والوصف ومعلومات الحلقات الأصلية ديال هاد المصدر. معلومات TMDB غتبقى مطفية لهاد العنوان.",
         "SEARCH_ERROR": "البحث فـ TMDB ما خدامش. تأكد من الاتصال ومفتاح API، وعاود جرب.",
         "SAVE_ERROR": "ما قدرناش نطبقو هاد الاختيار. تأكد من الاتصال والمساحة المتوفرة فالمتصفح، وعاود جرب.",
@@ -37,7 +37,7 @@
     "SHOW_LESS": "وري قل",
     "PLAYLISTS": "قوائم التشغيل",
     "HOME": {
-        "TITLE": "IPTVnator",
+        "TITLE": "NaviTV",
         "SUBTITLE": "عفاك اختار شي قائمة تشغيل من الليستا ولا زيد قائمة جديدة",
         "TABS": {
             "RECENTLY_ADDED": "قوائم التشغيل اللي تزادو مؤخراً",
@@ -53,7 +53,7 @@
             "UNTITLED_PLAYLIST": "قائمة تشغيل بلا عنوان",
             "PLAYLIST_ACTIONS": "إجراءات قائمة التشغيل",
             "ADD_FIRST": "عفاك زيد قائمة التشغيل الأولى ديالك",
-            "WELCOME_TITLE": "مرحبا بيك في IPTVnator",
+            "WELCOME_TITLE": "مرحبا بيك في NaviTV",
             "WELCOME_DESCRIPTION": "بدا رحلة البث ديالك بزيادة قائمة التشغيل الأولى ديالك. ربط مع خدمة IPTV المفضلة عندك وتمتع ببث مباشر، أفلام، وسلاسل.",
             "ADD_YOUR_FIRST": "زيد قائمة التشغيل الأولى ديالك",
             "FEATURE_M3U": "ملفات M3U/M3U8",
@@ -228,7 +228,13 @@
             "ERROR_TLS_HOST_UNKNOWN": "ما قدرناش نحددو مضيف قائمة التشغيل. عفاك عاود جرّب يدوياً.",
             "TRUST_TLS_HOST": "وثق فالمضيف",
             "TRUST_TLS_HOST_TITLE": "توثق فشهادة ما صالحة؟",
-            "TRUST_TLS_HOST_WARNING": "كمل غير إلا كنتي كتوثق فهاد مضيف قائمة التشغيل. IPTVnator غادي يسمح بشهادات TLS ما صالحةش لهد المضيف، ولكن باقي المضيفين خاصهم شهادات صالحة."
+            "TRUST_TLS_HOST_WARNING": "كمل غير إلا كنتي كتوثق فهاد مضيف قائمة التشغيل. NaviTV غادي يسمح بشهادات TLS ما صالحةش لهد المضيف، ولكن باقي المضيفين خاصهم شهادات صالحة."
+        },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
         },
         "TEXT_IMPORT": {
             "LABEL": "دخل قائمة تشغيل m3u(8) على شكل نص"
@@ -374,7 +380,7 @@
         "NAV_SERVER": "السيرفر",
         "SERVER_DESCRIPTION": "لوائح التشغيل والمفضلة وفين وصلتي فالمشاهدة كيتحفظو فهاد السيرفر وكيتشاركو مع كاع الأجهزة اللي كتحلو.",
         "SERVER_CONNECTION": "الاتصال",
-        "SERVER_CONNECTION_DESCRIPTION": "سيرفر IPTVnator اللي كيحفظ فيه هاد التطبيق.",
+        "SERVER_CONNECTION_DESCRIPTION": "سيرفر NaviTV اللي كيحفظ فيه هاد التطبيق.",
         "SERVER_CONNECTED": "متاصل",
         "SERVER_OFFLINE": "ماشي متوفر",
         "SERVER_STORAGE": "التخزين",
@@ -446,7 +452,7 @@
         "TMDB_ATTRIBUTION": "هاد المنتج كيستعمل TMDB API ولكن ماشي معتمد ولا مصادق عليه من طرف TMDB.",
         "APP_PREFERENCES": "تفضيلات التطبيق",
         "HERO_EYEBROW": "إعدادات مساحة العمل",
-        "HERO_TITLE": "شكّل كيفاش كيتحس IPTVnator",
+        "HERO_TITLE": "شكّل كيفاش كيتحس NaviTV",
         "HERO_DESCRIPTION": "ضبط التشغيل، الأدلة، الوصول عن بعد، ومعالجة البيانات من بلاصة وحدة بدون ما تخسر ستايل مساحة العمل الحالية.",
         "SUBTITLE": "بدل إعدادات التطبيق",
         "DESCRIPTION": "عفاك بدل الخيارات من الليستا لتحت وأكد بضغط على زر حفظ التغييرات",
@@ -512,7 +518,7 @@
         "EPG_SOURCE_FORMATS_EXAMPLES": "أمثلة:",
         "VIDEO_PLAYER_DESCRIPTION": "اختار مشغل الفيديو الافتراضي",
         "WEB_PLAYER_SHARED_CONTROLS": "عناصر تحكم موحدة لمشغلات الويب",
-        "WEB_PLAYER_SHARED_CONTROLS_DESCRIPTION": "استعمل عناصر التحكم المشتركة ديال IPTVnator مع HTML5 وVideo.js وArtPlayer.",
+        "WEB_PLAYER_SHARED_CONTROLS_DESCRIPTION": "استعمل عناصر التحكم المشتركة ديال NaviTV مع HTML5 وVideo.js وArtPlayer.",
         "PLAYER_AMBIENT_MODE": "خلفية محيطة",
         "PLAYER_AMBIENT_MODE_DESCRIPTION": "ملي المساحة حول المشغل بغلاف معتم وطابت بلاصة الشرائط السوداء.",
         "PLAY_TRAILERS_IN_BACKGROUND": "خدّم الإعلانات فخلفية التفاصيل",
@@ -543,7 +549,7 @@
         "EPG_VIEW_MODE_TIMELINE": "الخط الزمني",
         "EPG_VIEW_MODE_LIST": "لائحة",
         "STARTUP_BEHAVIOR": "العرض عند البدء",
-        "STARTUP_BEHAVIOR_DESCRIPTION": "اختار واش IPTVnator يحل أول عرض متوفر في مساحة العمل ولا يسترجع آخر عرض على مستوى القسم. أول عرض كيعني لوحة التحكم إلى كانت مفعلة، إلا فالا فهي Sources.",
+        "STARTUP_BEHAVIOR_DESCRIPTION": "اختار واش NaviTV يحل أول عرض متوفر في مساحة العمل ولا يسترجع آخر عرض على مستوى القسم. أول عرض كيعني لوحة التحكم إلى كانت مفعلة، إلا فالا فهي Sources.",
         "STARTUP_BEHAVIOR_FIRST_VIEW": "أول عرض متوفر",
         "STARTUP_BEHAVIOR_RESTORE_LAST_VIEW": "استرجع آخر عرض",
         "STARTUP_WINDOW_MODE": "النافذة عند البدء",
@@ -557,7 +563,7 @@
         "STRIP_COUNTRY_PREFIX": "حيد بادئات البلد من أسماء القنوات",
         "STRIP_COUNTRY_PREFIX_DESCRIPTION": "كيحيد بادئات البلد/المجموعة بحال \"US | \" ولا \"UK - \" من أسماء قنوات البث المباشر فكامل التطبيق.",
         "VERSION_DESCRIPTION": "الإصدار الحالي ديال التطبيق",
-        "ABOUT_SUBTITLE": "الإصدار، روابط المشروع، وطرق دعم IPTVnator.",
+        "ABOUT_SUBTITLE": "الإصدار، روابط المشروع، وطرق دعم NaviTV.",
         "EMBEDDED_MPV_NOTICE_TITLE": "وقت تشغيل MPV المدمج",
         "EMBEDDED_MPV_NOTICE_DESCRIPTION": "إصدارات سطح المكتب تقدر تتضمن مكتبات libmpv و FFmpeg المدمجة لمشغل MPV المدمج التجريبي. المستخدمين ما محتاجينش يثبتو تطبيق MPV بشكل منفصل؛ MPV الخارجي و VLC مازالو متوفرين كمشغلات احتياطية.",
         "COMMUNITY": "المشروع والمجتمع",
@@ -570,7 +576,7 @@
         "SUPPORT_DESCRIPTION": "IPTVnator مجاني ومفتوح المصدر، مبني بشكل مفتوح. إلى كان جزء من روتينك اليومي، مساهمة صغيرة كتعاون باش يبقى المشروع حي وتشكل اللي غادي يجي — شكرا.",
         "SUPPORT_SPONSORS_HINT": "متكرر ولا مرة وحدة",
         "SUPPORT_KOFI_HINT": "شري ليا قهوة",
-        "EPG_NOTE": "EPG متوفر حالياً غير فالإصدار المبني على Electron ديال IPTVnator.",
+        "EPG_NOTE": "EPG متوفر حالياً غير فالإصدار المبني على Electron ديال NaviTV.",
         "EPG_NOTE_URL_TEXT": "شوف هنا",
         "IMPORT_EXPORT_DATA": "استورد/صدّر قوائم التشغيل",
         "IMPORT_EXPORT_DATA_DESCRIPTION": "صدّر ولا رجّع نسخ احتياطية ديال لوائح التشغيل، بما فيها لقطات M3U ومعطيات اتصال Xtream/Stalker وحالة المستخدم وروابط مصادر EPG.",
@@ -603,10 +609,10 @@
         "PLAYLISTS_REMOVED": "تحيدو جميع لوائح التشغيل والمعطيات ديالهم.",
         "MPV_PLAYER_PATH_LABEL": "مسار mpv",
         "MPV_PLAYER_PATH_DESCRIPTION": "حدد مسار MPV. فـ macOS تقدر تستعمل باقة تطبيق MPV بحال /Applications/mpv.app أو مسار الملف التنفيذي.",
-        "MPV_COMPATIBLE_PLAYER_TIP": "IINA يقدر يتفتح كمشغل متوافق مع MPV فـ macOS، ولكن استعمل مسار الملف التنفيذي بحال /Applications/IINA.app/Contents/MacOS/iina-cli أو /Applications/IINA.app/Contents/MacOS/IINA. تحكم IPTVnator وتتبع الموضع وإعادة استعمال النافذة مضمونين غير مع MPV IPC.",
+        "MPV_COMPATIBLE_PLAYER_TIP": "IINA يقدر يتفتح كمشغل متوافق مع MPV فـ macOS، ولكن استعمل مسار الملف التنفيذي بحال /Applications/IINA.app/Contents/MacOS/iina-cli أو /Applications/IINA.app/Contents/MacOS/IINA. تحكم NaviTV وتتبع الموضع وإعادة استعمال النافذة مضمونين غير مع MPV IPC.",
         "MPV_PLAYER_PATH": "مسار مشغل mpv",
         "MPV_PLAYER_ARGUMENTS_LABEL": "وسائط سطر الأوامر ديال mpv",
-        "MPV_PLAYER_ARGUMENTS_DESCRIPTION": "وسائط اختيارية كتدوز لـ mpv ملي IPTVnator كيبدا عملية مشغل خارجي جديدة.",
+        "MPV_PLAYER_ARGUMENTS_DESCRIPTION": "وسائط اختيارية كتدوز لـ mpv ملي NaviTV كيبدا عملية مشغل خارجي جديدة.",
         "MPV_PLAYER_ARGUMENTS": "وسائط mpv",
         "MPV_REUSE_INSTANCE_LABEL": "إعادة استخدام نسخة MPV",
         "MPV_REUSE_INSTANCE_DESCRIPTION": "إلى كانت مفعلة، نفس نافذة MPV غادي تستعمل لتشغيل بثوث مختلفة. إلى كانت معطلة، كل بث كيتحل في نافذة MPV جديدة.",
@@ -618,9 +624,9 @@
         "VLC_PLAYER_PATH_DESCRIPTION": "حدد مسار VLC. فـ macOS تقدر تستعمل باقة تطبيق VLC بحال /Applications/VLC.app أو مسار الملف التنفيذي.",
         "VLC_PLAYER_PATH": "مسار مشغل VLC",
         "VLC_PLAYER_ARGUMENTS_LABEL": "وسائط سطر الأوامر ديال VLC",
-        "VLC_PLAYER_ARGUMENTS_DESCRIPTION": "وسائط اختيارية كتدوز لـ VLC ملي IPTVnator كيبدا عملية مشغل خارجي جديدة.",
+        "VLC_PLAYER_ARGUMENTS_DESCRIPTION": "وسائط اختيارية كتدوز لـ VLC ملي NaviTV كيبدا عملية مشغل خارجي جديدة.",
         "VLC_PLAYER_ARGUMENTS": "وسائط VLC",
-        "EXTERNAL_PLAYER_ARGUMENTS_HINT": "استعمل وسيطة وحدة فكل سطر. هاد القيم كتطبق قبل خيارات IPTVnator الخاصة بالبث.",
+        "EXTERNAL_PLAYER_ARGUMENTS_HINT": "استعمل وسيطة وحدة فكل سطر. هاد القيم كتطبق قبل خيارات NaviTV الخاصة بالبث.",
         "VLC_REUSE_INSTANCE_LABEL": "إعادة استخدام نسخة VLC",
         "VLC_REUSE_INSTANCE_DESCRIPTION": "إلى كانت مفعلة، نفس نافذة VLC غادي تستعمل لتشغيل بثوث مختلفة. إلى كانت معطلة، كل بث كيتحل في نافذة VLC جديدة.",
         "REMOTE_CONTROL": "التحكم عن بعد",
@@ -747,12 +753,12 @@
         "MIGRATION_FAILED": "النقل فشل. لوائح التشغيل ديالك باقيين فهاد المتصفح؛ عاود جرب من الإعدادات ← السيرفر.",
         "MIGRATION_RELOAD": "عاود التحميل",
         "SIGN_IN_TITLE": "خاص رمز الدخول",
-        "SIGN_IN_DESCRIPTION": "هاد سيرفر IPTVnator كيطلب رمز الدخول قبل ما يوريك لوائح التشغيل ديالك.",
+        "SIGN_IN_DESCRIPTION": "هاد سيرفر NaviTV كيطلب رمز الدخول قبل ما يوريك لوائح التشغيل ديالك.",
         "SIGN_IN_TOKEN_LABEL": "رمز الدخول",
         "SIGN_IN_HINT": "تلقاه فالإعداد IPTVNATOR_ACCESS_TOKEN ديال السيرفر.",
         "SIGN_IN_REJECTED": "الرمز ترفض. تأكد منو وعاود جرب.",
         "SIGN_IN_UNREACHABLE": "ما قدرناش نوصلو للسيرفر. شوف الاتصال وعاود جرب.",
-        "SIGN_IN_STORAGE": "هاد المتصفح ما كيخليش IPTVnator يحفظ الرمز. سمح بداتا ديال الموقع لهاد الصفحة وعاود جرب.",
+        "SIGN_IN_STORAGE": "هاد المتصفح ما كيخليش NaviTV يحفظ الرمز. سمح بداتا ديال الموقع لهاد الصفحة وعاود جرب.",
         "SIGN_IN_CONTINUE": "كمّل",
         "STATUS_ONLINE": "السيرفر متاصل",
         "STATUS_OFFLINE": "السيرفر ماشي متوفر",
@@ -1124,10 +1130,10 @@
         "RETRY": "حاول مرة أخرى",
         "ALLOW_PRIVATE_SOURCE": "سمح للمصدر",
         "ALLOW_PRIVATE_SOURCE_TITLE": "نسمحو لمصدر EPG من شبكة خاصة؟",
-        "ALLOW_PRIVATE_SOURCE_WARNING": "سمح بهادشي غير إلا كنتي كتوثق فمصدر EPG. IPTVnator غادي يسمح غير لهد الرابط EPG بعينو يتاصل بعناوين شبكة خاصة ولا محلية.",
+        "ALLOW_PRIVATE_SOURCE_WARNING": "سمح بهادشي غير إلا كنتي كتوثق فمصدر EPG. NaviTV غادي يسمح غير لهد الرابط EPG بعينو يتاصل بعناوين شبكة خاصة ولا محلية.",
         "TRUST_TLS_HOST": "وثق فالمضيف",
         "TRUST_TLS_HOST_TITLE": "توثق فشهادة ما صالحة؟",
-        "TRUST_TLS_HOST_WARNING": "كمل غير إلا كنتي كتوثق فهاد المضيف. IPTVnator غادي يسمح بشهادات TLS ما صالحةش لهد المضيف، ولكن باقي المضيفين خاصهم شهادات صالحة.",
+        "TRUST_TLS_HOST_WARNING": "كمل غير إلا كنتي كتوثق فهاد المضيف. NaviTV غادي يسمح بشهادات TLS ما صالحةش لهد المضيف، ولكن باقي المضيفين خاصهم شهادات صالحة.",
         "CURRENT_PROGRAM": "البرنامج الحالي",
         "ARCHIVE_PLAYBACK": "تشغيل الأرشيف",
         "COLLAPSE_PANEL": "طوي لوحة EPG",
@@ -1255,7 +1261,7 @@
         "SUPPORT_PROJECT": "دعم المشروع"
     },
     "ABOUT": {
-        "TITLE": "حول IPTVnator",
+        "TITLE": "حول NaviTV",
         "DESCRIPTION": "تطبيق مشغل IPTV متعدد المنصات فيه بزاف ديال الميزات، بحال دعم قوائم تشغيل m3u و m3u8، المفضلة، دليل التلفزيون، الأرشيف التلفزيوني/الإعادة والمزيد.",
         "VERSION": "الإصدار",
         "GITHUB_TOOLTIP": "مستودع IPTVnator فـ GitHub",
@@ -1719,7 +1725,7 @@
         "STOP_RECORDING": "وقّف التسجيل",
         "REMOVE_RECORDING_DIALOG": {
             "TITLE": "نحيدو التسجيل من مدير التحميلات؟",
-            "MESSAGE": "هاد العملية كتحيد هاد العنصر من IPTVnator. الملف المسجل كيبقى على القرص."
+            "MESSAGE": "هاد العملية كتحيد هاد العنصر من NaviTV. الملف المسجل كيبقى على القرص."
         },
         "RECORDING_DETAIL": {
             "PROGRAMS": "البرامج المسجلة",
@@ -1730,7 +1736,7 @@
         "REMOVE_FROM_MANAGER": "حيد من مسير التحميلات",
         "REMOVE_COMPLETED_DIALOG": {
             "TITLE": "حيد من مسير التحميلات؟",
-            "MESSAGE": "هادشي كيحيد العنصر من IPTVnator. ملف الميديا المحمل كيبقى فالديسك."
+            "MESSAGE": "هادشي كيحيد العنصر من NaviTV. ملف الميديا المحمل كيبقى فالديسك."
         },
         "REMOVE_PARTIAL_DIALOG": {
             "TITLE": "حيد التحميل الجزئي؟",
@@ -1818,8 +1824,8 @@
             "TOGGLE_MUTE": "ما قدرناش نبدلو كتم الصوت",
             "STATUS": "ما قدرناش نجيبو حالة التحكم عن بعد"
         },
-        "HEADER": "التحكم عن بعد ديال IPTVnator",
-        "FOOTER": "التحكم عن بعد ديال IPTVnator"
+        "HEADER": "التحكم عن بعد ديال NaviTV",
+        "FOOTER": "التحكم عن بعد ديال NaviTV"
     },
     "WORKSPACE": {
         "FAVORITES_ONLY": "المفضلة فقط",
@@ -1883,6 +1889,65 @@
             "SEE_ALL": "شوف الكل",
             "SEE_ALL_COUNT": "شوف الكل ({{count}})",
             "RECENTLY_WATCHED": "متشافين مؤخراً",
+            "LIVE_SPORTS": "الرياضة مباشرة",
+            "UPCOMING_GAMES": "Upcoming games",
+            "TASTE": {
+                "TITLE": "Make Home yours",
+                "HINT": "Pick what you like and Home adds rows for it. You can change this any time.",
+                "SHOWS": "Shows & movies",
+                "LIVE": "Live TV",
+                "SAVE": "Save",
+                "SKIP": "Not now",
+                "EDIT": "Edit your picks",
+                "ROW": "{{genre}} for you",
+                "LIVE_ROW": "Live TV for you",
+                "GENRES": {
+                    "REALITY": "Reality TV",
+                    "DRAMA": "Drama",
+                    "COMEDY": "Comedy",
+                    "CRIME": "Crime & mystery",
+                    "ACTION": "Action & adventure",
+                    "SCIFI": "Sci-fi & fantasy",
+                    "DOCUMENTARY": "Documentaries",
+                    "KIDS": "Kids & family",
+                    "NOVELAS": "Telenovelas"
+                },
+                "LIVE_TYPES": {
+                    "NEWS": "News",
+                    "LOCAL": "Local channels",
+                    "ENTERTAINMENT": "Entertainment",
+                    "KIDS": "Kids",
+                    "SPANISH": "Spanish TV",
+                    "MOVIES": "Movie channels",
+                    "MUSIC": "Music"
+                }
+            },
+            "NETWORKS": {
+                "TITLE": "Networks",
+                "BACK": "Back to Home",
+                "LOADING": "Loading…",
+                "EMPTY": "Nothing from this network in your catalog right now."
+            },
+            "UPCOMING": {
+                "LIVE": "Live",
+                "TODAY": "Today",
+                "TOMORROW": "Tomorrow"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "Which sports do you want on Home?",
+                "HINT": "Games from these sports show up first, with their start times.",
+                "SAVE": "Save",
+                "ALL": "Show all sports",
+                "EDIT": "Choose sports"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Football",
+                "BASKETBALL": "Basketball",
+                "FIGHTS": "Boxing & UFC",
+                "SOCCER": "Soccer",
+                "BASEBALL": "Baseball",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "تزادو مؤخراً على Xtream",
             "TMDB_TRENDING": "الرائج هاد السيمانة",
             "TMDB_RECOMMENDED": "مقترحات ليك",
@@ -2141,7 +2206,7 @@
         },
         "SHORTCUTS": {
             "TITLE": "اختصارات الكلافيي",
-            "SUBTITLE": "اختصارات متوفرة فـ IPTVnator لمساحة العمل والتنقل والتشغيل والنوافذ.",
+            "SUBTITLE": "اختصارات متوفرة فـ NaviTV لمساحة العمل والتنقل والتشغيل والنوافذ.",
             "OPEN_TOOLTIP": "اختصارات الكلافيي (?)",
             "OPEN_ARIA": "حل اختصارات الكلافيي",
             "PLATFORM": {
@@ -2352,7 +2417,7 @@
     },
     "HOSTED_SERVER": {
         "TITLE": "السيرفر فهاد الكمبيوتر",
-        "DESCRIPTION": "كيبقى خدام ما دام IPTVnator محلول، حتى إلا صغّرتي النافذة. ملي كتخرج من التطبيق كيتوقف السيرفر.",
+        "DESCRIPTION": "كيبقى خدام ما دام NaviTV محلول، حتى إلا صغّرتي النافذة. ملي كتخرج من التطبيق كيتوقف السيرفر.",
         "SETUP_GUIDE": "كيفاش تشغّل سيرفر فهاد الكمبيوتر",
         "LOCAL_ONLY": "متاح غير فهاد الكمبيوتر.",
         "CLIENT_GUIDE": "كيفاش تتصل بسيرفر موجود",
@@ -2385,15 +2450,15 @@
     },
     "SOURCE_SYNC": {
         "ABOUT_TITLE": "على المزامنة عبر السيرفر",
-        "ABOUT_PURPOSE": "ربط أجهزتك بنفس سيرفر IPTVnator باش تشارك لوائح التشغيل والمصادر. تقدر حتى تزامن المفضلة وتقدّم المشاهدة والسجل ديالها.",
+        "ABOUT_PURPOSE": "ربط أجهزتك بنفس سيرفر NaviTV باش تشارك لوائح التشغيل والمصادر. تقدر حتى تزامن المفضلة وتقدّم المشاهدة والسجل ديالها.",
         "ABOUT_PRIVACY": "المزامنة كتخدم بلا خدمات سحابية. البيانات المشتركة كتتخزّن فالسيرفر اللي كتختار.",
-        "ABOUT_DESKTOP": "شغّل السيرفر من تطبيق الكمبيوتر. الأجهزة الأخرى فشبكة الدار تقدر تتصل إلا سمحتي ليها بالدخول. السيرفر كيبقى خدام ما دام IPTVnator محلول، حتى إلا صغّرتي النافذة.",
+        "ABOUT_DESKTOP": "شغّل السيرفر من تطبيق الكمبيوتر. الأجهزة الأخرى فشبكة الدار تقدر تتصل إلا سمحتي ليها بالدخول. السيرفر كيبقى خدام ما دام NaviTV محلول، حتى إلا صغّرتي النافذة.",
         "ABOUT_SEPARATE_TITLE": "سيرفر منفصل",
-        "ABOUT_SEPARATE": "شغّل IPTVnator باستعمال Docker على NAS ولا سيرفر فالدار. الأجهزة ديالك تقدر تتصل ما دام داك السيرفر خدام، حتى من بعد ما تخرج من تطبيق الكمبيوتر.",
+        "ABOUT_SEPARATE": "شغّل NaviTV باستعمال Docker على NAS ولا سيرفر فالدار. الأجهزة ديالك تقدر تتصل ما دام داك السيرفر خدام، حتى من بعد ما تخرج من تطبيق الكمبيوتر.",
         "CONNECTION_RECOVERY": "الاتصال المحفوظ بالسيرفر ما متوفرش. تأكد من تخزين المتصفح أو عاود الاتصال من إعدادات السيرفر.",
         "TITLE": "السيرفر",
-        "DESCRIPTION": "تاصل بـ IPTVnator اللي خدام بـ Docker فالسيرفر ديال الدار ولا NAS باش تشارك المصادر بين الأجهزة.",
-        "URL": "عنوان سيرفر IPTVnator",
+        "DESCRIPTION": "تاصل بـ NaviTV اللي خدام بـ Docker فالسيرفر ديال الدار ولا NAS باش تشارك المصادر بين الأجهزة.",
+        "URL": "عنوان سيرفر NaviTV",
         "TOKEN": "رمز الدخول (اختياري)",
         "TOKEN_HINT": "دخل قيمة IPTVNATOR_ACCESS_TOKEN اللي مضبوطة فالسيرفر ولا طلبها من مولاه. خلي الخانة خاوية إلا ما كانش توكن مضبوط.",
         "RESTART_HINT": "تبديل مكتبة السيرفر ولا قطع الاتصال كيعاود يشعل التطبيق. المكتبة المحلية الأصلية كتبقى محفوظة.",
@@ -2420,9 +2485,9 @@
         "STATE_locked": "دخل رمز دخول صالح لهاد السيرفر.",
         "STATE_conflict": "تبدل المصدر فجهاز آخر. حدّث وعاود التعديل.",
         "SETUP_GUIDE": "كيفاش تجهز السيرفر ديالك",
-        "URL_HINT": "استعمل العنوان اللي كتفتح به IPTVnator فالمتصفح ({{example}}). المسار /api كيتزاد بوحدو.",
+        "URL_HINT": "استعمل العنوان اللي كتفتح به NaviTV فالمتصفح ({{example}}). المسار /api كيتزاد بوحدو.",
         "URL_INVALID": "دخل عنوان كامل كيبدا بـ http:// ولا https:// بلا معلومات الدخول، بارامترات البحث ولا الجزء #.",
-        "CONNECTION_FAILED": "ما قدرناش نتاصلو. تأكد من عنوان السيرفر، ومن أن IPTVnator خدام ويمكن توصل ليه من هاد الجهاز، وعاود حاول."
+        "CONNECTION_FAILED": "ما قدرناش نتاصلو. تأكد من عنوان السيرفر، ومن أن NaviTV خدام ويمكن توصل ليه من هاد الجهاز، وعاود حاول."
     },
     "ACTIVITY_SYNC": {
         "TITLE": "مزامنة المشاهدة",

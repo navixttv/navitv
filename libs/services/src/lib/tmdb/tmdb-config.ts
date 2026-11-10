@@ -19,4 +19,9 @@ export {
     tmdbProfileUrl,
     tmdbStillUrl,
     tmdbSeasonPosterUrl,
+    tmdbLogoUrl,
+} from '@iptvnator/shared/tmdb';
+export type {
+    TmdbWatchProvider,
+    TmdbWatchProvidersResponse,
 } from '@iptvnator/shared/tmdb';

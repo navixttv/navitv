@@ -540,11 +540,11 @@ test('Linux CI verifies every package family and exercises intended environments
     assert.doesNotMatch(buildWorkflow, /snap run --shell iptvnator/);
     assert.match(
         buildWorkflow,
-        /flatpak run --command=sh com\.fourgray\.iptvnator/
+        /flatpak run --command=sh com\.navixttv\.navitv/
     );
     assert.match(
         flatpakVerificationStep,
-        /flatpak run\s+\\\s+--env=LIBGL_ALWAYS_SOFTWARE=1\s+\\\s+--env=ELECTRON_ENABLE_LOGGING=1\s+\\\s+com\.fourgray\.iptvnator\s+\\\s+--embedded-mpv-runtime-probe/
+        /flatpak run\s+\\\s+--env=LIBGL_ALWAYS_SOFTWARE=1\s+\\\s+--env=ELECTRON_ENABLE_LOGGING=1\s+\\\s+com\.navixttv\.navitv\s+\\\s+--embedded-mpv-runtime-probe/
     );
     assert.doesNotMatch(
         flatpakVerificationStep,
@@ -561,12 +561,12 @@ test('Flatpak application runtime probe runs under an isolated D-Bus session', (
 
     assert.match(
         flatpakVerificationStep,
-        /xvfb-run -a dbus-run-session -- timeout --verbose -k 10 300 flatpak run\s+\\\s+--env=LIBGL_ALWAYS_SOFTWARE=1\s+\\\s+--env=ELECTRON_ENABLE_LOGGING=1\s+\\\s+com\.fourgray\.iptvnator\s+\\\s+--embedded-mpv-runtime-probe/
+        /xvfb-run -a dbus-run-session -- timeout --verbose -k 10 300 flatpak run\s+\\\s+--env=LIBGL_ALWAYS_SOFTWARE=1\s+\\\s+--env=ELECTRON_ENABLE_LOGGING=1\s+\\\s+com\.navixttv\.navitv\s+\\\s+--embedded-mpv-runtime-probe/
     );
     assert.match(installStep, /^\s+dbus-daemon\s+\\$/m);
     assert.match(
         flatpakVerificationStep,
-        /xvfb-run -a env LIBGL_ALWAYS_SOFTWARE=1\s+\\\s+flatpak run --command=sh com\.fourgray\.iptvnator/
+        /xvfb-run -a env LIBGL_ALWAYS_SOFTWARE=1\s+\\\s+flatpak run --command=sh com\.navixttv\.navitv/
     );
 });
 

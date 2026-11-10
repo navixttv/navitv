@@ -54,8 +54,12 @@ test.describe('Electron Settings', () => {
             await openSettings(app.mainWindow);
             await openSettingsSection(app.mainWindow, 'about');
 
-            await expect(app.mainWindow.getByTestId('app-update-status')).toBeVisible();
-            await expect(app.mainWindow.getByTestId('app-update-check')).toBeVisible();
+            await expect(
+                app.mainWindow.getByTestId('app-update-status')
+            ).toBeVisible();
+            await expect(
+                app.mainWindow.getByTestId('app-update-check')
+            ).toBeVisible();
             await expect(
                 app.mainWindow.getByTestId('app-update-open-release')
             ).toBeVisible();
@@ -95,9 +99,8 @@ test.describe('Electron Settings', () => {
             const doubleClickSetting = app.mainWindow.getByTestId(
                 'external-player-double-click-setting'
             );
-            const doubleClickCheckbox = doubleClickSetting.locator(
-                '[role="switch"]'
-            );
+            const doubleClickCheckbox =
+                doubleClickSetting.locator('[role="switch"]');
 
             await expect(doubleClickSetting).toBeVisible();
             await expect(doubleClickCheckbox).not.toBeChecked();
@@ -234,7 +237,7 @@ test.describe('Electron Settings', () => {
             );
             await openSettingsSection(firstLaunch.mainWindow, 'appearance');
             await firstLaunch.mainWindow
-                .locator('[data-test-id="DARK_THEME"]')
+                .locator('[data-test-id="LIGHT_THEME"]')
                 .click();
             await openSettingsSection(firstLaunch.mainWindow, 'playback');
             await selectSettingsOption(
@@ -284,7 +287,7 @@ test.describe('Electron Settings', () => {
             ).toContainText('Deutsch');
             await openSettingsSection(secondLaunch.mainWindow, 'appearance');
             await expect(
-                secondLaunch.mainWindow.locator('[data-test-id="DARK_THEME"]')
+                secondLaunch.mainWindow.locator('[data-test-id="LIGHT_THEME"]')
             ).toHaveAttribute('aria-checked', 'true');
             await openSettingsSection(secondLaunch.mainWindow, 'playback');
             await expect(
@@ -303,7 +306,10 @@ test.describe('Electron Settings', () => {
                     'mat-slide-toggle[formcontrolname="showExternalPlaybackBar"] [role="switch"]'
                 )
             ).not.toBeChecked();
-            await openSettingsSection(secondLaunch.mainWindow, 'remote-control');
+            await openSettingsSection(
+                secondLaunch.mainWindow,
+                'remote-control'
+            );
             await expect(
                 secondLaunch.mainWindow.locator(
                     'mat-slide-toggle[formcontrolname="remoteControl"] [role="switch"]'
@@ -360,9 +366,7 @@ test.describe('Electron Settings', () => {
 
             await expect(firstChannel).toBeVisible({ timeout: 20000 });
             await firstChannel.click();
-            const video = app.mainWindow.locator(
-                'app-html-video-player video'
-            );
+            const video = app.mainWindow.locator('app-html-video-player video');
             await expect(video).toBeAttached();
             await video.evaluate((video: HTMLVideoElement) => {
                 const ownerDocument = video.ownerDocument;
@@ -618,7 +622,9 @@ test.describe('Electron Settings', () => {
         }
     });
 
-    test('@settings @electron starts on sources when dashboard is disabled', async ({ dataDir }) => {
+    test('@settings @electron starts on sources when dashboard is disabled', async ({
+        dataDir,
+    }) => {
         const firstLaunch = await launchElectronApp(dataDir);
 
         try {
@@ -832,7 +838,9 @@ test.describe('Electron Settings', () => {
         }
 
         try {
-            await app.mainWindow.waitForURL(/\/workspace\/xtreams\/[^/]+\/vod$/);
+            await app.mainWindow.waitForURL(
+                /\/workspace\/xtreams\/[^/]+\/vod$/
+            );
         } finally {
             await closeElectronApp(app);
         }
@@ -867,8 +875,7 @@ test.describe('Electron Settings', () => {
                 app.mainWindow.getByTestId('tmdb-cache-size')
             ).toHaveText(/\b1 entries/);
 
-            const clearButton =
-                app.mainWindow.getByTestId('tmdb-clear-cache');
+            const clearButton = app.mainWindow.getByTestId('tmdb-clear-cache');
             await expect(clearButton).toBeEnabled();
             await clearButton.click();
 
@@ -992,7 +999,9 @@ test.describe('Electron Settings', () => {
                     () =>
                         app.electronApp.evaluate(({ BrowserWindow }) => {
                             const mainWindow = BrowserWindow.getAllWindows()[0];
-                            return mainWindow ? mainWindow.isMaximized() : false;
+                            return mainWindow
+                                ? mainWindow.isMaximized()
+                                : false;
                         }),
                     { timeout: 10_000 }
                 )
@@ -1026,8 +1035,7 @@ type CapturedExternalPlayerLaunch = {
     url: string;
 };
 
-const externalPlayerLaunchCaptureKey =
-    '__iptvnatorE2eExternalPlayerLaunches';
+const externalPlayerLaunchCaptureKey = '__iptvnatorE2eExternalPlayerLaunches';
 
 async function installExternalPlayerLaunchCapture(
     app: LaunchedElectronApp

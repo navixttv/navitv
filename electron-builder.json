@@ -1,7 +1,7 @@
 {
-    "appId": "com.fourgray.iptvnator",
-    "productName": "IPTVnator",
-    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
+    "appId": "com.navixttv.navitv",
+    "productName": "NaviTV",
+    "artifactName": "NaviTV-${version}-${os}-${arch}.${ext}",
     "fileAssociations": [
         {
             "ext": "m3u",
@@ -21,8 +21,8 @@
     "publish": [
         {
             "provider": "github",
-            "owner": "4gray",
-            "repo": "iptvnator"
+            "owner": "navixttv",
+            "repo": "navitv"
         }
     ],
     "directories": {
@@ -63,7 +63,7 @@
     ],
     "extraMetadata": {
         "name": "iptvnator",
-        "productName": "IPTVnator",
+        "productName": "NaviTV",
         "desktopName": "iptvnator",
         "main": "electron-backend/main.js"
     },
@@ -124,9 +124,9 @@
     "appImage": {
         "desktop": {
             "entry": {
-                "X-AppImage-Name": "IPTVnator",
-                "X-AppImage-Homepage": "https://github.com/4gray/iptvnator",
-                "X-AppImage-UpdateURL": "https://github.com/4gray/iptvnator"
+                "X-AppImage-Name": "NaviTV",
+                "X-AppImage-Homepage": "https://github.com/navixttv/navitv",
+                "X-AppImage-UpdateURL": "https://github.com/navixttv/navitv"
             }
         }
     },
@@ -150,8 +150,8 @@
         ],
         "files": [
             [
-                "apps/electron-backend/linux/com.fourgray.iptvnator.metainfo.xml",
-                "/share/metainfo/com.fourgray.iptvnator.metainfo.xml"
+                "apps/electron-backend/linux/com.navixttv.navitv.metainfo.xml",
+                "/share/metainfo/com.navixttv.navitv.metainfo.xml"
             ]
         ]
     },
@@ -198,10 +198,10 @@
                 "arch": ["x64", "ia32"]
             }
         ],
-        "artifactName": "${name}-${version}-windows-${arch}-setup.${ext}",
+        "artifactName": "NaviTV-${version}-windows-${arch}-setup.${ext}",
         "icon": "apps/web/src/assets/icons/icon.png"
     },
     "nsis": {
-        "artifactName": "${name}-${version}-windows-${arch}-setup.${ext}"
+        "artifactName": "NaviTV-${version}-windows-${arch}-setup.${ext}"
     }
 }

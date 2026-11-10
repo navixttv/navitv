@@ -444,6 +444,26 @@ export class AddPlaylistDialogComponent {
         }
     }
 
+    /**
+     * NaviTV TV app: type the source on a phone instead of with the remote.
+     * The TV layer (`window.__tvShell`) opens a QR code page; the phone's form
+     * comes back as a `navitv:add-source` event.
+     */
+    readonly canAddFromPhone =
+        typeof window !== 'undefined' &&
+        typeof (
+            window as unknown as {
+                __tvShell?: { openPairing?: unknown };
+            }
+        ).__tvShell?.openPairing === 'function';
+
+    addFromPhone(): void {
+        (
+            window as unknown as { __tvShell?: { openPairing?: () => void } }
+        ).__tvShell?.openPairing?.();
+        this.closeDialog();
+    }
+
     closeDialog(): void {
         this.drafts.clearAll();
         this.urlImport.cancel();

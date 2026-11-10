@@ -22,28 +22,28 @@ describe('app update channel util', () => {
 
     it('maps each channel to its repository and pages', () => {
         expect(appUpdateRepository('stable')).toEqual({
-            owner: '4gray',
-            repo: 'iptvnator',
+            owner: 'navixttv',
+            repo: 'navitv',
         });
         expect(appUpdateRepository('nightly')).toEqual({
-            owner: '4gray',
-            repo: 'iptvnator-nightly',
+            owner: 'navixttv',
+            repo: 'navitv-nightly',
         });
         // /releases/latest never resolves to a prerelease.
         expect(appUpdateReleasesPageUrl('stable')).toBe(
-            'https://github.com/4gray/iptvnator/releases/latest'
+            'https://github.com/navixttv/navitv/releases/latest'
         );
         expect(appUpdateReleasesPageUrl('nightly')).toBe(
-            'https://github.com/4gray/iptvnator-nightly/releases'
+            'https://github.com/navixttv/navitv-nightly/releases'
         );
         expect(appUpdateReleasesApiUrl('nightly')).toBe(
-            'https://api.github.com/repos/4gray/iptvnator-nightly/releases'
+            'https://api.github.com/repos/navixttv/navitv-nightly/releases'
         );
         expect(appUpdateReleasesListUrl('stable')).toBe(
-            'https://github.com/4gray/iptvnator/releases'
+            'https://github.com/navixttv/navitv/releases'
         );
         expect(appUpdateReleasesListUrl('nightly')).toBe(
-            'https://github.com/4gray/iptvnator-nightly/releases'
+            'https://github.com/navixttv/navitv-nightly/releases'
         );
     });
 

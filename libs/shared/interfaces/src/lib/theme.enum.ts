@@ -7,3 +7,6 @@ export enum Theme {
     NightOwlTheme = 'NIGHT_OWL_THEME',
     BlackOledTheme = 'BLACK_OLED_THEME',
 }
+
+/** NaviTV opens in the Dark theme until the user picks another one. */
+export const DEFAULT_THEME = Theme.DarkTheme;

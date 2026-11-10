@@ -3,6 +3,7 @@ import {
     Component,
     effect,
     inject,
+    Injector,
     OnInit,
     signal,
     ChangeDetectionStrategy,
@@ -38,7 +39,7 @@ import {
     Language,
     Settings,
     STORE_KEY,
-    Theme,
+    DEFAULT_THEME,
     createDevLogger,
     normalizeAppLanguage,
 } from '@iptvnator/shared/interfaces';
@@ -108,6 +109,7 @@ export class AppComponent implements OnInit {
         ParentalLockEnforcementService
     );
     private playlistOpenRequests = inject(PlaylistOpenRequestService);
+    private readonly injector = inject(Injector);
     private runtime = inject(RuntimeCapabilitiesService);
     private readonly workspaceShellActions = inject(WORKSPACE_SHELL_ACTIONS);
     private readonly contextDrawer = inject(WorkspaceShellContextDrawerService);
@@ -130,6 +132,22 @@ export class AppComponent implements OnInit {
         // queued there until the renderer subscribes. Start listening as early
         // as possible so a first-launch file is not delayed behind app init.
         this.playlistOpenRequests.start();
+
+        // NaviTV "Add from phone": sources a phone sends to the TV app. Only
+        // the TV app (its layer defines openPairing) can send one, so the
+        // handler loads there alone and stays out of the startup bundle.
+        if (
+            typeof (
+                window as unknown as {
+                    __tvShell?: { openPairing?: unknown };
+                }
+            ).__tvShell?.openPairing === 'function'
+        ) {
+            void import('./services/remote-source-intake.service').then(
+                ({ RemoteSourceIntakeService }) =>
+                    this.injector.get(RemoteSourceIntakeService).start()
+            );
+        }
 
         // Keep the display awake while a built-in player is playing video
         // (Electron powerSaveBlocker / PWA Screen Wake Lock, issue #1095).
@@ -184,7 +202,9 @@ export class AppComponent implements OnInit {
                     // Settings are stored in IndexedDB and loaded by the settings store
                     // Only specific Electron settings (MPV/VLC paths) are sent when changed in settings component
 
-                    const resolvedLang = normalizeAppLanguage(settings.language);
+                    const resolvedLang = normalizeAppLanguage(
+                        settings.language
+                    );
                     // The switch re-renders every date with the new locale;
                     // its data is a lazy chunk that must be registered first.
                     void this.dateLocales.use(resolvedLang);
@@ -209,10 +229,10 @@ export class AppComponent implements OnInit {
     }
 
     /**
-     * Applies the operating system color scheme when no explicit theme is set
+     * Applies the default theme (Dark) when no explicit theme is set
      */
     detectDarkMode(): void {
-        this.settingsService.changeTheme(Theme.SystemTheme);
+        this.settingsService.changeTheme(DEFAULT_THEME);
     }
 
     /**

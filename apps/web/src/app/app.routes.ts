@@ -104,6 +104,13 @@ export const routes: Routes = [
                     ),
             },
             {
+                path: 'networks/:networkId',
+                loadComponent: () =>
+                    import('@iptvnator/workspace/dashboard/feature').then(
+                        (c) => c.DashboardNetworkPageComponent
+                    ),
+            },
+            {
                 path: 'sources',
                 loadComponent: () =>
                     import('@iptvnator/workspace/shell/feature').then(

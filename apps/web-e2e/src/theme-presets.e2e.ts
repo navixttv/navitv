@@ -187,6 +187,9 @@ test.describe('PWA theme presets', () => {
     test('@theme @settings @pwa @web follows the OS in System and restores explicit Mocha on discard', async ({
         page,
     }) => {
+        // NaviTV starts in Dark; opt into System to follow the OS.
+        await themeOption(page, 'system').click();
+        await saveSettings(page);
         await page.emulateMedia({ colorScheme: 'light' });
         await expectTheme(page, 'light');
         await themeOption(page, 'mocha').click();

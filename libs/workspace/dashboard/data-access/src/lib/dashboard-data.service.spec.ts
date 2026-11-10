@@ -2874,6 +2874,78 @@ describe('DashboardDataService', () => {
         );
     });
 
+    it('drops titles tagged for languages outside the content filter (NaviTV)', async () => {
+        dbServiceMock.getGlobalRecentlyAdded.mockResolvedValue([
+            {
+                id: 1,
+                category_id: 77,
+                title: 'EN \u2013 Show A',
+                added: '1774298340',
+                added_at: '1774298340',
+                xtream_id: 501,
+                type: 'series',
+                playlist_id: 'xtream-1',
+                playlist_name: 'Xtream Playlist',
+            },
+            {
+                id: 2,
+                category_id: 77,
+                title: 'IR \u2013 Show B',
+                added: '1774298341',
+                added_at: '1774298341',
+                xtream_id: 502,
+                type: 'series',
+                playlist_id: 'xtream-1',
+                playlist_name: 'Xtream Playlist',
+            },
+            {
+                id: 3,
+                category_id: 77,
+                title: 'NL - Film C',
+                added: '1774298342',
+                added_at: '1774298342',
+                xtream_id: 503,
+                type: 'series',
+                playlist_id: 'xtream-1',
+                playlist_name: 'Xtream Playlist',
+            },
+            {
+                id: 4,
+                category_id: 77,
+                title: 'ES | Serie D',
+                added: '1774298343',
+                added_at: '1774298343',
+                xtream_id: 504,
+                type: 'series',
+                playlist_id: 'xtream-1',
+                playlist_name: 'Xtream Playlist',
+            },
+            {
+                id: 5,
+                category_id: 77,
+                title: 'Plain Title E',
+                added: '1774298344',
+                added_at: '1774298344',
+                xtream_id: 505,
+                type: 'series',
+                playlist_id: 'xtream-1',
+                playlist_name: 'Xtream Playlist',
+            },
+        ]);
+
+        const items = await service.getXtreamRecentlyAddedItems(2);
+
+        expect(dbServiceMock.getGlobalRecentlyAdded).toHaveBeenCalledWith(
+            'all',
+            8,
+            'xtream'
+        );
+        expect(items.map((item) => item.title)).toEqual([
+            'Plain Title E',
+            'ES | Serie D',
+        ]);
+    });
+
     it('builds the Xtream recently added route', () => {
         const item = {
             id: 11,

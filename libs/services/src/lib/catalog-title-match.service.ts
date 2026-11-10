@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import {
     CatalogTitleMatch,
     normalizeTitleKeys,
@@ -114,6 +114,19 @@ export const TITLE_MATCH_LOCK_ATTEMPTS = 3;
 const LOCK_CHANGED = Symbol('lock changed');
 
 /**
+ * Title matching for builds without the Electron DB worker (NaviTV's TV and
+ * browser builds): an in-memory index over the Xtream catalogs it loaded.
+ */
+export interface CatalogTitleMatchFallback {
+    matchTitles(titles: readonly string[]): Promise<CatalogTitleMatch[]>;
+}
+
+export const CATALOG_TITLE_MATCH_FALLBACK =
+    new InjectionToken<CatalogTitleMatchFallback | null>(
+        'CATALOG_TITLE_MATCH_FALLBACK'
+    );
+
+/**
  * Cross-playlist title matching via the Electron DB worker
  * (`DB_MATCH_TITLES`, trigram FTS over all imported Xtream playlists), in
  * requests of TITLE_MATCH_REQUEST_SIZE titles.
@@ -123,12 +136,19 @@ const LOCK_CHANGED = Symbol('lock changed');
 @Injectable({ providedIn: 'root' })
 export class CatalogTitleMatchService {
     private readonly parentalLock = inject(ParentalLockService);
+    private readonly fallback = inject(CATALOG_TITLE_MATCH_FALLBACK, {
+        optional: true,
+    });
 
-    get isAvailable(): boolean {
+    private get hasWorker(): boolean {
         return (
             typeof window !== 'undefined' &&
             typeof window.electron?.dbMatchTitles === 'function'
         );
+    }
+
+    get isAvailable(): boolean {
+        return this.hasWorker || !!this.fallback;
     }
 
     async matchTitles(titles: string[]): Promise<CatalogTitleMatch[]> {
@@ -141,6 +161,18 @@ export class CatalogTitleMatchService {
             this.parentalLock.withholdsEverything()
         ) {
             return [];
+        }
+        if (!this.hasWorker && this.fallback) {
+            // NaviTV TV / browser build: the in-memory catalog index. Locked
+            // categories are dropped by the callers' `visibleMatches`.
+            try {
+                return await this.fallback.matchTitles(
+                    titles.slice(0, TITLE_MATCH_TITLE_LIMIT)
+                );
+            } catch (error) {
+                console.warn('Catalog title matching failed:', error);
+                return [];
+            }
         }
 
         // The worker dedupes and caps each request; doing both here first

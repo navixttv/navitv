@@ -21,7 +21,7 @@ describe('Flatpak embedded MPV frame-copy runtime', () => {
             createLinuxFrameCopyHelperEnvironment(
                 {
                     PATH: '/app/bin:/usr/bin',
-                    FLATPAK_ID: 'com.fourgray.iptvnator',
+                    FLATPAK_ID: 'com.navixttv.navitv',
                     __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS:
                         '/tmp/hostile-egl-platform',
                     __EGL_EXTERNAL_PLATFORM_CONFIG_FILENAMES:
@@ -37,7 +37,7 @@ describe('Flatpak embedded MPV frame-copy runtime', () => {
             )
         ).toEqual({
             PATH: '/app/bin:/usr/bin',
-            FLATPAK_ID: 'com.fourgray.iptvnator',
+            FLATPAK_ID: 'com.navixttv.navitv',
             __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS:
                 FREEDESKTOP_EGL_EXTERNAL_PLATFORM_CONFIG_DIRS,
             LD_LIBRARY_PATH: path.join(FLATPAK_NATIVE_DIR, 'lib'),
@@ -46,11 +46,7 @@ describe('Flatpak embedded MPV frame-copy runtime', () => {
 
     it.each([
         ['wrong app id', 'com.example.other', '/app/iptvnator/native'],
-        [
-            'helper outside /app',
-            'com.fourgray.iptvnator',
-            '/opt/iptvnator/native',
-        ],
+        ['helper outside /app', 'com.navixttv.navitv', '/opt/iptvnator/native'],
     ])(
         'does not reconstruct Flatpak GL metadata for %s',
         (_label, flatpakId, nativeDir) => {
@@ -103,7 +99,7 @@ describe('Flatpak embedded MPV frame-copy runtime', () => {
             const probeRuntime = context.createProbe({
                 env: {
                     PATH: '/app/bin:/usr/bin',
-                    FLATPAK_ID: 'com.fourgray.iptvnator',
+                    FLATPAK_ID: 'com.navixttv.navitv',
                     __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS:
                         '/tmp/hostile-egl-platform',
                     __EGL_EXTERNAL_PLATFORM_CONFIG_FILENAMES:
@@ -136,7 +132,7 @@ describe('Flatpak embedded MPV frame-copy runtime', () => {
                 expect.objectContaining({
                     env: {
                         PATH: '/app/bin:/usr/bin',
-                        FLATPAK_ID: 'com.fourgray.iptvnator',
+                        FLATPAK_ID: 'com.navixttv.navitv',
                         __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS:
                             FREEDESKTOP_EGL_EXTERNAL_PLATFORM_CONFIG_DIRS,
                         LD_LIBRARY_PATH: path.join(FLATPAK_NATIVE_DIR, 'lib'),

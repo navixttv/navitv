@@ -17,8 +17,15 @@ for (const theme of ['Light', 'Dark'] as const) {
         try {
             await openSettings(page);
             await openSettingsSection(page, 'appearance');
-            await page.getByRole('radio', { name: theme, exact: true }).click();
-            await saveSettings(page);
+            const option = page.getByRole('radio', {
+                name: theme,
+                exact: true,
+            });
+            // NaviTV starts in Dark: choosing the theme already set changes nothing.
+            if (!(await option.isChecked())) {
+                await option.click();
+                await saveSettings(page);
+            }
             await openSettingsSection(page, 'about');
             const check = page.getByTestId('app-update-check');
             await expect(check).toHaveCSS('border-top-left-radius', '10px');

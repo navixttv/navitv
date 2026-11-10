@@ -15,8 +15,10 @@ export type TmdbMediaType = 'movie' | 'tv';
 export type TmdbCacheMediaType = TmdbMediaType | 'person';
 
 /**
- * Opt-in TMDB enrichment settings. Enrichment sends movie/series titles to
- * TMDB, so it is disabled by default for privacy.
+ * TMDB enrichment settings. Enrichment sends movie/series titles to TMDB.
+ * NaviTV turns it on by default (posters, plots, the Home banner); it still
+ * needs an API key, which release builds embed, and can be switched off in
+ * Settings.
  */
 export interface TmdbSettings {
     enabled: boolean;
@@ -25,7 +27,7 @@ export interface TmdbSettings {
 }
 
 export const DEFAULT_TMDB_SETTINGS: TmdbSettings = {
-    enabled: false,
+    enabled: true,
     apiKey: '',
 };
 

@@ -164,7 +164,7 @@ export class XtreamApiService extends XtreamEpgNormalizer {
      */
     async getLiveStreams(
         credentials: XtreamCredentials,
-        options?: XtreamRequestOptions
+        options?: XtreamVodCatalogRequestOptions
     ): Promise<XtreamLiveStream[]> {
         const response = await this.sendRequest(
             credentials,
@@ -172,6 +172,9 @@ export class XtreamApiService extends XtreamEpgNormalizer {
                 action: XtreamCodeActions.GetLiveStreams,
                 username: credentials.username,
                 password: credentials.password,
+                ...(options?.categoryId !== undefined
+                    ? { category_id: options.categoryId }
+                    : {}),
             },
             options
         );
@@ -231,7 +234,7 @@ export class XtreamApiService extends XtreamEpgNormalizer {
      */
     async getSeriesStreams(
         credentials: XtreamCredentials,
-        options?: XtreamRequestOptions
+        options?: XtreamVodCatalogRequestOptions
     ): Promise<XtreamSerieItem[]> {
         const response = await this.sendRequest(
             credentials,
@@ -239,6 +242,9 @@ export class XtreamApiService extends XtreamEpgNormalizer {
                 action: XtreamCodeActions.GetSeries,
                 username: credentials.username,
                 password: credentials.password,
+                ...(options?.categoryId !== undefined
+                    ? { category_id: options.categoryId }
+                    : {}),
             },
             options
         );
@@ -255,7 +261,7 @@ export class XtreamApiService extends XtreamEpgNormalizer {
     async getStreams(
         credentials: XtreamCredentials,
         type: StreamType,
-        options?: XtreamRequestOptions
+        options?: XtreamVodCatalogRequestOptions
     ): Promise<XtreamLiveStream[] | XtreamVodStream[] | XtreamSerieItem[]> {
         switch (type) {
             case 'live':

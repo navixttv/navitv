@@ -17,7 +17,7 @@
         "EMPTY": "Yapım bulunamadı",
         "SEARCH_HINT": "En az iki karakter girin",
         "EMPTY_HELP": "Özgün adı deneyin veya sağlayıcı verilerini koruyun.",
-        "AUTO_HELP": "Düzeltmenizi kaldırın ve IPTVnator’ın meta verileri yeniden otomatik bulmasını sağlayın.",
+        "AUTO_HELP": "Düzeltmenizi kaldırın ve NaviTV’ın meta verileri yeniden otomatik bulmasını sağlayın.",
         "PROVIDER_HELP": "Bu kaynaktaki özgün görseli, açıklamayı ve bölüm bilgilerini koruyun. Bu yapım için TMDB ile zenginleştirme kapalı kalır.",
         "SEARCH_ERROR": "TMDB araması kullanılamıyor. Bağlantınızı ve API anahtarınızı kontrol edip yeniden deneyin.",
         "SAVE_ERROR": "Bu seçim uygulanamadı. Bağlantınızı ve tarayıcıdaki kullanılabilir depolama alanını kontrol edip yeniden deneyin.",
@@ -37,7 +37,7 @@
     "SHOW_LESS": "Daha az",
     "PLAYLISTS": "Oynatma Listeleri",
     "HOME": {
-        "TITLE": "IPTVnator",
+        "TITLE": "NaviTV",
         "SUBTITLE": "Lütfen listeden bir oynatma listesi seçin veya yeni bir liste ekleyin",
         "TABS": {
             "RECENTLY_ADDED": "Son Eklenen Listeler",
@@ -53,7 +53,7 @@
             "UNTITLED_PLAYLIST": "Adsız oynatma listesi",
             "PLAYLIST_ACTIONS": "Oynatma listesi eylemleri",
             "ADD_FIRST": "Lütfen ilk oynatma listenizi ekleyin",
-            "WELCOME_TITLE": "IPTVnator'a Hoş Geldiniz",
+            "WELCOME_TITLE": "NaviTV'a Hoş Geldiniz",
             "WELCOME_DESCRIPTION": "İlk oynatma listenizi ekleyerek yayın yolculuğunuza başlayın. Favori IPTV hizmetinize bağlanın ve canlı TV, film ve dizilerin keyfini çıkarın.",
             "ADD_YOUR_FIRST": "İlk Oynatma Listenizi Ekleyin",
             "FEATURE_M3U": "M3U/M3U8 Dosyaları",
@@ -228,7 +228,13 @@
             "ERROR_TLS_HOST_UNKNOWN": "Oynatma listesi ana bilgisayarı belirlenemedi. Lütfen el ile yeniden deneyin.",
             "TRUST_TLS_HOST": "Ana bilgisayara güven",
             "TRUST_TLS_HOST_TITLE": "Geçersiz sertifikaya güvenilsin mi?",
-            "TRUST_TLS_HOST_WARNING": "Yalnızca bu oynatma listesi ana bilgisayarına güveniyorsanız devam edin. IPTVnator bu ana bilgisayar için geçersiz TLS sertifikalarına izin verir, ancak diğer ana bilgisayarlar için geçerli sertifika gerekmeye devam eder."
+            "TRUST_TLS_HOST_WARNING": "Yalnızca bu oynatma listesi ana bilgisayarına güveniyorsanız devam edin. NaviTV bu ana bilgisayar için geçersiz TLS sertifikalarına izin verir, ancak diğer ana bilgisayarlar için geçerli sertifika gerekmeye devam eder."
+        },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
         },
         "TEXT_IMPORT": {
             "LABEL": "m3u(8) oynatma listesini metin olarak girin"
@@ -374,7 +380,7 @@
         "NAV_SERVER": "Sunucu",
         "SERVER_DESCRIPTION": "Oynatma listeleri, favoriler ve izleme ilerlemesi bu sunucuda saklanır ve onu açan her cihazla paylaşılır.",
         "SERVER_CONNECTION": "Bağlantı",
-        "SERVER_CONNECTION_DESCRIPTION": "Bu uygulamanın verileri kaydettiği IPTVnator sunucusu.",
+        "SERVER_CONNECTION_DESCRIPTION": "Bu uygulamanın verileri kaydettiği NaviTV sunucusu.",
         "SERVER_CONNECTED": "Bağlı",
         "SERVER_OFFLINE": "Kullanılamıyor",
         "SERVER_STORAGE": "Depolama",
@@ -446,7 +452,7 @@
         "TMDB_ATTRIBUTION": "Bu ürün TMDB API'sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.",
         "APP_PREFERENCES": "Uygulama tercihleri",
         "HERO_EYEBROW": "Çalışma alanı ayarları",
-        "HERO_TITLE": "IPTVnator'un nasıl hissettirdiğini şekillendirin",
+        "HERO_TITLE": "NaviTV'un nasıl hissettirdiğini şekillendirin",
         "HERO_DESCRIPTION": "Oynatma, rehberler, uzaktan erişim ve veri yönetimini geçerli çalışma alanı stilini kaybetmeden tek bir yerden ayarlayın.",
         "SUBTITLE": "Uygulamanın yapılandırmasını değiştir",
         "DESCRIPTION": "Lütfen aşağıdaki seçenekleri düzenleyin ve değişiklikleri kaydet düğmesiyle onaylayın",
@@ -512,7 +518,7 @@
         "EPG_SOURCE_FORMATS_EXAMPLES": "Örnekler:",
         "VIDEO_PLAYER_DESCRIPTION": "Varsayılan video oynatıcıyı seçin",
         "WEB_PLAYER_SHARED_CONTROLS": "Web oynatıcıları için birleşik kontroller",
-        "WEB_PLAYER_SHARED_CONTROLS_DESCRIPTION": "HTML5, Video.js ve ArtPlayer'da IPTVnator'ın ortak kontrollerini kullan.",
+        "WEB_PLAYER_SHARED_CONTROLS_DESCRIPTION": "HTML5, Video.js ve ArtPlayer'da NaviTV'ın ortak kontrollerini kullan.",
         "PLAYER_AMBIENT_MODE": "Ortam ışığı dolgusu",
         "PLAYER_AMBIENT_MODE_DESCRIPTION": "Oynatıcının çevresindeki boşluğu siyah çubuklar yerine bulanık ve karartılmış bir poster ile doldurur.",
         "PLAY_TRAILERS_IN_BACKGROUND": "Fragmanları ayrıntıların arka planında oynat",
@@ -543,7 +549,7 @@
         "EPG_VIEW_MODE_TIMELINE": "Zaman çizelgesi",
         "EPG_VIEW_MODE_LIST": "Liste",
         "STARTUP_BEHAVIOR": "Başlangıç görünümü",
-        "STARTUP_BEHAVIOR_DESCRIPTION": "IPTVnator'un ilk kullanılabilir çalışma alanı görünümünü mü açacağını yoksa bölüm düzeyindeki son görünümünüzü mü geri yükleyeceğini seçin. İlk görünüm, Pano etkinleştirildiğinde Pano, aksi takdirde Kaynaklar anlamına gelir.",
+        "STARTUP_BEHAVIOR_DESCRIPTION": "NaviTV'un ilk kullanılabilir çalışma alanı görünümünü mü açacağını yoksa bölüm düzeyindeki son görünümünüzü mü geri yükleyeceğini seçin. İlk görünüm, Pano etkinleştirildiğinde Pano, aksi takdirde Kaynaklar anlamına gelir.",
         "STARTUP_BEHAVIOR_FIRST_VIEW": "İlk kullanılabilir görünüm",
         "STARTUP_BEHAVIOR_RESTORE_LAST_VIEW": "Son görünümü geri yükle",
         "STARTUP_WINDOW_MODE": "Başlangıçta pencere",
@@ -557,7 +563,7 @@
         "STRIP_COUNTRY_PREFIX": "Kanal adlarından ülke ön eklerini kaldır",
         "STRIP_COUNTRY_PREFIX_DESCRIPTION": "Uygulama genelinde canlı kanal adlarından \"US | \" veya \"UK - \" gibi ülke/grup ön eklerini kaldırır.",
         "VERSION_DESCRIPTION": "Uygulamanın geçerli sürümü",
-        "ABOUT_SUBTITLE": "Sürüm, proje bağlantıları ve IPTVnator'u desteklemenin yolları.",
+        "ABOUT_SUBTITLE": "Sürüm, proje bağlantıları ve NaviTV'u desteklemenin yolları.",
         "EMBEDDED_MPV_NOTICE_TITLE": "Gömülü MPV çalışma zamanı",
         "EMBEDDED_MPV_NOTICE_DESCRIPTION": "Masaüstü sürümleri, deneysel Gömülü MPV oynatıcı için paketlenmiş libmpv ve FFmpeg kitaplıklarını içerebilir. Kullanıcıların MPV uygulamasını ayrıca kurmasına gerek yoktur; harici MPV ve VLC, yedek oynatıcı olarak kullanılabilir kalır.",
         "COMMUNITY": "Proje ve topluluk",
@@ -570,7 +576,7 @@
         "SUPPORT_DESCRIPTION": "IPTVnator ücretsiz ve açık kaynaklıdır, açıkta geliştirilir. Günlük rutininizin bir parçasıysa, küçük bir katkı projeyi canlı tutmaya ve sırada ne olduğunu şekillendirmeye yardımcı olur — teşekkürler.",
         "SUPPORT_SPONSORS_HINT": "Yinelenen veya tek seferlik",
         "SUPPORT_KOFI_HINT": "Bana bir kahve ısmarla",
-        "EPG_NOTE": "EPG şu anda yalnızca IPTVnator’ın Electron tabanlı sürümünde kullanılabilir.",
+        "EPG_NOTE": "EPG şu anda yalnızca NaviTV’ın Electron tabanlı sürümünde kullanılabilir.",
         "EPG_NOTE_URL_TEXT": "Buradan kontrol edin",
         "IMPORT_EXPORT_DATA": "Oynatma listelerini içe/dışa aktar",
         "IMPORT_EXPORT_DATA_DESCRIPTION": "M3U anlık görüntüleri, Xtream/Stalker bağlantı meta verileri, kullanıcı durumu ve EPG kaynak URL’leri dahil oynatma listesi yedeklerini dışa aktarın veya geri yükleyin.",
@@ -603,10 +609,10 @@
         "PLAYLISTS_REMOVED": "Tüm oynatma listeleri ve oynatma listesi verileri kaldırıldı.",
         "MPV_PLAYER_PATH_LABEL": "mpv yolu",
         "MPV_PLAYER_PATH_DESCRIPTION": "MPV yolunu ayarlayın. macOS’ta /Applications/mpv.app gibi MPV uygulama paketini veya yürütülebilir dosya yolunu kullanabilirsiniz.",
-        "MPV_COMPATIBLE_PLAYER_TIP": "IINA, macOS’ta MPV uyumlu bir oynatıcı olarak başlatılabilir; ancak /Applications/IINA.app/Contents/MacOS/iina-cli veya /Applications/IINA.app/Contents/MacOS/IINA gibi yürütülebilir dosya yolunu kullanın. IPTVnator kontrolleri, konum yoklama ve örnek yeniden kullanımı yalnızca MPV IPC için garanti edilir.",
+        "MPV_COMPATIBLE_PLAYER_TIP": "IINA, macOS’ta MPV uyumlu bir oynatıcı olarak başlatılabilir; ancak /Applications/IINA.app/Contents/MacOS/iina-cli veya /Applications/IINA.app/Contents/MacOS/IINA gibi yürütülebilir dosya yolunu kullanın. NaviTV kontrolleri, konum yoklama ve örnek yeniden kullanımı yalnızca MPV IPC için garanti edilir.",
         "MPV_PLAYER_PATH": "mpv oynatıcı yolu",
         "MPV_PLAYER_ARGUMENTS_LABEL": "mpv komut satırı argümanları",
-        "MPV_PLAYER_ARGUMENTS_DESCRIPTION": "IPTVnator yeni bir harici oynatıcı işlemi başlattığında mpv’ye iletilen isteğe bağlı argümanlar.",
+        "MPV_PLAYER_ARGUMENTS_DESCRIPTION": "NaviTV yeni bir harici oynatıcı işlemi başlattığında mpv’ye iletilen isteğe bağlı argümanlar.",
         "MPV_PLAYER_ARGUMENTS": "mpv argümanları",
         "MPV_REUSE_INSTANCE_LABEL": "MPV örneğini yeniden kullan",
         "MPV_REUSE_INSTANCE_DESCRIPTION": "Etkinleştirildiğinde, farklı yayınları oynatmak için aynı MPV penceresi yeniden kullanılır. Devre dışı bırakıldığında, her yayın yeni bir MPV penceresinde açılır.",
@@ -618,9 +624,9 @@
         "VLC_PLAYER_PATH_DESCRIPTION": "VLC yolunu ayarlayın. macOS’ta /Applications/VLC.app gibi VLC uygulama paketini veya yürütülebilir dosya yolunu kullanabilirsiniz.",
         "VLC_PLAYER_PATH": "VLC oynatıcı yolu",
         "VLC_PLAYER_ARGUMENTS_LABEL": "VLC komut satırı argümanları",
-        "VLC_PLAYER_ARGUMENTS_DESCRIPTION": "IPTVnator yeni bir harici oynatıcı işlemi başlattığında VLC’ye iletilen isteğe bağlı argümanlar.",
+        "VLC_PLAYER_ARGUMENTS_DESCRIPTION": "NaviTV yeni bir harici oynatıcı işlemi başlattığında VLC’ye iletilen isteğe bağlı argümanlar.",
         "VLC_PLAYER_ARGUMENTS": "VLC argümanları",
-        "EXTERNAL_PLAYER_ARGUMENTS_HINT": "Her satıra bir argüman girin. Bu değerler, akışa özel IPTVnator seçeneklerinden önce uygulanır.",
+        "EXTERNAL_PLAYER_ARGUMENTS_HINT": "Her satıra bir argüman girin. Bu değerler, akışa özel NaviTV seçeneklerinden önce uygulanır.",
         "VLC_REUSE_INSTANCE_LABEL": "VLC örneğini yeniden kullan",
         "VLC_REUSE_INSTANCE_DESCRIPTION": "Etkinleştirildiğinde, farklı yayınları oynatmak için aynı VLC penceresi yeniden kullanılır. Devre dışı bırakıldığında, her yayın yeni bir VLC penceresinde açılır.",
         "REMOTE_CONTROL": "Uzaktan kontrol",
@@ -747,12 +753,12 @@
         "MIGRATION_FAILED": "Taşıma başarısız oldu. Oynatma listeleriniz hâlâ bu tarayıcıda; Ayarlar → Sunucu bölümünden tekrar deneyin.",
         "MIGRATION_RELOAD": "Yeniden yükle",
         "SIGN_IN_TITLE": "Erişim belirteci gerekli",
-        "SIGN_IN_DESCRIPTION": "Bu IPTVnator sunucusu oynatma listelerinizi göstermeden önce bir erişim belirteci istiyor.",
+        "SIGN_IN_DESCRIPTION": "Bu NaviTV sunucusu oynatma listelerinizi göstermeden önce bir erişim belirteci istiyor.",
         "SIGN_IN_TOKEN_LABEL": "Erişim belirteci",
         "SIGN_IN_HINT": "Sunucunun IPTVNATOR_ACCESS_TOKEN ayarında bulabilirsiniz.",
         "SIGN_IN_REJECTED": "Belirteç reddedildi. Kontrol edip tekrar deneyin.",
         "SIGN_IN_UNREACHABLE": "Sunucuya ulaşılamıyor. Bağlantıyı kontrol edip tekrar deneyin.",
-        "SIGN_IN_STORAGE": "Bu tarayıcı IPTVnator'ın belirteci saklamasına izin vermiyor. Bu sayfa için site verilerine izin verip tekrar deneyin.",
+        "SIGN_IN_STORAGE": "Bu tarayıcı NaviTV'ın belirteci saklamasına izin vermiyor. Bu sayfa için site verilerine izin verip tekrar deneyin.",
         "SIGN_IN_CONTINUE": "Devam",
         "STATUS_ONLINE": "Sunucu bağlı",
         "STATUS_OFFLINE": "Sunucu kullanılamıyor",
@@ -1124,10 +1130,10 @@
         "RETRY": "Tekrar Dene",
         "ALLOW_PRIVATE_SOURCE": "Kaynağa izin ver",
         "ALLOW_PRIVATE_SOURCE_TITLE": "Özel ağ EPG kaynağına izin verilsin mi?",
-        "ALLOW_PRIVATE_SOURCE_WARNING": "Buna yalnızca EPG kaynağına güveniyorsanız izin verin. IPTVnator, bu tam EPG URL’sinin özel veya yerel ağ adreslerine bağlanmasına izin verir.",
+        "ALLOW_PRIVATE_SOURCE_WARNING": "Buna yalnızca EPG kaynağına güveniyorsanız izin verin. NaviTV, bu tam EPG URL’sinin özel veya yerel ağ adreslerine bağlanmasına izin verir.",
         "TRUST_TLS_HOST": "Ana bilgisayara güven",
         "TRUST_TLS_HOST_TITLE": "Geçersiz sertifikaya güvenilsin mi?",
-        "TRUST_TLS_HOST_WARNING": "Yalnızca bu ana bilgisayara güveniyorsanız devam edin. IPTVnator bu ana bilgisayar için geçersiz TLS sertifikalarına izin verir, ancak diğer ana bilgisayarlar için geçerli sertifika gerekmeye devam eder.",
+        "TRUST_TLS_HOST_WARNING": "Yalnızca bu ana bilgisayara güveniyorsanız devam edin. NaviTV bu ana bilgisayar için geçersiz TLS sertifikalarına izin verir, ancak diğer ana bilgisayarlar için geçerli sertifika gerekmeye devam eder.",
         "CURRENT_PROGRAM": "Geçerli program",
         "ARCHIVE_PLAYBACK": "Arşiv oynatma",
         "COLLAPSE_PANEL": "EPG panelini daralt",
@@ -1255,7 +1261,7 @@
         "SUPPORT_PROJECT": "Projeyi destekleyin"
     },
     "ABOUT": {
-        "TITLE": "IPTVnator Hakkında",
+        "TITLE": "NaviTV Hakkında",
         "DESCRIPTION": "Çoklu özellikler sunan, m3u ve m3u8 oynatma listeleri, favoriler, TV rehberi, TV arşivi/geri dönük izleme ve daha fazlasını destekleyen çok platformlu IPTV oynatıcı uygulaması.",
         "VERSION": "Sürüm",
         "GITHUB_TOOLTIP": "GitHub’daki IPTVnator deposu",
@@ -1719,7 +1725,7 @@
         "STOP_RECORDING": "Kaydı durdur",
         "REMOVE_RECORDING_DIALOG": {
             "TITLE": "Kayıt yöneticiden kaldırılsın mı?",
-            "MESSAGE": "Bu işlem, kaydı IPTVnator'dan kaldırır. Kaydedilen dosya diskte kalır."
+            "MESSAGE": "Bu işlem, kaydı NaviTV'dan kaldırır. Kaydedilen dosya diskte kalır."
         },
         "RECORDING_DETAIL": {
             "PROGRAMS": "Kaydedilen programlar",
@@ -1730,7 +1736,7 @@
         "REMOVE_FROM_MANAGER": "İndirme yöneticisinden kaldır",
         "REMOVE_COMPLETED_DIALOG": {
             "TITLE": "İndirme yöneticisinden kaldırılsın mı?",
-            "MESSAGE": "Bu işlem öğeyi IPTVnator’dan kaldırır. İndirilen medya dosyası diskte kalır."
+            "MESSAGE": "Bu işlem öğeyi NaviTV’dan kaldırır. İndirilen medya dosyası diskte kalır."
         },
         "REMOVE_PARTIAL_DIALOG": {
             "TITLE": "Kısmi indirme kaldırılsın mı?",
@@ -1818,8 +1824,8 @@
             "TOGGLE_MUTE": "Ses açılamadı veya kapatılamadı",
             "STATUS": "Uzaktan kumanda durumu alınamadı"
         },
-        "HEADER": "IPTVnator Uzaktan Kumanda",
-        "FOOTER": "IPTVnator Uzaktan Kumanda"
+        "HEADER": "NaviTV Uzaktan Kumanda",
+        "FOOTER": "NaviTV Uzaktan Kumanda"
     },
     "WORKSPACE": {
         "FAVORITES_ONLY": "Yalnızca favoriler",
@@ -1883,6 +1889,65 @@
             "SEE_ALL": "Tümünü gör",
             "SEE_ALL_COUNT": "{{count}} öğenin tümünü gör",
             "RECENTLY_WATCHED": "Son İzlenenler",
+            "LIVE_SPORTS": "Canlı spor",
+            "UPCOMING_GAMES": "Upcoming games",
+            "TASTE": {
+                "TITLE": "Make Home yours",
+                "HINT": "Pick what you like and Home adds rows for it. You can change this any time.",
+                "SHOWS": "Shows & movies",
+                "LIVE": "Live TV",
+                "SAVE": "Save",
+                "SKIP": "Not now",
+                "EDIT": "Edit your picks",
+                "ROW": "{{genre}} for you",
+                "LIVE_ROW": "Live TV for you",
+                "GENRES": {
+                    "REALITY": "Reality TV",
+                    "DRAMA": "Drama",
+                    "COMEDY": "Comedy",
+                    "CRIME": "Crime & mystery",
+                    "ACTION": "Action & adventure",
+                    "SCIFI": "Sci-fi & fantasy",
+                    "DOCUMENTARY": "Documentaries",
+                    "KIDS": "Kids & family",
+                    "NOVELAS": "Telenovelas"
+                },
+                "LIVE_TYPES": {
+                    "NEWS": "News",
+                    "LOCAL": "Local channels",
+                    "ENTERTAINMENT": "Entertainment",
+                    "KIDS": "Kids",
+                    "SPANISH": "Spanish TV",
+                    "MOVIES": "Movie channels",
+                    "MUSIC": "Music"
+                }
+            },
+            "NETWORKS": {
+                "TITLE": "Networks",
+                "BACK": "Back to Home",
+                "LOADING": "Loading…",
+                "EMPTY": "Nothing from this network in your catalog right now."
+            },
+            "UPCOMING": {
+                "LIVE": "Live",
+                "TODAY": "Today",
+                "TOMORROW": "Tomorrow"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "Which sports do you want on Home?",
+                "HINT": "Games from these sports show up first, with their start times.",
+                "SAVE": "Save",
+                "ALL": "Show all sports",
+                "EDIT": "Choose sports"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Football",
+                "BASKETBALL": "Basketball",
+                "FIGHTS": "Boxing & UFC",
+                "SOCCER": "Soccer",
+                "BASEBALL": "Baseball",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "Xtream'de Yeni Eklenenler",
             "TMDB_TRENDING": "Bu hafta trend olanlar",
             "TMDB_RECOMMENDED": "Size özel öneriler",
@@ -2141,7 +2206,7 @@
         },
         "SHORTCUTS": {
             "TITLE": "Klavye kısayolları",
-            "SUBTITLE": "IPTVnator’da çalışma alanı, gezinme, oynatma ve iletişim kutuları için kullanılabilir kısayollar.",
+            "SUBTITLE": "NaviTV’da çalışma alanı, gezinme, oynatma ve iletişim kutuları için kullanılabilir kısayollar.",
             "OPEN_TOOLTIP": "Klavye kısayolları (?)",
             "OPEN_ARIA": "Klavye kısayollarını aç",
             "PLATFORM": {
@@ -2352,7 +2417,7 @@
     },
     "HOSTED_SERVER": {
         "TITLE": "Bu bilgisayardaki sunucu",
-        "DESCRIPTION": "IPTVnator açık olduğu sürece, pencere küçültülmüş olsa bile çalışır. Uygulamadan çıkınca sunucu durur.",
+        "DESCRIPTION": "NaviTV açık olduğu sürece, pencere küçültülmüş olsa bile çalışır. Uygulamadan çıkınca sunucu durur.",
         "SETUP_GUIDE": "Bu bilgisayarda sunucu nasıl başlatılır?",
         "LOCAL_ONLY": "Yalnızca bu bilgisayarda kullanılabilir.",
         "CLIENT_GUIDE": "Mevcut bir sunucuya nasıl bağlanılır?",
@@ -2385,15 +2450,15 @@
     },
     "SOURCE_SYNC": {
         "ABOUT_TITLE": "Sunucu eşitlemesi hakkında",
-        "ABOUT_PURPOSE": "Oynatma listelerini ve kaynakları paylaşmak için cihazlarınızı aynı IPTVnator sunucusuna bağlayın. Favorileri, izleme ilerlemesini ve geçmişi de eşitleyebilirsiniz.",
+        "ABOUT_PURPOSE": "Oynatma listelerini ve kaynakları paylaşmak için cihazlarınızı aynı NaviTV sunucusuna bağlayın. Favorileri, izleme ilerlemesini ve geçmişi de eşitleyebilirsiniz.",
         "ABOUT_PRIVACY": "Eşitleme bulut hizmetleri olmadan çalışır. Paylaşılan veriler seçtiğiniz sunucuda saklanır.",
-        "ABOUT_DESKTOP": "Sunucuyu masaüstü uygulamasından başlatın. Erişime izin verirseniz ev ağındaki diğer cihazlar bağlanabilir. IPTVnator açık olduğu sürece, pencere küçültülmüş olsa bile sunucu çalışır.",
+        "ABOUT_DESKTOP": "Sunucuyu masaüstü uygulamasından başlatın. Erişime izin verirseniz ev ağındaki diğer cihazlar bağlanabilir. NaviTV açık olduğu sürece, pencere küçültülmüş olsa bile sunucu çalışır.",
         "ABOUT_SEPARATE_TITLE": "Ayrı sunucu",
-        "ABOUT_SEPARATE": "IPTVnator’ı Docker ile bir NAS veya ev sunucusunda çalıştırın. Masaüstü uygulamasından çıksanız bile bu sunucu çalıştığı sürece cihazlarınız bağlanabilir.",
+        "ABOUT_SEPARATE": "NaviTV’ı Docker ile bir NAS veya ev sunucusunda çalıştırın. Masaüstü uygulamasından çıksanız bile bu sunucu çalıştığı sürece cihazlarınız bağlanabilir.",
         "CONNECTION_RECOVERY": "Kayıtlı sunucu bağlantısı kullanılamıyor. Tarayıcı depolamasını kontrol edin veya Sunucu ayarlarından yeniden bağlanın.",
         "TITLE": "Sunucu",
-        "DESCRIPTION": "Kaynakları cihazlar arasında paylaşmak için ev sunucunuzda veya NAS üzerinde Docker ile çalışan IPTVnator’a bağlanın.",
-        "URL": "IPTVnator sunucu adresi",
+        "DESCRIPTION": "Kaynakları cihazlar arasında paylaşmak için ev sunucunuzda veya NAS üzerinde Docker ile çalışan NaviTV’a bağlanın.",
+        "URL": "NaviTV sunucu adresi",
         "TOKEN": "Erişim belirteci (isteğe bağlı)",
         "TOKEN_HINT": "Sunucuda ayarlanan IPTVNATOR_ACCESS_TOKEN değerini kullanın veya sunucunun sahibinden isteyin. Belirteç ayarlanmadıysa boş bırakın.",
         "RESTART_HINT": "Sunucu kitaplığını değiştirmek veya bağlantıyı kesmek uygulamayı yeniden yükler. Özgün yerel kitaplığınız korunur.",
@@ -2420,9 +2485,9 @@
         "STATE_locked": "Geçerli bir erişim belirteci girin.",
         "STATE_conflict": "Kaynak başka bir cihazda değişti. Yenileyip düzenlemeyi yeniden uygulayın.",
         "SETUP_GUIDE": "Sunucunuzu nasıl kurarsınız",
-        "URL_HINT": "IPTVnator’ı tarayıcınızda açtığınız adresi kullanın ({{example}}). /api yolu otomatik eklenir.",
+        "URL_HINT": "NaviTV’ı tarayıcınızda açtığınız adresi kullanın ({{example}}). /api yolu otomatik eklenir.",
         "URL_INVALID": "Giriş bilgileri, sorgu parametreleri veya # parçası içermeyen tam bir http:// ya da https:// adresi girin.",
-        "CONNECTION_FAILED": "Bağlanılamadı. Sunucu adresini, IPTVnator’ın çalıştığını ve bu cihazdan erişilebildiğini kontrol edip yeniden deneyin."
+        "CONNECTION_FAILED": "Bağlanılamadı. Sunucu adresini, NaviTV’ın çalıştığını ve bu cihazdan erişilebildiğini kontrol edip yeniden deneyin."
     },
     "ACTIVITY_SYNC": {
         "TITLE": "İzleme etkinliği eşitleme",

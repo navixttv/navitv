@@ -62,11 +62,10 @@ test('retains the offline library after failed updates and protects unsaved sett
         await page
             .locator('[data-test-id="settings-section-appearance"]')
             .click();
-        await page.getByRole('radio', { name: 'Dark', exact: true }).click();
-        await page.locator('[data-test-id="save-settings"]').click();
+        // NaviTV starts in Dark, so there is nothing to save here.
         await expect(
-            page.locator('[data-test-id="save-settings"]')
-        ).toBeHidden();
+            page.getByRole('radio', { name: 'Dark', exact: true })
+        ).toBeChecked();
         await page.getByRole('link', { name: 'Sources', exact: true }).click();
         const rows = page.locator('app-source-row');
         await expect(rows).toHaveCount(1);

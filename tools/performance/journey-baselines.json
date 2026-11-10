@@ -3,31 +3,33 @@
     "journeys": {
         "launch": {
             "renderer.initialBytes": {
-                "value": 1196205,
+                "value": 1208195,
                 "unit": "bytes",
                 "slack": 4096,
-                "updatedAt": "2026-10-14",
-                "evidencePr": 1939,
+                "updatedAt": "2026-11-09",
+                "evidencePr": 1,
                 "measuredWith": "pnpm nx build web && pnpm run perf:initial-bytes",
-                "note": "No Angular Material module is in the initial bundle since #1939: services created with the app open toasts through LazySnackBar and dialogs through LazyMatDialog, so a new eager MatSnackBar or MatDialog import brings back Material's button, ripple and the CDK a11y chunks (about 110 KB). The CDK overlay stays initial through the FullscreenOverlayContainer provider in app.config.ts. Self-hosted server storage (#1903) keeps only what must run before the first route on the startup path (the /v1/instance probe and remembered server, the connection status, the token bound to its instance, the playlist storage backend); the storage code itself loads by dynamic import in server mode only."
+                "note": "NaviTV (2026-11-09): +5.6 KB for the US/UK country filter, which must run when a playlist is added or refreshed, so it stays on the startup path. NaviTV (2026-11-09): +6.3 KB (Linux runner 1,208,195) for the dark and TMDB-on defaults, the title-match fallback token the TV / browser Home rows need, and the network page route; the Add-from-phone handler loads by dynamic import inside the TV app only, and moving the catalog index behind one measured larger (an extra initial chunk). No Angular Material module is in the initial bundle since #1939: services created with the app open toasts through LazySnackBar and dialogs through LazyMatDialog, so a new eager MatSnackBar or MatDialog import brings back Material's button, ripple and the CDK a11y chunks (about 110 KB). The CDK overlay stays initial through the FullscreenOverlayContainer provider in app.config.ts. Self-hosted server storage (#1903) keeps only what must run before the first route on the startup path (the /v1/instance probe and remembered server, the connection status, the token bound to its instance, the playlist storage backend); the storage code itself loads by dynamic import in server mode only."
             },
             "renderer.ipcCallsToFirstCard": {
-                "value": 15,
+                "value": 16,
                 "unit": "calls",
                 "slack": 0,
-                "updatedAt": "2026-10-04",
-                "evidencePr": 1828,
-                "evidenceRun": "https://github.com/4gray/iptvnator/actions/runs/37192092882",
-                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb), identical in 3 runs"
+                "updatedAt": "2026-11-09",
+                "evidencePr": 1,
+                "evidenceRun": "https://github.com/navixttv/navitv/actions/runs/42726337985",
+                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb) in PR #1 CI",
+                "note": "NaviTV (2026-11-09, PR #1): the dashboard now also loads its NaviTV rows on a profile with an Xtream source (Networks from the film/series categories, Live sports, Upcoming games, the 'Make Home yours' and sports pickers). Raised to the Linux runner's value as a deliberate trade-off; deferring those loads past the first card is the next candidate to bring it back down."
             },
             "renderer.domMutationsToFirstCard": {
-                "value": 570,
+                "value": 634,
                 "unit": "mutations",
                 "slack": 0,
-                "updatedAt": "2026-10-12",
-                "evidencePr": 1903,
-                "measuredWith": "J1 launch A/B on macOS (pnpm run perf:journeys builds, launch journey only): master 6fe684af5 555, PR 1903 556 in every iteration; CI measured 569 on master",
-                "note": "Raised by 1 for self-hosted server storage: its new lazy chunks (server sign-in, server-storage providers, Settings > Server) split one shared initial chunk in two, so index.html carries one more modulepreload link, a node the parser inserts. Initial bytes are raised separately (see renderer.initialBytes)."
+                "updatedAt": "2026-11-09",
+                "evidencePr": 1,
+                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb) in PR #1 CI",
+                "note": "Raised by 1 for self-hosted server storage: its new lazy chunks (server sign-in, server-storage providers, Settings > Server) split one shared initial chunk in two, so index.html carries one more modulepreload link, a node the parser inserts. Initial bytes are raised separately (see renderer.initialBytes). NaviTV (2026-11-09, PR #1): the dashboard now also loads its NaviTV rows on a profile with an Xtream source (Networks from the film/series categories, Live sports, Upcoming games, the 'Make Home yours' and sports pickers). Raised to the Linux runner's value as a deliberate trade-off; deferring those loads past the first card is the next candidate to bring it back down.",
+                "evidenceRun": "https://github.com/navixttv/navitv/actions/runs/42726337985"
             },
             "main.modulesRegisteredBeforeWindow": {
                 "value": 2,
@@ -40,24 +42,24 @@
                 "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb), identical in all 55 measured iterations of 11 master runs, 2026-10-03 to 2026-10-04"
             },
             "renderer.layoutShiftScore": {
-                "value": 0,
+                "value": 0.002,
                 "unit": "score",
                 "slack": 0,
-                "note": "guard only, not validated: no PR has yet shown that lowering this counter lowers the journey wall-clock (Principle 3)",
-                "updatedAt": "2026-10-04",
-                "evidencePr": null,
-                "evidenceRun": "https://github.com/4gray/iptvnator/actions/runs/37184230956",
-                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb), identical in all 55 measured iterations of 11 master runs, 2026-10-03 to 2026-10-04"
+                "note": "guard only, not validated: no PR has yet shown that lowering this counter lowers the journey wall-clock (Principle 3) NaviTV (2026-11-09, PR #1): the dashboard now also loads its NaviTV rows on a profile with an Xtream source (Networks from the film/series categories, Live sports, Upcoming games, the 'Make Home yours' and sports pickers). Raised to the Linux runner's value as a deliberate trade-off; deferring those loads past the first card is the next candidate to bring it back down.",
+                "updatedAt": "2026-11-09",
+                "evidencePr": 1,
+                "evidenceRun": "https://github.com/navixttv/navitv/actions/runs/42726337985",
+                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb) in PR #1 CI"
             },
             "renderer.layoutShiftScoreSettled": {
-                "value": 0,
+                "value": 0.002,
                 "unit": "score",
                 "slack": 0,
-                "note": "guard only, not validated: no PR has yet shown that lowering this counter lowers the journey wall-clock (Principle 3)",
-                "updatedAt": "2026-10-04",
-                "evidencePr": null,
-                "evidenceRun": "https://github.com/4gray/iptvnator/actions/runs/37184230956",
-                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb), identical in all 55 measured iterations of 11 master runs, 2026-10-03 to 2026-10-04"
+                "note": "guard only, not validated: no PR has yet shown that lowering this counter lowers the journey wall-clock (Principle 3) NaviTV (2026-11-09, PR #1): the dashboard now also loads its NaviTV rows on a profile with an Xtream source (Networks from the film/series categories, Live sports, Upcoming games, the 'Make Home yours' and sports pickers). Raised to the Linux runner's value as a deliberate trade-off; deferring those loads past the first card is the next candidate to bring it back down.",
+                "updatedAt": "2026-11-09",
+                "evidencePr": 1,
+                "evidenceRun": "https://github.com/navixttv/navitv/actions/runs/42726337985",
+                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb) in PR #1 CI"
             },
             "renderer.cdTicksToFirstCard": {
                 "value": 5,
@@ -70,13 +72,14 @@
                 "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb), identical in all 15 measured iterations of 3 runs of #1929 (zoneless, d88d00506)"
             },
             "renderer.cdTicksIdle30s": {
-                "value": 3,
+                "value": 4,
                 "unit": "ticks",
                 "slack": 0,
-                "updatedAt": "2026-10-13",
-                "evidencePr": 1929,
-                "evidenceRun": "https://github.com/4gray/iptvnator/actions/runs/38359088033",
-                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb), identical in all 15 measured iterations of 3 runs of #1929 (zoneless, d88d00506)"
+                "updatedAt": "2026-11-09",
+                "evidencePr": 1,
+                "evidenceRun": "https://github.com/navixttv/navitv/actions/runs/42726337985",
+                "measuredWith": "pnpm run perf:journeys (ubuntu-latest, xvfb) in PR #1 CI",
+                "note": "NaviTV (2026-11-09, PR #1): the dashboard now also loads its NaviTV rows on a profile with an Xtream source (Networks from the film/series categories, Live sports, Upcoming games, the 'Make Home yours' and sports pickers). Raised to the Linux runner's value as a deliberate trade-off; deferring those loads past the first card is the next candidate to bring it back down."
             }
         },
         "open-source": {

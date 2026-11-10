@@ -6,7 +6,7 @@ import {
     Settings,
     StartupBehavior,
     StreamFormat,
-    Theme,
+    DEFAULT_THEME,
     VideoPlayer,
     watchEmbeddedMpvSupport,
 } from '@iptvnator/shared/interfaces';
@@ -32,7 +32,7 @@ export const DEFAULT_SETTINGS: Settings = {
     updateChannel: 'stable',
     showExternalPlaybackBar: true,
     stripCountryPrefix: false,
-    theme: Theme.SystemTheme,
+    theme: DEFAULT_THEME,
     mpvPlayerPath: '',
     mpvPlayerArguments: '',
     mpvReuseInstance: false,

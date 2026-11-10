@@ -20,7 +20,7 @@ let forwarded;
 let reversed;
 try {
     await once(mock, 'listening');
-    adb('shell', 'am', 'start', '-W', '-n', 'org.tvshell.iptvnator/.ui.MainActivity');
+    adb('shell', 'am', 'start', '-W', '-n', 'com.navixttv.navitv.tv/org.tvshell.iptvnator.ui.MainActivity');
     forwarded = adb('forward', 'tcp:0', 'tcp:43330');
     reversed = adb('reverse', 'tcp:0', `tcp:${mock.address().port}`);
     const api = `http://127.0.0.1:${forwarded}/api`;

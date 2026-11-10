@@ -157,6 +157,31 @@ describe('playlist utils', () => {
         });
     });
 
+    it('starts groups tagged for other countries hidden (NaviTV country filter)', () => {
+        const item = (title: string) =>
+            ({ group: { title }, raw: '' }) as never;
+        const playlist = createPlaylistObject('Countries', {
+            header: { attrs: {}, raw: '#EXTM3U' },
+            items: [
+                item('US | News'),
+                item('FR | Cinema'),
+                item('FR | Cinema'),
+                item('Kids'),
+            ],
+        } as never);
+
+        expect(playlist.hiddenGroupTitles).toEqual(['FR | Cinema']);
+    });
+
+    it('omits hidden groups when every group is allowed', () => {
+        const playlist = createPlaylistObject('Local', {
+            header: { attrs: {}, raw: '#EXTM3U' },
+            items: [{ group: { title: 'UK: Sport' }, raw: '' }],
+        } as never);
+
+        expect(playlist).not.toHaveProperty('hiddenGroupTitles');
+    });
+
     it('stores detected M3U EPG URLs on the created playlist', () => {
         const playlist = createPlaylistObject('Playlist with EPG', {
             header: {

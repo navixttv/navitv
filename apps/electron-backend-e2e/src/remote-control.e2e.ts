@@ -86,6 +86,9 @@ test.describe('Electron Remote Control', () => {
                     'artplayer'
                 );
                 await enableRemoteControl(page, remotePort);
+                // NaviTV starts in Dark; the theme checks below follow the OS.
+                await openSettingsSection(page, 'appearance');
+                await page.getByTestId('SYSTEM_THEME').click();
                 await saveSettings(page);
                 await waitForRemoteControlServer(request, remotePort);
                 await goToDashboard(page);

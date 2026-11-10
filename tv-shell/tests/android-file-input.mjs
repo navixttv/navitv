@@ -33,10 +33,10 @@ function tap(label) {
 const temp = mkdtempSync(join(tmpdir(), 'iptvnator-picker-'));
 let device;
 try {
-    adb('shell', 'am', 'start', '-n', 'org.tvshell.iptvnator/.ui.MainActivity');
+    adb('shell', 'am', 'start', '-n', 'com.navixttv.navitv.tv/org.tvshell.iptvnator.ui.MainActivity');
     device = (await _android.devices({ omitDriverInstall: true })).find((device) => device.serial() === serial);
     assert.ok(device, 'Emulator was not found by Playwright.');
-    const page = await (await device.webView({ pkg: 'org.tvshell.iptvnator' })).page();
+    const page = await (await device.webView({ pkg: 'com.navixttv.navitv.tv' })).page();
     await page.waitForLoadState('domcontentloaded');
     async function open(accept) {
         await page.evaluate((accept) => {
@@ -64,14 +64,14 @@ try {
         tap('Show roots');
         tap('Downloads');
         tap(name);
-        await waitFor(() => /org\.tvshell\.iptvnator/.test(resumed()), 'Picker did not return to the app.');
+        await waitFor(() => /com\.navixttv\.navitv\.tv/.test(resumed()), 'Picker did not return to the app.');
         await page.waitForFunction(() => window.__syntheticFileResult !== null);
         assert.equal(await page.evaluate(() => window.__syntheticFileResult), content);
         console.log(`PASS native ${extension} selection reaches the HTML file reader`);
     }
     await open('.json');
     adb('shell', 'input', 'keyevent', '4');
-    await waitFor(() => /org\.tvshell\.iptvnator/.test(resumed()), 'Cancel did not return to the app.');
+    await waitFor(() => /com\.navixttv\.navitv\.tv/.test(resumed()), 'Cancel did not return to the app.');
     assert.equal(await page.locator('#synthetic-file-input').evaluate((input) => input.files.length), 0);
     await open('.json');
     adb('shell', 'input', 'keyevent', '4');

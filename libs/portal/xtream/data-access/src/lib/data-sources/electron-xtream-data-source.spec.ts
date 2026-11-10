@@ -246,6 +246,33 @@ describe('ElectronXtreamDataSource (DB-first strategy)', () => {
             );
         });
 
+        it('starts categories tagged for other countries hidden (NaviTV country filter)', async () => {
+            harness.dbService.getXtreamCategories
+                .mockResolvedValueOnce([])
+                .mockResolvedValueOnce([dbCategory]);
+            harness.apiService.getCategories.mockResolvedValue([
+                { category_id: '1', category_name: 'US | News' },
+                { category_id: '2', category_name: 'FR | Cinema' },
+                { category_id: '3', category_name: 'UK: Sport' },
+                { category_id: '4', category_name: '|DE| Kids' },
+                { category_id: '5', category_name: 'Movies' },
+            ]);
+
+            await harness.dataSource.getCategories(
+                playlistId,
+                credentials,
+                'live'
+            );
+
+            expect(harness.dbService.saveXtreamCategories).toHaveBeenCalledWith(
+                playlistId,
+                expect.any(Array),
+                'live',
+                [2, 4],
+                []
+            );
+        });
+
         it('deduplicates concurrent requests for the same playlist and type', async () => {
             harness.apiService.getCategories.mockResolvedValue([
                 { category_id: '10', category_name: 'News' },

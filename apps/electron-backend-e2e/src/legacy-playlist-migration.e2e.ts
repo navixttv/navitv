@@ -360,8 +360,11 @@ test.describe('v0.19 profile migration', () => {
         });
     }
 
+    // NaviTV never adopts a pre-0.20 IPTVnator profile as its own userData
+    // (see electron-profile-bootstrap.ts), so the automatic-adoption flows
+    // below do not apply. Explicit recovery through the dialog still does.
     for (const active of ['xtream-2', 'stalker-60', 'm3u']) {
-        test(`imports all 65 sources with ${active} last active, offline`, async ({
+        test.skip(`imports all 65 sources with ${active} last active, offline`, async ({
             dataDir,
         }) => {
             await seedLegacyProfile(dataDir, active);
@@ -664,7 +667,8 @@ test.describe('v0.19 profile migration', () => {
             });
         }
     });
-    test('restarts a failed real legacy import without losing the original store or cached data', async ({
+    // NaviTV: relies on automatic legacy-profile adoption (see above).
+    test.skip('restarts a failed real legacy import without losing the original store or cached data', async ({
         dataDir,
     }) => {
         await seedLegacyProfile(dataDir, 'xtream-2', true, true);

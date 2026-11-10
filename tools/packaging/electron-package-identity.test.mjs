@@ -151,9 +151,9 @@ function writeWindowsHelperFixture(helperPath, importedDllName) {
 }
 
 test('Linux package identity does not expose the internal Electron backend project name', () => {
-    assert.equal(electronBuilderConfig.productName, 'IPTVnator');
+    assert.equal(electronBuilderConfig.productName, 'NaviTV');
     assert.equal(electronBuilderConfig.extraMetadata?.name, 'iptvnator');
-    assert.equal(electronBuilderConfig.extraMetadata?.productName, 'IPTVnator');
+    assert.equal(electronBuilderConfig.extraMetadata?.productName, 'NaviTV');
     assert.equal(electronBuilderConfig.linux?.executableName, 'iptvnator');
     assert.equal(electronBuilderConfig.extraMetadata?.desktopName, 'iptvnator');
     assert.ok(
@@ -211,15 +211,15 @@ test('AppImage desktop metadata supports AppManager without changing other Linux
                     ];
                 })
         );
-        assert.equal(fields['X-AppImage-Name'], 'IPTVnator');
+        assert.equal(fields['X-AppImage-Name'], 'NaviTV');
         assert.equal(fields['X-AppImage-Version'], version);
         assert.equal(
             fields['X-AppImage-Homepage'],
-            'https://github.com/4gray/iptvnator'
+            'https://github.com/navixttv/navitv'
         );
         assert.equal(
             fields['X-AppImage-UpdateURL'],
-            'https://github.com/4gray/iptvnator'
+            'https://github.com/navixttv/navitv'
         );
         assert.equal(fields.StartupWMClass, 'iptvnator');
         assert.equal(fields.Exec, 'AppRun --ozone-platform=x11 %U');
@@ -291,8 +291,8 @@ test('GitHub Releases auto-update metadata is generated and uploaded', () => {
     assert.deepEqual(electronBuilderConfig.publish, [
         {
             provider: 'github',
-            owner: '4gray',
-            repo: 'iptvnator',
+            owner: 'navixttv',
+            repo: 'navitv',
         },
     ]);
     assert.deepEqual(electronBuilderConfig.mac?.target, [

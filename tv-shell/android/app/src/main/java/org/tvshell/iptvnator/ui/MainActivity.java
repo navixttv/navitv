@@ -83,6 +83,11 @@ public class MainActivity extends Activity {
     private long menuDownAt;
     private boolean menuLongPressFired;
     private String lastOfferedUrl;
+    private static final int REQUEST_NATIVE_PLAYER = 1301;
+    private static final int REQUEST_PAIRING = 1302;
+    /** The stream the built-in player last failed on: an error there falls back to the prompt. */
+    private String nativeFailedUrl;
+    private boolean nativePlayerOpen;
     private long lastOfferedAt;
     private AlertDialog externalDialog;
     private boolean resumed;
@@ -580,6 +585,12 @@ public class MainActivity extends Activity {
      */
     void offerExternal(final String url, final String title, boolean becauseOfError) {
         if (url == null || url.isEmpty() || webView == null || isFinishing()) return;
+        // A stream the page cannot play goes to NaviTV's built-in player first; only a
+        // failure there asks about another app.
+        if (becauseOfError && !url.equals(nativeFailedUrl)) {
+            playNative(url, title, !isVodUrl(url));
+            return;
+        }
         if (becauseOfError && !prefs.promptExternalOnError()) return;
         if (externalDialog != null && externalDialog.isShowing()) return;
         long now = SystemClock.uptimeMillis();
@@ -604,6 +615,49 @@ public class MainActivity extends Activity {
                 }
             })
             .show();
+    }
+
+    /** Opens the "Add from phone" QR code screen. */
+    void openPairing() {
+        if (isFinishing()) return;
+        try {
+            startActivityForResult(new Intent(this, PairingActivity.class), REQUEST_PAIRING);
+        } catch (RuntimeException e) {
+            Log.w(ShellApp.TAG, "pairing screen launch failed");
+        }
+    }
+
+    static boolean isVodUrl(String url) {
+        return url != null && url.matches("(?i).*/(movie|series)/.*");
+    }
+
+    /** Plays a stream in NaviTV's built-in player (Media3), full screen. */
+    void playNative(String url, String title, boolean live) {
+        if (url == null || url.trim().isEmpty() || isFinishing()) return;
+        if (nativePlayerOpen) return; // the page's guard keeps its own state in step
+        nativePlayerOpen = true;
+        try {
+            startActivityForResult(NativePlayerActivity.intent(this, url.trim(), title, live, null), REQUEST_NATIVE_PLAYER);
+        } catch (RuntimeException e) {
+            nativePlayerOpen = false;
+            Log.w(ShellApp.TAG, "native player launch failed");
+            nativeFailedUrl = url;
+            js("window.__tvShell && window.__tvShell.nativePlayerClosed && window.__tvShell.nativePlayerClosed({failed:true})");
+            offerExternal(url, title, true);
+        }
+    }
+
+    private void onNativePlayerClosed(Intent data) {
+        nativePlayerOpen = false;
+        String url = data == null ? null : data.getStringExtra(NativePlayerActivity.EXTRA_URL);
+        boolean failed = data != null && data.getBooleanExtra(NativePlayerActivity.RESULT_FAILED, false);
+        if (failed && url != null) nativeFailedUrl = url;
+        long position = data == null ? 0 : data.getLongExtra(NativePlayerActivity.RESULT_POSITION_MS, 0);
+        long duration = data == null ? 0 : data.getLongExtra(NativePlayerActivity.RESULT_DURATION_MS, 0);
+        boolean ended = data != null && data.getBooleanExtra(NativePlayerActivity.RESULT_ENDED, false);
+        js("window.__tvShell && window.__tvShell.nativePlayerClosed && window.__tvShell.nativePlayerClosed({positionMs:"
+            + position + ",durationMs:" + duration + ",ended:" + ended + ",failed:" + failed + "})");
+        if (webView != null) webView.requestFocus(View.FOCUS_DOWN);
     }
 
     void showExitHint() {
@@ -688,6 +742,20 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_NATIVE_PLAYER) {
+            onNativePlayerClosed(data);
+            return;
+        }
+        if (requestCode == REQUEST_PAIRING) {
+            String source = data == null ? null : data.getStringExtra(PairingActivity.RESULT_SOURCE);
+            if (resultCode == RESULT_OK && source != null) {
+                // A JSON object literal is a valid JS expression; it carries the
+                // login to the page only, never to the log.
+                js("window.dispatchEvent(new CustomEvent('navitv:add-source',{detail:" + source + "}))");
+            }
+            if (webView != null) webView.requestFocus(View.FOCUS_DOWN);
+            return;
+        }
         if (!fileChooser.onActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
         }

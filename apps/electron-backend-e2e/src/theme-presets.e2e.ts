@@ -104,6 +104,10 @@ test.describe('Electron theme presets', () => {
             await page.emulateMedia({ colorScheme: 'light' });
             await openSettings(page);
             await openSettingsSection(page, 'appearance');
+            // NaviTV starts in Dark; opt into System to follow the OS.
+            await expectTheme(page, 'dark');
+            await themeOption(page, 'system').click();
+            await saveSettings(page);
             await expectTheme(page, 'light');
             await themeOption(page, 'mocha').click();
             await saveSettings(page);

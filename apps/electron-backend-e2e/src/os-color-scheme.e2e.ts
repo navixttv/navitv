@@ -91,10 +91,14 @@ interface Surface {
 async function chooseAppTheme(page: Page, theme: Theme): Promise<void> {
     await openSettings(page);
     await openSettingsSection(page, 'appearance');
-    await page
-        .getByTestId(theme === 'dark' ? 'DARK_THEME' : 'LIGHT_THEME')
-        .click();
-    await saveSettings(page);
+    const option = page.getByTestId(
+        theme === 'dark' ? 'DARK_THEME' : 'LIGHT_THEME'
+    );
+    // NaviTV starts in Dark: choosing the theme already set changes nothing.
+    if ((await option.getAttribute('aria-checked')) !== 'true') {
+        await option.click();
+        await saveSettings(page);
+    }
     await expect(page.locator('body')).toHaveClass(
         theme === 'dark' ? /dark-theme/ : /^(?!.*dark-theme)/
     );

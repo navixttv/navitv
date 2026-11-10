@@ -1,14 +1,11 @@
 import { app } from 'electron';
 import { getElectronUserDataPath } from '@iptvnator/shared/database';
-import { selectLegacyProfile } from './legacy-profile';
 import { activateSourceServerProfile } from './source-server-config';
 
 activateSourceServerProfile();
 
+// NaviTV never adopts a pre-0.20 IPTVnator profile (appData/electron-backend)
+// as its own userData: that would write into the other app's profile. The
+// opt-in "recover legacy sources" dialog still reads a disposable copy.
 const override = getElectronUserDataPath();
-const current = override ?? app.getPath('userData');
-const legacy = selectLegacyProfile(
-    process.env.IPTVNATOR_E2E_DATA_DIR?.trim() || app.getPath('appData'),
-    current
-);
-if (legacy || override) app.setPath('userData', legacy ?? current);
+if (override) app.setPath('userData', override);

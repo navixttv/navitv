@@ -1,4 +1,5 @@
 export * from './lib/app-update-channel.util';
+export * from './lib/category-country-filter.util';
 export * from './lib/xtream-content-selection';
 export * from './lib/xtream-history-recovery';
 export type { XtreamCategoryVisibility } from './lib/xtream-category-visibility';

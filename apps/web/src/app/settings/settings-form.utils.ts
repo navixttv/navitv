@@ -26,7 +26,7 @@ import {
     StartupBehavior,
     StartupWindowMode,
     StreamFormat,
-    Theme,
+    DEFAULT_THEME,
     validateEmbeddedMpvExtraOptions,
     validateEpgSourceReferenceControl,
     VideoPlayer,
@@ -101,7 +101,7 @@ export function createSettingsForm(
         updateChannel: DEFAULT_APP_UPDATE_CHANNEL as AppUpdateChannel,
         showExternalPlaybackBar: true,
         stripCountryPrefix: false,
-        theme: Theme.SystemTheme,
+        theme: DEFAULT_THEME,
         mpvPlayerPath: '',
         mpvPlayerArguments: '',
         mpvReuseInstance: false,
@@ -218,7 +218,7 @@ export function createSettingsFromFormValue(
         updateChannel: normalizeAppUpdateChannel(value.updateChannel),
         showExternalPlaybackBar: value.showExternalPlaybackBar ?? true,
         stripCountryPrefix: value.stripCountryPrefix ?? false,
-        theme: value.theme ?? Theme.SystemTheme,
+        theme: value.theme ?? DEFAULT_THEME,
         mpvPlayerPath: normalizeExternalPlayerPath(value.mpvPlayerPath),
         mpvPlayerArguments: normalizeExternalPlayerArguments(
             value.mpvPlayerArguments

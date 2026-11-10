@@ -17,7 +17,7 @@
         "EMPTY": "Não foram encontrados títulos",
         "SEARCH_HINT": "Introduza pelo menos dois caracteres",
         "EMPTY_HELP": "Experimente o título original ou mantenha os dados do fornecedor.",
-        "AUTO_HELP": "Remova a sua correção para que o IPTVnator volte a procurar metadados automaticamente.",
+        "AUTO_HELP": "Remova a sua correção para que o NaviTV volte a procurar metadados automaticamente.",
         "PROVIDER_HELP": "Mantenha a imagem, a descrição e as informações originais dos episódios desta origem. O enriquecimento do TMDB permanece desativado para este título.",
         "SEARCH_ERROR": "A pesquisa no TMDB está indisponível. Verifique a ligação e a chave de API e tente novamente.",
         "SAVE_ERROR": "Não foi possível aplicar esta escolha. Verifique a ligação e o espaço disponível no navegador e tente novamente.",
@@ -37,7 +37,7 @@
     "SHOW_LESS": "Menos",
     "PLAYLISTS": "Playlists",
     "HOME": {
-        "TITLE": "IPTVnator",
+        "TITLE": "NaviTV",
         "SUBTITLE": "Seleciona uma playlist ou adiciona uma nova.",
         "TABS": {
             "RECENTLY_ADDED": "Playlists adicionadas recentemente",
@@ -53,7 +53,7 @@
             "UNTITLED_PLAYLIST": "Playlist sem título",
             "PLAYLIST_ACTIONS": "Ações da playlist",
             "ADD_FIRST": "Adiciona a tua primeira playlist.",
-            "WELCOME_TITLE": "Bem-vindo ao IPTVnator",
+            "WELCOME_TITLE": "Bem-vindo ao NaviTV",
             "WELCOME_DESCRIPTION": "Começa por adicionar a tua primeira playlist. Liga-te ao teu serviço de IPTV preferido e desfruta de TV em direto, filmes e séries.",
             "ADD_YOUR_FIRST": "Adicionar a primeira playlist",
             "FEATURE_M3U": "Ficheiros M3U/M3U8",
@@ -228,7 +228,13 @@
             "ERROR_TLS_HOST_UNKNOWN": "Não foi possível determinar o servidor da playlist. Tenta novamente manualmente.",
             "TRUST_TLS_HOST": "Confiar no servidor",
             "TRUST_TLS_HOST_TITLE": "Confiar num certificado inválido?",
-            "TRUST_TLS_HOST_WARNING": "Continua apenas se confiares no servidor desta playlist. O IPTVnator permitirá certificados TLS inválidos para este servidor; os restantes continuam a exigir certificados válidos."
+            "TRUST_TLS_HOST_WARNING": "Continua apenas se confiares no servidor desta playlist. O NaviTV permitirá certificados TLS inválidos para este servidor; os restantes continuam a exigir certificados válidos."
+        },
+        "ADD_FROM_PHONE": {
+            "BUTTON": "Add from phone",
+            "HINT": "Scan a QR code and type your login on your phone instead of the remote.",
+            "ADDED": "Added {{title}}",
+            "FAILED": "The source sent from your phone could not be added. Check the details and try again."
         },
         "TEXT_IMPORT": {
             "LABEL": "Inserir playlist m3u(8) como texto"
@@ -374,7 +380,7 @@
         "NAV_SERVER": "Servidor",
         "SERVER_DESCRIPTION": "As playlists, os favoritos e o progresso de visualização ficam guardados neste servidor e são partilhados por todos os dispositivos que lhe acedem.",
         "SERVER_CONNECTION": "Ligação",
-        "SERVER_CONNECTION_DESCRIPTION": "O servidor IPTVnator onde esta aplicação guarda os dados.",
+        "SERVER_CONNECTION_DESCRIPTION": "O servidor NaviTV onde esta aplicação guarda os dados.",
         "SERVER_CONNECTED": "Ligado",
         "SERVER_OFFLINE": "Indisponível",
         "SERVER_STORAGE": "Armazenamento",
@@ -446,7 +452,7 @@
         "TMDB_ATTRIBUTION": "Este produto utiliza a API do TMDB, mas não é aprovado nem certificado pelo TMDB.",
         "APP_PREFERENCES": "Preferências da aplicação",
         "HERO_EYEBROW": "Definições do espaço de trabalho",
-        "HERO_TITLE": "Personaliza a experiência do IPTVnator",
+        "HERO_TITLE": "Personaliza a experiência do NaviTV",
         "HERO_DESCRIPTION": "Ajusta reprodução, guias, acesso remoto e gestão de dados num só lugar, sem perder o estilo atual do espaço de trabalho.",
         "SUBTITLE": "Altera a configuração da aplicação",
         "DESCRIPTION": "Ajusta as opções abaixo e confirma no botão Guardar alterações.",
@@ -512,7 +518,7 @@
         "EPG_SOURCE_FORMATS_EXAMPLES": "Exemplos:",
         "VIDEO_PLAYER_DESCRIPTION": "Selecionar o leitor de vídeo predefinido",
         "WEB_PLAYER_SHARED_CONTROLS": "Controlos unificados para leitores web",
-        "WEB_PLAYER_SHARED_CONTROLS_DESCRIPTION": "Utilizar os controlos partilhados do IPTVnator no HTML5, Video.js e ArtPlayer.",
+        "WEB_PLAYER_SHARED_CONTROLS_DESCRIPTION": "Utilizar os controlos partilhados do NaviTV no HTML5, Video.js e ArtPlayer.",
         "PLAYER_AMBIENT_MODE": "Fundo ambiente",
         "PLAYER_AMBIENT_MODE_DESCRIPTION": "Preenche o espaço em redor do leitor com uma imagem de capa desfocada e escurecida em vez de barras pretas.",
         "PLAY_TRAILERS_IN_BACKGROUND": "Reproduzir trailers ao fundo dos detalhes",
@@ -543,7 +549,7 @@
         "EPG_VIEW_MODE_TIMELINE": "Linha temporal",
         "EPG_VIEW_MODE_LIST": "Lista",
         "STARTUP_BEHAVIOR": "Página inicial",
-        "STARTUP_BEHAVIOR_DESCRIPTION": "Escolhe se o IPTVnator abre a primeira página disponível do espaço de trabalho ou restaura a última secção visitada. A primeira página é o painel, quando está ativado, ou Fontes.",
+        "STARTUP_BEHAVIOR_DESCRIPTION": "Escolhe se o NaviTV abre a primeira página disponível do espaço de trabalho ou restaura a última secção visitada. A primeira página é o painel, quando está ativado, ou Fontes.",
         "STARTUP_BEHAVIOR_FIRST_VIEW": "Primeira página disponível",
         "STARTUP_BEHAVIOR_RESTORE_LAST_VIEW": "Restaurar a última página",
         "STARTUP_WINDOW_MODE": "Janela ao iniciar",
@@ -557,7 +563,7 @@
         "STRIP_COUNTRY_PREFIX": "Remover prefixos de país dos nomes dos canais",
         "STRIP_COUNTRY_PREFIX_DESCRIPTION": "Remove prefixos de país/grupo como \"US | \" ou \"UK - \" dos nomes dos canais em direto em toda a aplicação.",
         "VERSION_DESCRIPTION": "Versão atual da aplicação",
-        "ABOUT_SUBTITLE": "Versão, links do projeto e formas de apoiar o IPTVnator.",
+        "ABOUT_SUBTITLE": "Versão, links do projeto e formas de apoiar o NaviTV.",
         "EMBEDDED_MPV_NOTICE_TITLE": "Ambiente de execução do MPV integrado",
         "EMBEDDED_MPV_NOTICE_DESCRIPTION": "As versões para computador podem incluir as bibliotecas libmpv e FFmpeg para o leitor experimental MPV integrado. Não é necessário instalar a aplicação MPV separadamente; o MPV externo e o VLC continuam disponíveis como leitores alternativos.",
         "COMMUNITY": "Projeto e comunidade",
@@ -570,7 +576,7 @@
         "SUPPORT_DESCRIPTION": "O IPTVnator é gratuito e de código aberto, desenvolvido de forma pública. Se faz parte da tua rotina, uma pequena contribuição ajuda a manter o projeto e a definir o que vem a seguir. Obrigado.",
         "SUPPORT_SPONSORS_HINT": "Recorrente ou única",
         "SUPPORT_KOFI_HINT": "Oferecer um café",
-        "EPG_NOTE": "Atualmente, o EPG só está disponível na versão do IPTVnator para computador baseada em Electron.",
+        "EPG_NOTE": "Atualmente, o EPG só está disponível na versão do NaviTV para computador baseada em Electron.",
         "EPG_NOTE_URL_TEXT": "Consulta aqui",
         "IMPORT_EXPORT_DATA": "Importar/exportar cópias de segurança das playlists",
         "IMPORT_EXPORT_DATA_DESCRIPTION": "Exporta ou restaura cópias de segurança das playlists, incluindo cópias M3U, metadados de ligação Xtream/Stalker, estado do utilizador e URLs das fontes de EPG.",
@@ -603,10 +609,10 @@
         "PLAYLISTS_REMOVED": "Todas as playlists e os seus dados foram removidos.",
         "MPV_PLAYER_PATH_LABEL": "Caminho do mpv",
         "MPV_PLAYER_PATH_DESCRIPTION": "Define o caminho do MPV. No macOS, podes utilizar a aplicação, como /Applications/mpv.app, ou o caminho do executável.",
-        "MPV_COMPATIBLE_PLAYER_TIP": "O IINA pode ser iniciado como leitor compatível com MPV no macOS, utilizando o caminho do executável, como /Applications/IINA.app/Contents/MacOS/iina-cli ou /Applications/IINA.app/Contents/MacOS/IINA. Os controlos do IPTVnator, a consulta da posição e a reutilização da instância só são garantidos com IPC do MPV.",
+        "MPV_COMPATIBLE_PLAYER_TIP": "O IINA pode ser iniciado como leitor compatível com MPV no macOS, utilizando o caminho do executável, como /Applications/IINA.app/Contents/MacOS/iina-cli ou /Applications/IINA.app/Contents/MacOS/IINA. Os controlos do NaviTV, a consulta da posição e a reutilização da instância só são garantidos com IPC do MPV.",
         "MPV_PLAYER_PATH": "Caminho do leitor mpv",
         "MPV_PLAYER_ARGUMENTS_LABEL": "Argumentos de linha de comandos do mpv",
-        "MPV_PLAYER_ARGUMENTS_DESCRIPTION": "Argumentos opcionais passados ao mpv quando o IPTVnator inicia um novo processo de leitor externo.",
+        "MPV_PLAYER_ARGUMENTS_DESCRIPTION": "Argumentos opcionais passados ao mpv quando o NaviTV inicia um novo processo de leitor externo.",
         "MPV_PLAYER_ARGUMENTS": "Argumentos do mpv",
         "MPV_REUSE_INSTANCE_LABEL": "Reutilizar instância do MPV",
         "MPV_REUSE_INSTANCE_DESCRIPTION": "Quando ativado, a mesma janela do MPV será reutilizada para reproduzir transmissões diferentes. Quando desativado, cada transmissão abre numa nova janela do MPV.",
@@ -618,9 +624,9 @@
         "VLC_PLAYER_PATH_DESCRIPTION": "Define o caminho do VLC. No macOS, podes utilizar a aplicação, como /Applications/VLC.app, ou o caminho do executável.",
         "VLC_PLAYER_PATH": "Caminho do leitor VLC",
         "VLC_PLAYER_ARGUMENTS_LABEL": "Argumentos de linha de comandos do VLC",
-        "VLC_PLAYER_ARGUMENTS_DESCRIPTION": "Argumentos opcionais passados ao VLC quando o IPTVnator inicia um novo processo de leitor externo.",
+        "VLC_PLAYER_ARGUMENTS_DESCRIPTION": "Argumentos opcionais passados ao VLC quando o NaviTV inicia um novo processo de leitor externo.",
         "VLC_PLAYER_ARGUMENTS": "Argumentos do VLC",
-        "EXTERNAL_PLAYER_ARGUMENTS_HINT": "Utiliza um argumento por linha. Estes valores são aplicados antes das opções do IPTVnator específicas da transmissão.",
+        "EXTERNAL_PLAYER_ARGUMENTS_HINT": "Utiliza um argumento por linha. Estes valores são aplicados antes das opções do NaviTV específicas da transmissão.",
         "VLC_REUSE_INSTANCE_LABEL": "Reutilizar instância do VLC",
         "VLC_REUSE_INSTANCE_DESCRIPTION": "Quando ativado, a mesma janela do VLC será reutilizada para reproduzir transmissões diferentes. Quando desativado, cada transmissão abre numa nova janela do VLC.",
         "REMOTE_CONTROL": "Comando remoto",
@@ -747,12 +753,12 @@
         "MIGRATION_FAILED": "Não foi possível mover as playlists. Continuam neste navegador; tenta novamente em Definições → Servidor.",
         "MIGRATION_RELOAD": "Recarregar",
         "SIGN_IN_TITLE": "Token de acesso necessário",
-        "SIGN_IN_DESCRIPTION": "Este servidor IPTVnator pede um token de acesso antes de mostrar as tuas playlists.",
+        "SIGN_IN_DESCRIPTION": "Este servidor NaviTV pede um token de acesso antes de mostrar as tuas playlists.",
         "SIGN_IN_TOKEN_LABEL": "Token de acesso",
         "SIGN_IN_HINT": "Encontra-o na definição IPTVNATOR_ACCESS_TOKEN do servidor.",
         "SIGN_IN_REJECTED": "Token recusado. Verifica-o e tenta novamente.",
         "SIGN_IN_UNREACHABLE": "Não foi possível aceder ao servidor. Verifica a ligação e tenta novamente.",
-        "SIGN_IN_STORAGE": "Este navegador não permite que o IPTVnator guarde o token. Permite os dados do site para esta página e tenta novamente.",
+        "SIGN_IN_STORAGE": "Este navegador não permite que o NaviTV guarde o token. Permite os dados do site para esta página e tenta novamente.",
         "SIGN_IN_CONTINUE": "Continuar",
         "STATUS_ONLINE": "Servidor ligado",
         "STATUS_OFFLINE": "Servidor indisponível",
@@ -1124,10 +1130,10 @@
         "RETRY": "Tentar novamente",
         "ALLOW_PRIVATE_SOURCE": "Permitir fonte",
         "ALLOW_PRIVATE_SOURCE_TITLE": "Permitir fonte de EPG em rede privada?",
-        "ALLOW_PRIVATE_SOURCE_WARNING": "Permite apenas se confiares na fonte de EPG. O IPTVnator permitirá que este URL específico de EPG se ligue a endereços de rede privada ou local.",
+        "ALLOW_PRIVATE_SOURCE_WARNING": "Permite apenas se confiares na fonte de EPG. O NaviTV permitirá que este URL específico de EPG se ligue a endereços de rede privada ou local.",
         "TRUST_TLS_HOST": "Confiar no servidor",
         "TRUST_TLS_HOST_TITLE": "Confiar num certificado inválido?",
-        "TRUST_TLS_HOST_WARNING": "Continua apenas se confiares neste servidor. O IPTVnator permitirá certificados TLS inválidos para este servidor; os restantes continuam a exigir certificados válidos.",
+        "TRUST_TLS_HOST_WARNING": "Continua apenas se confiares neste servidor. O NaviTV permitirá certificados TLS inválidos para este servidor; os restantes continuam a exigir certificados válidos.",
         "CURRENT_PROGRAM": "Programa atual",
         "ARCHIVE_PLAYBACK": "Reprodução de programas anteriores",
         "COLLAPSE_PANEL": "Recolher painel EPG",
@@ -1255,7 +1261,7 @@
         "SUPPORT_PROJECT": "Apoiar o projeto"
     },
     "ABOUT": {
-        "TITLE": "Acerca do IPTVnator",
+        "TITLE": "Acerca do NaviTV",
         "DESCRIPTION": "Leitor de IPTV para várias plataformas, com playlists M3U e M3U8, favoritos, guia de programação, acesso a programas anteriores e outras funcionalidades.",
         "VERSION": "Versão",
         "GITHUB_TOOLTIP": "Repositório do IPTVnator no GitHub",
@@ -1719,7 +1725,7 @@
         "STOP_RECORDING": "Parar gravação",
         "REMOVE_RECORDING_DIALOG": {
             "TITLE": "Remover gravação do gestor?",
-            "MESSAGE": "Esta ação remove a entrada do IPTVnator. O ficheiro gravado permanece no disco."
+            "MESSAGE": "Esta ação remove a entrada do NaviTV. O ficheiro gravado permanece no disco."
         },
         "RECORDING_DETAIL": {
             "PROGRAMS": "Programas gravados",
@@ -1730,7 +1736,7 @@
         "REMOVE_FROM_MANAGER": "Remover do gestor",
         "REMOVE_COMPLETED_DIALOG": {
             "TITLE": "Remover do gestor?",
-            "MESSAGE": "Esta ação remove a entrada do IPTVnator. O ficheiro multimédia transferido permanece no disco."
+            "MESSAGE": "Esta ação remove a entrada do NaviTV. O ficheiro multimédia transferido permanece no disco."
         },
         "REMOVE_PARTIAL_DIALOG": {
             "TITLE": "Remover transferência parcial?",
@@ -1818,8 +1824,8 @@
             "TOGGLE_MUTE": "Falha ao ativar ou desativar o som",
             "STATUS": "Falha ao obter o estado do comando remoto"
         },
-        "HEADER": "Comando remoto do IPTVnator",
-        "FOOTER": "Comando remoto do IPTVnator"
+        "HEADER": "Comando remoto do NaviTV",
+        "FOOTER": "Comando remoto do NaviTV"
     },
     "WORKSPACE": {
         "FAVORITES_ONLY": "Apenas favoritos",
@@ -1883,6 +1889,65 @@
             "SEE_ALL": "Ver todos",
             "SEE_ALL_COUNT": "Ver todos ({{count}})",
             "RECENTLY_WATCHED": "Vistos recentemente",
+            "LIVE_SPORTS": "Desporto em direto",
+            "UPCOMING_GAMES": "Upcoming games",
+            "TASTE": {
+                "TITLE": "Make Home yours",
+                "HINT": "Pick what you like and Home adds rows for it. You can change this any time.",
+                "SHOWS": "Shows & movies",
+                "LIVE": "Live TV",
+                "SAVE": "Save",
+                "SKIP": "Not now",
+                "EDIT": "Edit your picks",
+                "ROW": "{{genre}} for you",
+                "LIVE_ROW": "Live TV for you",
+                "GENRES": {
+                    "REALITY": "Reality TV",
+                    "DRAMA": "Drama",
+                    "COMEDY": "Comedy",
+                    "CRIME": "Crime & mystery",
+                    "ACTION": "Action & adventure",
+                    "SCIFI": "Sci-fi & fantasy",
+                    "DOCUMENTARY": "Documentaries",
+                    "KIDS": "Kids & family",
+                    "NOVELAS": "Telenovelas"
+                },
+                "LIVE_TYPES": {
+                    "NEWS": "News",
+                    "LOCAL": "Local channels",
+                    "ENTERTAINMENT": "Entertainment",
+                    "KIDS": "Kids",
+                    "SPANISH": "Spanish TV",
+                    "MOVIES": "Movie channels",
+                    "MUSIC": "Music"
+                }
+            },
+            "NETWORKS": {
+                "TITLE": "Networks",
+                "BACK": "Back to Home",
+                "LOADING": "Loading…",
+                "EMPTY": "Nothing from this network in your catalog right now."
+            },
+            "UPCOMING": {
+                "LIVE": "Live",
+                "TODAY": "Today",
+                "TOMORROW": "Tomorrow"
+            },
+            "SPORTS_PICKER": {
+                "TITLE": "Which sports do you want on Home?",
+                "HINT": "Games from these sports show up first, with their start times.",
+                "SAVE": "Save",
+                "ALL": "Show all sports",
+                "EDIT": "Choose sports"
+            },
+            "SPORTS": {
+                "FOOTBALL": "Football",
+                "BASKETBALL": "Basketball",
+                "FIGHTS": "Boxing & UFC",
+                "SOCCER": "Soccer",
+                "BASEBALL": "Baseball",
+                "HOCKEY": "Hockey"
+            },
             "XTREAM_RECENTLY_ADDED": "Adicionados recentemente no Xtream",
             "TMDB_TRENDING": "Tendências da semana",
             "TMDB_RECOMMENDED": "Recomendado para ti",
@@ -2141,7 +2206,7 @@
         },
         "SHORTCUTS": {
             "TITLE": "Atalhos de teclado",
-            "SUBTITLE": "Atalhos do espaço de trabalho, navegação, reprodução e caixas de diálogo disponíveis no IPTVnator.",
+            "SUBTITLE": "Atalhos do espaço de trabalho, navegação, reprodução e caixas de diálogo disponíveis no NaviTV.",
             "OPEN_TOOLTIP": "Atalhos de teclado (?)",
             "OPEN_ARIA": "Abrir atalhos de teclado",
             "PLATFORM": {
@@ -2352,7 +2417,7 @@
     },
     "HOSTED_SERVER": {
         "TITLE": "Servidor neste computador",
-        "DESCRIPTION": "Funciona enquanto o IPTVnator estiver aberto, mesmo minimizado. Sair da aplicação para o servidor.",
+        "DESCRIPTION": "Funciona enquanto o NaviTV estiver aberto, mesmo minimizado. Sair da aplicação para o servidor.",
         "SETUP_GUIDE": "Como iniciar um servidor neste computador",
         "LOCAL_ONLY": "Disponível apenas neste computador.",
         "CLIENT_GUIDE": "Como ligar a um servidor existente",
@@ -2385,15 +2450,15 @@
     },
     "SOURCE_SYNC": {
         "ABOUT_TITLE": "Sobre a sincronização por servidor",
-        "ABOUT_PURPOSE": "Liga os teus dispositivos ao mesmo servidor IPTVnator para partilhar playlists e fontes. Também podes sincronizar favoritos, progresso e histórico de visualização.",
+        "ABOUT_PURPOSE": "Liga os teus dispositivos ao mesmo servidor NaviTV para partilhar playlists e fontes. Também podes sincronizar favoritos, progresso e histórico de visualização.",
         "ABOUT_PRIVACY": "A sincronização funciona sem serviços na nuvem. Os dados partilhados são guardados no servidor que escolheres.",
-        "ABOUT_DESKTOP": "Inicia o servidor na aplicação para computador. Outros dispositivos na rede doméstica podem ligar-se se permitires o acesso. O servidor funciona enquanto o IPTVnator estiver aberto, mesmo minimizado.",
+        "ABOUT_DESKTOP": "Inicia o servidor na aplicação para computador. Outros dispositivos na rede doméstica podem ligar-se se permitires o acesso. O servidor funciona enquanto o NaviTV estiver aberto, mesmo minimizado.",
         "ABOUT_SEPARATE_TITLE": "Servidor separado",
-        "ABOUT_SEPARATE": "Executa o IPTVnator com Docker num NAS ou servidor doméstico. Os teus dispositivos podem ligar-se enquanto esse servidor estiver em execução, mesmo depois de saíres da aplicação para computador.",
+        "ABOUT_SEPARATE": "Executa o NaviTV com Docker num NAS ou servidor doméstico. Os teus dispositivos podem ligar-se enquanto esse servidor estiver em execução, mesmo depois de saíres da aplicação para computador.",
         "CONNECTION_RECOVERY": "A ligação guardada ao servidor não está disponível. Verifica o armazenamento do navegador ou volta a ligar nas definições do servidor.",
         "TITLE": "Servidor",
-        "DESCRIPTION": "Liga-te ao IPTVnator executado com Docker no teu servidor doméstico ou NAS para partilhar fontes entre dispositivos.",
-        "URL": "Endereço do servidor IPTVnator",
+        "DESCRIPTION": "Liga-te ao NaviTV executado com Docker no teu servidor doméstico ou NAS para partilhar fontes entre dispositivos.",
+        "URL": "Endereço do servidor NaviTV",
         "TOKEN": "Token de acesso (opcional)",
         "TOKEN_HINT": "Usa o valor IPTVNATOR_ACCESS_TOKEN definido no servidor ou pede-o ao proprietário. Deixa vazio se não houver um token configurado.",
         "RESTART_HINT": "Mudar de biblioteca do servidor ou desligar a ligação recarrega a aplicação. A biblioteca local original é mantida.",
@@ -2420,9 +2485,9 @@
         "STATE_locked": "Introduz um token de acesso válido para este servidor.",
         "STATE_conflict": "A fonte partilhada foi alterada noutro dispositivo. Atualiza e repete a alteração.",
         "SETUP_GUIDE": "Como configurar o teu servidor",
-        "URL_HINT": "Usa o endereço onde abres o IPTVnator no navegador ({{example}}). O caminho /api é adicionado automaticamente.",
+        "URL_HINT": "Usa o endereço onde abres o NaviTV no navegador ({{example}}). O caminho /api é adicionado automaticamente.",
         "URL_INVALID": "Introduz um endereço completo com http:// ou https://, sem dados de acesso, parâmetros de consulta ou fragmentos #.",
-        "CONNECTION_FAILED": "Não foi possível ligar. Verifica o endereço do servidor, se o IPTVnator está em execução e acessível a partir deste dispositivo, e tenta novamente."
+        "CONNECTION_FAILED": "Não foi possível ligar. Verifica o endereço do servidor, se o NaviTV está em execução e acessível a partir deste dispositivo, e tenta novamente."
     },
     "ACTIVITY_SYNC": {
         "TITLE": "Sincronização da reprodução",

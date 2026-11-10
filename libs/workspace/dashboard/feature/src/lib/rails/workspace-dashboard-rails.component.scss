@@ -57,3 +57,24 @@
         gap: 24px;
     }
 }
+
+// NaviTV: "Choose sports" under the Upcoming games row.
+.rails-sports-edit {
+    margin-top: -8px;
+}
+
+.rails-sports-edit__button {
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 0;
+    border-radius: 999px;
+    padding: 4px 12px;
+    background: transparent;
+    color: var(--mat-sys-primary, inherit);
+
+    &:focus-visible {
+        outline: 2px solid var(--app-focus-ring);
+        outline-offset: 2px;
+    }
+}

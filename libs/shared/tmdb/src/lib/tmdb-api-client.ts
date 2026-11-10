@@ -155,6 +155,23 @@ export class TmdbApiClient {
         );
     }
 
+    /**
+     * Streaming services TMDB lists for a region, with their logo paths
+     * (NaviTV's Home "Networks" row shows these logos).
+     */
+    async getWatchProviders(
+        mediaType: 'movie' | 'tv',
+        region: string,
+        language: string,
+        apiKey: string
+    ): Promise<TmdbWatchProvidersResponse> {
+        return this.request<TmdbWatchProvidersResponse>(
+            `/watch/providers/${mediaType}`,
+            { watch_region: region, language },
+            apiKey
+        );
+    }
+
     async getPersonDetails(
         personId: number,
         language: string,
@@ -224,4 +241,16 @@ export class TmdbApiClient {
 
         return (await response.json()) as T;
     }
+}
+
+/** One streaming service from `/watch/providers/{movie|tv}`. */
+export interface TmdbWatchProvider {
+    provider_id: number;
+    provider_name: string;
+    logo_path: string | null;
+    display_priority?: number;
+}
+
+export interface TmdbWatchProvidersResponse {
+    results?: TmdbWatchProvider[];
 }

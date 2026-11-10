@@ -6,6 +6,7 @@ import {
     XtreamContentType,
     XTREAM_REQUEST,
     XTREAM_CONTENT_TYPES,
+    withForeignCategoriesHidden,
     xtreamHistoryRecoveryKey,
 } from '@iptvnator/shared/interfaces';
 import { DataService } from './data.service';
@@ -191,11 +192,16 @@ export class XtreamSelectedCatalogRefreshService {
                     playlist._id,
                     categories,
                     categoryType,
-                    saved.hiddenCategories
-                        .filter(
-                            (category) => category.categoryType === categoryType
-                        )
-                        .map((category) => category.xtreamId),
+                    // NaviTV: new foreign-country categories start hidden.
+                    withForeignCategoriesHidden(
+                        saved.hiddenCategories
+                            .filter(
+                                (category) =>
+                                    category.categoryType === categoryType
+                            )
+                            .map((category) => category.xtreamId),
+                        categories
+                    ),
                     this.locks.lockedXtreamIds(playlist._id, categoryType)
                 );
                 publish(type, 'saving-content', 0, content.length);

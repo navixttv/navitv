@@ -56,10 +56,10 @@ function resolvePackagedExecutable() {
                 executable: path.join(
                     executablesRoot,
                     'mac',
-                    'IPTVnator.app',
+                    'NaviTV.app',
                     'Contents',
                     'MacOS',
-                    'IPTVnator'
+                    'NaviTV'
                 ),
             },
             {
@@ -67,10 +67,10 @@ function resolvePackagedExecutable() {
                 executable: path.join(
                     executablesRoot,
                     'mac-arm64',
-                    'IPTVnator.app',
+                    'NaviTV.app',
                     'Contents',
                     'MacOS',
-                    'IPTVnator'
+                    'NaviTV'
                 ),
             },
         ];
@@ -82,11 +82,11 @@ function resolvePackagedExecutable() {
     }
 
     if (currentPlatform === 'windows') {
-        return findUnpackedExecutable('win', ['IPTVnator.exe']);
+        return findUnpackedExecutable('win', ['NaviTV.exe']);
     }
 
     if (currentPlatform === 'linux') {
-        return findUnpackedExecutable('linux', ['IPTVnator', 'iptvnator']);
+        return findUnpackedExecutable('linux', ['NaviTV', 'iptvnator']);
     }
 
     return undefined;

@@ -53,6 +53,7 @@
     var heldArrow = null; // arrow pressed and not released yet: only its keydowns can be queued repeats
     var movePainted = true; // the last D-pad move has reached the screen (a held key waits for it)
     var keepScreenOn = false;
+    var nativePlayer = { open: false, url: null, video: null, closedAt: 0 }; // built-in player session
 
     // --------------------------------------------------------------- bridge
     function native(method) {
@@ -924,6 +925,39 @@
         return null;
     }
 
+    /**
+     * "Add from phone": the QR code screen; the source returns as `navitv:add-source`.
+     * Defined only inside the Android app, the one place the screen exists: the
+     * page shows its button when this function is present.
+     */
+    if (isAndroid) {
+        api.openPairing = function () {
+            native('openPairing');
+        };
+    }
+
+    /** The built-in player closed: leave the page's player instead of retrying. */
+    api.nativePlayerClosed = function (info) {
+        nativePlayer.open = false;
+        nativePlayer.closedAt = Date.now();
+        var video = nativePlayer.video;
+        nativePlayer.video = null;
+        if (video && video.isConnected) {
+            try { video.pause(); } catch (e) { /* ignore */ }
+        }
+        // Close the page's inline player, so Back and the details page are where the
+        // user left them.
+        var close = Array.prototype.filter.call(
+            document.querySelectorAll('app-portal-inline-player button'),
+            function (button) {
+                var icon = button.querySelector('mat-icon');
+                return icon && icon.textContent.trim() === 'close';
+            })[0];
+        if (close && isVisible(close)) close.click();
+        scheduleRefocus();
+        return info || null;
+    };
+
     api.currentStreamUrl = function () {
         var fromVjs = videoJsSource();
         if (fromVjs) return fromVjs;
@@ -1189,6 +1223,73 @@
             if (!url || !armPrompt(url, root)) return;
             native('onPlaybackError', url, document.title || '', '4');
         });
+        // Films and episodes play in NaviTV's built-in player (Media3): it decodes MKV,
+        // HEVC / 10-bit and AC3 through the device, which the WebView often cannot.
+        // The page's own load is stopped right away, so single-connection accounts
+        // are not busy twice. Live TV stays in the page (guide, previews); its
+        // failures reach the built-in player through onPlaybackError.
+        document.addEventListener('loadstart', function (e) {
+            var t = e.target;
+            if ((!isAndroid && !window.__tvShellForceNativePlayer) || window.__tvShellDisableNativePlayer) return;
+            if (!t || t.tagName !== 'VIDEO') return;
+            // Own counter: the shared __tvLoadAttempt is bumped by a later listener.
+            var attempt = t.__tvNativeSeq = (t.__tvNativeSeq || 0) + 1;
+            setTimeout(function () {
+                if (!t.isConnected || t.__tvNativeSeq !== attempt) return;
+                var src = t.currentSrc || t.getAttribute('src') || '';
+                var url = /^https?:/i.test(src) ? src : api.currentStreamUrl();
+                if (!url || !/\/(movie|series)\//i.test(url)) return;
+                var now = Date.now();
+                if (nativePlayer.open) return;
+                // Coming back from the built-in player, the page may retry the same
+                // stream: that is not a new request to play it.
+                if (url === nativePlayer.url && now - nativePlayer.closedAt < 15000) {
+                    try { t.pause(); } catch (err) { /* ignore */ }
+                    return;
+                }
+                nativePlayer.open = true;
+                nativePlayer.url = url;
+                nativePlayer.video = t;
+                try {
+                    t.pause();
+                    t.muted = true;
+                    if (/^https?:/i.test(src)) {
+                        t.removeAttribute('src');
+                        t.load();
+                    }
+                } catch (err) {
+                    /* the page's player may own the element */
+                }
+                lastMediaTitle = document.title;
+                native('playNative', url, lastMediaTitle || '', false);
+            }, 250);
+        }, true);
+        // Sound without picture: the WebView plays the audio track of a video it
+        // cannot decode (HEVC / 10-bit films on many sticks) and raises no error.
+        // A few seconds of advancing playback with no decoded frame is that case.
+        document.addEventListener('playing', function (e) {
+            var t = e.target;
+            if (!t || t.tagName !== 'VIDEO' || t.__tvPictureWatch) return;
+            t.__tvPictureWatch = true;
+            var attempt = t.__tvLoadAttempt || 0;
+            var startedAt = t.currentTime;
+            setTimeout(function () {
+                t.__tvPictureWatch = false;
+                if (!t.isConnected || t.paused || (t.__tvLoadAttempt || 0) !== attempt) return;
+                if (t.currentTime - startedAt < 2) return; // stalled, not playing
+                var url = api.currentStreamUrl();
+                if (!url) return;
+                var quality = t.getVideoPlaybackQuality ? t.getVideoPlaybackQuality() : null;
+                var noFrames = !!quality && quality.totalVideoFrames === 0;
+                // A stream without a video track at all (radio) also reports width 0:
+                // only films and episodes count then.
+                var noTrack = t.videoWidth === 0 && /\/(movie|series)\//i.test(url);
+                if (!(noFrames && t.videoWidth > 0) && !noTrack) return;
+                if (!armPrompt(url, t.closest ? t.closest('.video-js') : null)) return;
+                lastMediaTitle = document.title;
+                native('onPlaybackError', url, lastMediaTitle || '', '4');
+            }, 5000);
+        }, true);
         // video.js never sets the <video> src when no tech accepts the source
         // (raw .ts streams): it flags its root with `vjs-error` instead.
         var vjsObserver = new MutationObserver(function (mutations) {
@@ -1353,10 +1454,132 @@
     }
 
     // ------------------------------------------------------------- init
+    // ------------------------------------------------- in-page fullscreen
+    /**
+     * Android WebView hands element fullscreen to a separate native view, and on
+     * TV sticks the hardware video layer stays behind it: black picture, sound
+     * still playing. The WebView already fills the TV screen, so fullscreen is
+     * emulated in the page instead: the element is lifted into the top layer
+     * (a manual popover, or fixed positioning on engines without popovers) and
+     * the standard fullscreen API reports it, so the app's own fullscreen
+     * handling (fullscreenchange, document.fullscreenElement, Back) still works.
+     */
+    function installPageFullscreen() {
+        if (!isAndroid && !window.__tvShellForcePageFullscreen) return;
+        var FS_CLASS = 'tvshell-fullscreen';
+        var current = null;
+        var watch = null;
+        var css = document.createElement('style');
+        css.textContent =
+            '.' + FS_CLASS + '{position:fixed!important;inset:0!important;left:0!important;top:0!important;' +
+            'width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;' +
+            'margin:0!important;padding:0!important;border:0!important;border-radius:0!important;' +
+            'transform:none!important;z-index:2147483646!important;background:#000!important;overflow:hidden!important;}' +
+            '.' + FS_CLASS + '::backdrop{background:#000;}' +
+            // Fallback without popovers: ancestors must not trap the fixed element.
+            '.tvshell-fullscreen-ancestor{transform:none!important;filter:none!important;perspective:none!important;' +
+            'contain:none!important;will-change:auto!important;z-index:auto!important;}';
+        (document.head || document.documentElement).appendChild(css);
+
+        function fire(target) {
+            ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (type) {
+                var ev = new Event(type, { bubbles: true, composed: true });
+                (target && target.isConnected ? target : document).dispatchEvent(ev);
+            });
+        }
+
+        function leave() {
+            var el = current;
+            if (!el) return;
+            current = null;
+            if (watch) {
+                clearInterval(watch);
+                watch = null;
+            }
+            el.classList.remove(FS_CLASS);
+            Array.prototype.forEach.call(document.querySelectorAll('.tvshell-fullscreen-ancestor'), function (node) {
+                node.classList.remove('tvshell-fullscreen-ancestor');
+            });
+            if (el.hasAttribute('data-tvshell-popover')) {
+                try {
+                    if (el.hidePopover) el.hidePopover();
+                } catch (e) {
+                    /* already closed */
+                }
+                el.removeAttribute('popover');
+                el.removeAttribute('data-tvshell-popover');
+            }
+            fire(el);
+        }
+
+        function enter(el) {
+            if (current === el) return;
+            if (current) leave();
+            current = el;
+            el.classList.add(FS_CLASS);
+            // The top layer escapes ancestors' transforms, overflow and stacking.
+            if (typeof el.showPopover === 'function' && !el.hasAttribute('popover')) {
+                try {
+                    el.setAttribute('popover', 'manual');
+                    el.setAttribute('data-tvshell-popover', '');
+                    el.showPopover();
+                } catch (e) {
+                    el.removeAttribute('popover');
+                    el.removeAttribute('data-tvshell-popover');
+                }
+            }
+            if (!el.hasAttribute('data-tvshell-popover')) {
+                for (var node = el.parentElement; node && node !== document.documentElement; node = node.parentElement) {
+                    node.classList.add('tvshell-fullscreen-ancestor');
+                }
+            }
+            // A fullscreen element taken out of the page leaves fullscreen.
+            watch = setInterval(function () {
+                if (current && !current.isConnected) leave();
+            }, 500);
+            fire(el);
+        }
+
+        function request() {
+            enter(this);
+            return Promise.resolve();
+        }
+        function exit() {
+            leave();
+            return Promise.resolve();
+        }
+        ['requestFullscreen', 'webkitRequestFullscreen', 'webkitRequestFullScreen'].forEach(function (name) {
+            Element.prototype[name] = request;
+        });
+        ['exitFullscreen', 'webkitExitFullscreen', 'webkitCancelFullScreen'].forEach(function (name) {
+            Document.prototype[name] = exit;
+        });
+        ['fullscreenElement', 'webkitFullscreenElement', 'webkitCurrentFullScreenElement'].forEach(function (name) {
+            Object.defineProperty(Document.prototype, name, {
+                configurable: true,
+                get: function () {
+                    return current;
+                },
+            });
+        });
+        ['fullscreenEnabled', 'webkitFullscreenEnabled'].forEach(function (name) {
+            Object.defineProperty(Document.prototype, name, {
+                configurable: true,
+                get: function () {
+                    return true;
+                },
+            });
+        });
+        api.pageFullscreenElement = function () {
+            return current;
+        };
+    }
+
     function init() {
         document.documentElement.classList.add('tv-shell');
         document.body.classList.add('tv-shell');
         installStyle();
+        installPageFullscreen();
         installNetworkTracking();
         installClipboardHook();
         installHistoryTracking();

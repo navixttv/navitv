@@ -34,7 +34,8 @@ test('@settings @web radio choices follow arrows, Home/End and Discard', async (
     await system.press('ArrowRight');
     await expectRovingGroup(group, light);
     await page.locator('[data-test-id="discard-settings"]').click();
-    await expectRovingGroup(group, system);
+    // NaviTV starts in the Dark theme.
+    await expectRovingGroup(group, dark);
 
     const covers = page.locator('[data-test-id="select-cover-size"]');
     const medium = covers.getByRole('radio', { name: 'Medium', exact: true });
@@ -93,8 +94,12 @@ for (const theme of ['Light', 'Dark'] as const) {
         page,
     }) => {
         await openSection(page);
-        await page.getByRole('radio', { name: theme, exact: true }).click();
-        await page.locator('[data-test-id="save-settings"]').click();
+        const option = page.getByRole('radio', { name: theme, exact: true });
+        // NaviTV starts in Dark: choosing the theme already set changes nothing.
+        if (!(await option.isChecked())) {
+            await option.click();
+            await page.locator('[data-test-id="save-settings"]').click();
+        }
         await page.locator('[data-test-id="settings-section-backup"]').click();
         const importButton = page.getByRole('button', {
             name: 'Import',

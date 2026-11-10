@@ -20,6 +20,10 @@ import {
     DashboardTrendingService,
     DashboardRecommendationsService,
     type DashboardFavoriteItem,
+    DashboardLiveSportsService,
+    DashboardNetworksService,
+    DashboardTasteRailsService,
+    DashboardUpcomingGamesService,
 } from '@iptvnator/workspace/dashboard/data-access';
 import { DashboardLiveEpgPresenter } from './dashboard-live-epg.presenter';
 import { WorkspaceDashboardRailsComponent } from './workspace-dashboard-rails.component';
@@ -97,6 +101,36 @@ describe('dashboard favorite status translations', () => {
                     {
                         provide: DashboardSourceExpiryService,
                         useValue: { facts: signal(new Map()) },
+                    },
+                    {
+                        provide: DashboardLiveSportsService,
+                        useValue: {
+                            items: signal([]),
+                            load: jest.fn(),
+                            invalidate: jest.fn(),
+                        },
+                    },
+                    {
+                        provide: DashboardNetworksService,
+                        useValue: {
+                            networks: signal([]),
+                            load: jest.fn(),
+                            invalidate: jest.fn(),
+                        },
+                    },
+                    {
+                        provide: DashboardTasteRailsService,
+                        useValue: {
+                            rows: signal([]),
+                            liveChannels: signal([]),
+                            loadGenres: jest.fn(),
+                            loadLive: jest.fn(),
+                            invalidate: jest.fn(),
+                        },
+                    },
+                    {
+                        provide: DashboardUpcomingGamesService,
+                        useValue: { games: signal([]), load: jest.fn() },
                     },
                 ],
             });

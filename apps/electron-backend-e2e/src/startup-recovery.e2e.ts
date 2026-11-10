@@ -111,9 +111,10 @@ test('recovers settings and updates from a failed source read @electron @setting
         });
         await expect(page).toHaveURL(/\/workspace\/settings\/general/);
         await openSettingsSection(page, 'appearance');
-        await page.getByRole('radio', { name: 'Dark', exact: true }).click();
-        await page.getByTestId('save-settings').click();
-        await expect(page.getByTestId('save-settings')).toBeHidden();
+        // NaviTV starts in Dark, so there is nothing to save here.
+        await expect(
+            page.getByRole('radio', { name: 'Dark', exact: true })
+        ).toBeChecked();
         await page.evaluate(() => {
             window.history.pushState({}, '', '/workspace/dashboard');
             window.dispatchEvent(new PopStateEvent('popstate'));

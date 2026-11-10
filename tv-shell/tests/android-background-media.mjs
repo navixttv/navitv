@@ -15,10 +15,10 @@ const adb = (...args) => execFileSync(join(process.env.ANDROID_HOME, 'platform-t
 let device;
 adb('reverse', 'tcp:43331', 'tcp:43331');
 try {
-    adb('shell', 'am', 'start', '-n', 'org.tvshell.iptvnator/.ui.MainActivity');
+    adb('shell', 'am', 'start', '-n', 'com.navixttv.navitv.tv/org.tvshell.iptvnator.ui.MainActivity');
     device = (await _android.devices({ omitDriverInstall: true })).find((value) => value.serial() === serial);
     assert.ok(device, 'Emulator was not found.');
-    const page = await (await device.webView({ pkg: 'org.tvshell.iptvnator' })).page();
+    const page = await (await device.webView({ pkg: 'com.navixttv.navitv.tv' })).page();
     await page.waitForLoadState('domcontentloaded');
     const trailerUrl = 'https://www.youtube-nocookie.com/embed/synthetic-trailer';
     await page.route(trailerUrl, (route) => route.fulfill({
@@ -76,7 +76,7 @@ try {
     await page.evaluate(() => document.querySelectorAll('video,audio').forEach((media) => { media.play().catch(() => undefined); }));
     await waitPaused();
     console.log('PASS late background playback is stopped');
-    adb('shell', 'am', 'start', '-n', 'org.tvshell.iptvnator/.ui.MainActivity');
+    adb('shell', 'am', 'start', '-n', 'com.navixttv.navitv.tv/org.tvshell.iptvnator.ui.MainActivity');
     await delay(300);
     assert.deepEqual(await states(), [true, true]);
     assert.equal(await trailer.count(), 0);
