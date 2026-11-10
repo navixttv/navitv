@@ -1891,6 +1891,37 @@
             "RECENTLY_WATCHED": "Недавно просмотренные",
             "LIVE_SPORTS": "Спорт в прямом эфире",
             "UPCOMING_GAMES": "Upcoming games",
+            "TASTE": {
+                "TITLE": "Make Home yours",
+                "HINT": "Pick what you like and Home adds rows for it. You can change this any time.",
+                "SHOWS": "Shows & movies",
+                "LIVE": "Live TV",
+                "SAVE": "Save",
+                "SKIP": "Not now",
+                "EDIT": "Edit your picks",
+                "ROW": "{{genre}} for you",
+                "LIVE_ROW": "Live TV for you",
+                "GENRES": {
+                    "REALITY": "Reality TV",
+                    "DRAMA": "Drama",
+                    "COMEDY": "Comedy",
+                    "CRIME": "Crime & mystery",
+                    "ACTION": "Action & adventure",
+                    "SCIFI": "Sci-fi & fantasy",
+                    "DOCUMENTARY": "Documentaries",
+                    "KIDS": "Kids & family",
+                    "NOVELAS": "Telenovelas"
+                },
+                "LIVE_TYPES": {
+                    "NEWS": "News",
+                    "LOCAL": "Local channels",
+                    "ENTERTAINMENT": "Entertainment",
+                    "KIDS": "Kids",
+                    "SPANISH": "Spanish TV",
+                    "MOVIES": "Movie channels",
+                    "MUSIC": "Music"
+                }
+            },
             "UPCOMING": {
                 "LIVE": "Live",
                 "TODAY": "Today",

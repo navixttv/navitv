@@ -21,6 +21,7 @@ import {
     DashboardRecommendationsService,
     type DashboardFavoriteItem,
     DashboardLiveSportsService,
+    DashboardTasteRailsService,
     DashboardUpcomingGamesService,
 } from '@iptvnator/workspace/dashboard/data-access';
 import { DashboardLiveEpgPresenter } from './dashboard-live-epg.presenter';
@@ -105,6 +106,16 @@ describe('dashboard favorite status translations', () => {
                         useValue: {
                             items: signal([]),
                             load: jest.fn(),
+                            invalidate: jest.fn(),
+                        },
+                    },
+                    {
+                        provide: DashboardTasteRailsService,
+                        useValue: {
+                            rows: signal([]),
+                            liveChannels: signal([]),
+                            loadGenres: jest.fn(),
+                            loadLive: jest.fn(),
                             invalidate: jest.fn(),
                         },
                     },

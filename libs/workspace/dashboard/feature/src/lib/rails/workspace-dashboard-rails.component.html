@@ -40,6 +40,47 @@
             />
         }
 
+        <!-- NaviTV "Make Home yours": genre rows and Live TV for you. -->
+        @if (showTastePicker()) {
+            <lib-dashboard-taste-picker
+                [initial]="tastePreferences.taste()"
+                (saved)="onTasteSaved($event)"
+            />
+        }
+        @if (tasteLiveCardsEnriched().length > 0) {
+            <lib-dashboard-rail
+                [label]="'WORKSPACE.DASHBOARD.TASTE.LIVE_ROW' | translate"
+                [items]="tasteLiveCardsEnriched()"
+                layout="channel"
+                [testId]="'dashboard-taste-live-rail'"
+            />
+        }
+        @for (row of tasteRows(); track row.genre) {
+            <lib-dashboard-rail
+                [label]="row.label"
+                [items]="row.cards"
+                [totalCount]="row.cards.length"
+                [testId]="'dashboard-taste-' + row.genre + '-rail'"
+                [reserveMetaLine]="true"
+            />
+        }
+        @if (
+            tastePreferences.taste() !== null &&
+            !showTastePicker() &&
+            (tasteRows().length > 0 || tasteLiveCardsEnriched().length > 0)
+        ) {
+            <div class="rails-sports-edit">
+                <button
+                    type="button"
+                    class="rails-sports-edit__button"
+                    data-test-id="dashboard-edit-taste"
+                    (click)="editTaste()"
+                >
+                    {{ 'WORKSPACE.DASHBOARD.TASTE.EDIT' | translate }}
+                </button>
+            </div>
+        }
+
         <!-- NaviTV Upcoming games: games in the sports channels' guide, live first. -->
         @if (showSportsPicker()) {
             <lib-dashboard-sports-picker

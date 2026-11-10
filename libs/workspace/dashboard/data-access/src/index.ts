@@ -1,4 +1,5 @@
 export * from './lib/dashboard-data.service';
+export * from './lib/dashboard-live-channels.loader';
 export * from './lib/dashboard-live-sports.service';
 export * from './lib/dashboard-live-sports.util';
 export * from './lib/dashboard-sports-preferences.service';
@@ -12,3 +13,6 @@ export * from './lib/dashboard-source-expiry.service';
 export * from './lib/dashboard-source-expiry.util';
 export * from './lib/dashboard-tmdb-lookup.util';
 export * from './lib/dashboard-trending.service';
+export * from './lib/dashboard-taste.util';
+export * from './lib/dashboard-taste-preferences.service';
+export * from './lib/dashboard-taste-rails.service';

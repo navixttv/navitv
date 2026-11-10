@@ -1891,6 +1891,37 @@
             "RECENTLY_WATCHED": "Vistos recientemente",
             "LIVE_SPORTS": "Deportes en vivo",
             "UPCOMING_GAMES": "Próximos partidos",
+            "TASTE": {
+                "TITLE": "Personaliza tu Inicio",
+                "HINT": "Elige lo que te gusta e Inicio agregará filas para eso. Puedes cambiarlo cuando quieras.",
+                "SHOWS": "Series y películas",
+                "LIVE": "TV en vivo",
+                "SAVE": "Guardar",
+                "SKIP": "Ahora no",
+                "EDIT": "Editar tus preferencias",
+                "ROW": "{{genre}} para ti",
+                "LIVE_ROW": "TV en vivo para ti",
+                "GENRES": {
+                    "REALITY": "Reality",
+                    "DRAMA": "Drama",
+                    "COMEDY": "Comedia",
+                    "CRIME": "Crimen y misterio",
+                    "ACTION": "Acción y aventura",
+                    "SCIFI": "Ciencia ficción y fantasía",
+                    "DOCUMENTARY": "Documentales",
+                    "KIDS": "Niños y familia",
+                    "NOVELAS": "Telenovelas"
+                },
+                "LIVE_TYPES": {
+                    "NEWS": "Noticias",
+                    "LOCAL": "Canales locales",
+                    "ENTERTAINMENT": "Entretenimiento",
+                    "KIDS": "Niños",
+                    "SPANISH": "TV en español",
+                    "MOVIES": "Canales de películas",
+                    "MUSIC": "Música"
+                }
+            },
             "UPCOMING": {
                 "LIVE": "En vivo",
                 "TODAY": "Hoy",

@@ -42,7 +42,10 @@ import {
     DashboardDataService,
     DashboardLiveSportsService,
     DashboardSportsPreferencesService,
+    DashboardTastePreferencesService,
+    DashboardTasteRailsService,
     DashboardUpcomingGamesService,
+    type DashboardTaste,
     orderChannelsForGuide,
     type DashboardSport,
     DashboardFavoriteItem,
@@ -74,6 +77,7 @@ import {
     rankLiveSportsRail,
 } from './dashboard-live-sports.cards';
 import { DashboardSportsPickerComponent } from './dashboard-sports-picker.component';
+import { DashboardTastePickerComponent } from './dashboard-taste-picker.component';
 import { DashboardLiveEpgPresenter } from './dashboard-live-epg.presenter';
 import { DashboardLiveEpgClock } from './dashboard-live-epg-clock';
 import { createSourceExpiryClock } from './dashboard-source-expiry-clock';
@@ -108,6 +112,7 @@ import type {
         DashboardRailComponent,
         DashboardRailSkeletonComponent,
         DashboardSportsPickerComponent,
+        DashboardTastePickerComponent,
         EmptyStateComponent,
         TranslatePipe,
     ],
@@ -132,6 +137,10 @@ export class WorkspaceDashboardRailsComponent {
     readonly sportsPreferences = inject(DashboardSportsPreferencesService);
     /** The viewer reopened the sports picker with "Choose sports". */
     private readonly editingSports = signal(false);
+    readonly tastePreferences = inject(DashboardTastePreferencesService);
+    private readonly tasteRails = inject(DashboardTasteRailsService);
+    /** The viewer reopened "Make Home yours" with "Edit your picks". */
+    private readonly editingTaste = signal(false);
     private readonly dialog = inject(MatDialog);
     private readonly dialogService = inject(DialogService);
     private readonly playlistDeleteAction = inject(PlaylistDeleteActionService);
@@ -257,9 +266,49 @@ export class WorkspaceDashboardRailsComponent {
             .map((game) => buildUpcomingGameCard(game, now, labels));
     });
 
+    /** "Make Home yours": first visit with an Xtream source, or reopened. */
+    readonly showTastePicker = computed(
+        () =>
+            this.xtreamPlaylistCount() > 0 &&
+            (this.tastePreferences.taste() === null || this.editingTaste())
+    );
+
+    /** NaviTV genre rows ("Reality TV for you"), shows first. */
+    readonly tasteRows = computed(() => {
+        this.languageTick();
+        return this.tasteRails.rows().map((row) => ({
+            genre: row.genre,
+            label: this.translate.instant('WORKSPACE.DASHBOARD.TASTE.ROW', {
+                genre: this.translate.instant(
+                    'WORKSPACE.DASHBOARD.TASTE.GENRES.' +
+                        row.genre.toUpperCase()
+                ),
+            }),
+            cards: row.items.map((item) => this.toRecommendationCard(item)),
+        }));
+    });
+
+    /** "Live TV for you": channels of the chosen Live TV picks. */
+    readonly tasteLiveCards = computed<DashboardRailCard[]>(() =>
+        this.tasteRails.liveChannels().map(buildLiveSportsCard)
+    );
+    readonly tasteLiveCardsEnriched = computed<DashboardRailCard[]>(() =>
+        this.liveEpg.enrich(this.tasteLiveCards())
+    );
+
+    onTasteSaved(taste: DashboardTaste): void {
+        this.tastePreferences.save(taste);
+        this.editingTaste.set(false);
+    }
+
+    editTaste(): void {
+        this.editingTaste.set(true);
+    }
+
     /** First visit with sports channels, or "Choose sports" was pressed. */
     readonly showSportsPicker = computed(
         () =>
+            !this.showTastePicker() &&
             this.liveSports.items().length > 0 &&
             (this.sportsPreferences.sports() === null || this.editingSports())
     );
@@ -413,6 +462,29 @@ export class WorkspaceDashboardRailsComponent {
             const sports = this.sportsPreferences.sports();
             untracked(() => void this.upcomingGames.load(channels, sports));
         });
+
+        // NaviTV "Make Home yours" rows. Genre rows re-run as the catalog
+        // grows (the TV build indexes it in the background) and after the
+        // recently-added rail settles, so they never delay first paint.
+        this.tasteRails.invalidate();
+        effect(() => {
+            const taste = this.tastePreferences.taste();
+            if (!taste || !this.data.playlistsLoaded()) return;
+            const playlists = this.data.playlists();
+            untracked(
+                () => void this.tasteRails.loadLive(playlists, taste.live)
+            );
+        });
+        effect(() => {
+            const taste = this.tastePreferences.taste();
+            this.languageTick();
+            this.data.xtreamRecentlyAddedItems();
+            if (!taste || !this.data.continueWatchingSettled()) return;
+            untracked(() => void this.tasteRails.loadGenres(taste.genres));
+        });
+        effect(() =>
+            this.liveEpg.setVisibleCards('taste', this.tasteLiveCards())
+        );
 
         // Refresh when Xtream playlist count changes so a newly added provider
         // populates the rail without a manual dashboard reload. The Xtream
