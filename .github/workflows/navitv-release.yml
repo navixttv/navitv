@@ -10,10 +10,13 @@ on:
                 required: true
                 default: tag
                 type: choice
-                options: [tag, publish]
+                options: [tag, publish, from-run]
             version:
                 description: 'Version, e.g. 1.0.0'
                 required: true
+            run_id:
+                description: 'from-run: the finished build run to release'
+                required: false
 
 permissions:
     contents: write
@@ -47,3 +50,24 @@ jobs:
                   test -n "$id"
                   gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$id" \
                     -F draft=false -F prerelease=false -f make_latest=true --jq .html_url
+            - name: Release a finished build
+              if: inputs.action == 'from-run'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAG: v${{ inputs.version }}
+                  RUN_ID: ${{ inputs.run_id }}
+              run: |
+                  set -euo pipefail
+                  mkdir a && cd a
+                  for name in windows-artifacts linux-portable-artifacts linux-system-artifacts; do
+                    gh run download "$RUN_ID" -R "$GITHUB_REPOSITORY" -n "$name" -D "$name"
+                  done
+                  shopt -s nullglob
+                  files=(windows-artifacts/*-setup.exe windows-artifacts/*.msi windows-artifacts/*.zip \
+                    windows-artifacts/latest.yml windows-artifacts/*.blockmap \
+                    linux-portable-artifacts/*.AppImage linux-portable-artifacts/latest-linux*.yml \
+                    linux-portable-artifacts/*.blockmap linux-system-artifacts/*.deb linux-system-artifacts/*.rpm)
+                  printf '%s\n' "${files[@]}"
+                  gh release create "$TAG" "${files[@]}" -R "$GITHUB_REPOSITORY" \
+                    --verify-tag --title "NaviTV ${TAG#v}" --latest \
+                    --notes "NaviTV ${TAG#v} for Windows and Linux. Google TV / Fire Stick builds are the tv-shell releases."

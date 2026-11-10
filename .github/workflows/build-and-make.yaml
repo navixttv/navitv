@@ -1632,7 +1632,7 @@ jobs:
                       # An internal-only release intentionally has no authored
                       # public text. GitHub's generated commit list remains
                       # separate below.
-                      BODY="$(node tools/release/extract-changelog-section.mjs --public "${VERSION}")"
+                      BODY="$(node tools/release/extract-changelog-section.mjs --public "${VERSION}" || true)"
                   elif [ "${EVENT_NAME}" = "pull_request" ]; then
                       NAME="v${VERSION} — PR #${PR_NUMBER} @ ${SHORT_SHA} [test]"
                       TAG="test-pr-${PR_NUMBER}"
