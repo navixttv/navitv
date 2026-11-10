@@ -121,11 +121,16 @@ export class DashboardNetworksService {
             const { playlistId, type } = categories[0];
             const playlist = this.playlists.find((p) => p._id === playlistId);
             if (!playlist) continue;
-            const content = (await this.dataSource.getContent(
-                playlistId,
-                this.credentials(playlist),
-                type
-            )) as readonly ContentRow[];
+            // Desktop: the imported catalog only, never a provider request.
+            const content = (
+                this.runtime.supportsXtreamSqliteDataSource
+                    ? await this.dataSource.getCachedContent(playlistId, type)
+                    : await this.dataSource.getContent(
+                          playlistId,
+                          this.credentials(playlist),
+                          type
+                      )
+            ) as readonly ContentRow[];
             for (const category of categories) {
                 const matching = content
                     .filter(
@@ -153,12 +158,24 @@ export class DashboardNetworksService {
         playlist: LiveChannelsPlaylist,
         type: 'movie' | 'series'
     ): Promise<NetworkCategory[]> {
-        const rows = (await this.dataSource.getCategories(
-            playlist._id,
-            this.credentials(playlist),
-            type === 'movie' ? 'vod' : 'series'
-        )) as readonly CategoryRow[];
         const desktop = this.runtime.supportsXtreamSqliteDataSource;
+        const categoryType = type === 'movie' ? 'vod' : 'series';
+        // Desktop: Home reads the imported catalog and never asks the provider
+        // (an unreachable or not-yet-imported source must stay untouched).
+        const rows = (
+            desktop
+                ? (
+                      await this.dataSource.getCachedCategories(
+                          playlist._id,
+                          categoryType
+                      )
+                  ).filter((row) => !row.hidden && !row.locked)
+                : await this.dataSource.getCategories(
+                      playlist._id,
+                      this.credentials(playlist),
+                      categoryType
+                  )
+        ) as readonly CategoryRow[];
         const out: NetworkCategory[] = [];
         for (const row of rows) {
             const name = row.name ?? row.category_name ?? '';
