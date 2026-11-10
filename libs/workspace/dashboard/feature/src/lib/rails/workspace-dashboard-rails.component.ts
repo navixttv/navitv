@@ -41,6 +41,7 @@ import {
 import {
     DashboardDataService,
     DashboardLiveSportsService,
+    DashboardNetworksService,
     DashboardSportsPreferencesService,
     DashboardTastePreferencesService,
     DashboardTasteRailsService,
@@ -138,6 +139,18 @@ export class WorkspaceDashboardRailsComponent {
     /** The viewer reopened the sports picker with "Choose sports". */
     private readonly editingSports = signal(false);
     readonly tastePreferences = inject(DashboardTastePreferencesService);
+    private readonly networksService = inject(DashboardNetworksService);
+
+    /** NaviTV "Networks": one tile per streaming service the catalog covers. */
+    readonly networkCards = computed<DashboardRailCard[]>(() =>
+        this.networksService.networks().map((network) => ({
+            id: `network-${network.id}`,
+            title: network.name,
+            imageUrl: network.logoUrl ?? undefined,
+            icon: 'subscriptions',
+            link: ['/workspace/networks', network.id],
+        }))
+    );
     private readonly tasteRails = inject(DashboardTasteRailsService);
     /** The viewer reopened "Make Home yours" with "Edit your picks". */
     private readonly editingTaste = signal(false);
@@ -461,6 +474,14 @@ export class WorkspaceDashboardRailsComponent {
             const channels = this.liveSports.items();
             const sports = this.sportsPreferences.sports();
             untracked(() => void this.upcomingGames.load(channels, sports));
+        });
+
+        // NaviTV Networks: re-read on every visit (categories may change).
+        this.networksService.invalidate();
+        effect(() => {
+            if (!this.data.playlistsLoaded()) return;
+            const playlists = this.data.playlists();
+            untracked(() => void this.networksService.load(playlists));
         });
 
         // NaviTV "Make Home yours" rows. Genre rows re-run as the catalog

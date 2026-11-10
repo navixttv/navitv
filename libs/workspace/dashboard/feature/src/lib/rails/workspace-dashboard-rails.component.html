@@ -23,6 +23,16 @@
             <lib-dashboard-hero />
         }
 
+        <!-- NaviTV Networks: streaming services the catalog has categories for. -->
+        @if (networkCards().length > 0) {
+            <lib-dashboard-rail
+                [label]="'WORKSPACE.DASHBOARD.NETWORKS.TITLE' | translate"
+                [items]="networkCards()"
+                aspectRatio="1 / 1"
+                [testId]="'dashboard-networks-rail'"
+            />
+        }
+
         <!-- Continue watching (movies + series) -->
         @if (
             dashboardRails().continueWatching &&

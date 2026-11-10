@@ -1922,6 +1922,12 @@
                     "MUSIC": "Music"
                 }
             },
+            "NETWORKS": {
+                "TITLE": "Networks",
+                "BACK": "Back to Home",
+                "LOADING": "Loading…",
+                "EMPTY": "Nothing from this network in your catalog right now."
+            },
             "UPCOMING": {
                 "LIVE": "Live",
                 "TODAY": "Today",

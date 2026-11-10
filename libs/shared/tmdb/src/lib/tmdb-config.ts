@@ -130,3 +130,8 @@ export function tmdbSeasonPosterUrl(
         ? `${TMDB_IMAGE_BASE_URL}/${TMDB_SEASON_POSTER_SIZE}${path}`
         : null;
 }
+
+/** A streaming service logo (TMDB `logo_path`), sized for a Home tile. */
+export function tmdbLogoUrl(path: string | null | undefined): string | null {
+    return path ? `${TMDB_IMAGE_BASE_URL}/w300${path}` : null;
+}

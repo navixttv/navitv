@@ -1922,6 +1922,12 @@
                     "MUSIC": "Música"
                 }
             },
+            "NETWORKS": {
+                "TITLE": "Cadenas",
+                "BACK": "Volver a Inicio",
+                "LOADING": "Cargando…",
+                "EMPTY": "Por ahora no hay nada de esta cadena en tu catálogo."
+            },
             "UPCOMING": {
                 "LIVE": "En vivo",
                 "TODAY": "Hoy",

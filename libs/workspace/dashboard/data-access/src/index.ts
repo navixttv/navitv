@@ -16,3 +16,5 @@ export * from './lib/dashboard-trending.service';
 export * from './lib/dashboard-taste.util';
 export * from './lib/dashboard-taste-preferences.service';
 export * from './lib/dashboard-taste-rails.service';
+export * from './lib/dashboard-networks.util';
+export * from './lib/dashboard-networks.service';
