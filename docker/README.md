@@ -46,7 +46,7 @@ container are required for the default local deployment.
 ## Build The Image
 
 ```bash
-docker build -t 4gray/iptvnator -f docker/Dockerfile .
+docker build -t navixttv/navitv -f docker/Dockerfile .
 ```
 
 The image build runs:

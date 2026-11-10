@@ -59,16 +59,16 @@ jobs:
                   short_sha="${GITHUB_SHA::12}"
                   publish="false"
                   platforms="linux/amd64"
-                  tags="4gray/iptvnator:pr-${{ github.event.pull_request.number || 'manual' }}"
+                  tags="navixttv/navitv:pr-${{ github.event.pull_request.number || 'manual' }}"
 
                   if [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF}" == "refs/heads/master" ]]; then
                     publish="true"
                     platforms="linux/amd64,linux/arm64"
                     tags=$(cat <<TAGS
-                  4gray/iptvnator:latest
-                  4gray/iptvnator:${version}-pwa
-                  4gray/iptvnator:${version}-pwa-${short_sha}
-                  4gray/iptvnator:sha-${short_sha}
+                  navixttv/navitv:latest
+                  navixttv/navitv:${version}-pwa
+                  navixttv/navitv:${version}-pwa-${short_sha}
+                  navixttv/navitv:sha-${short_sha}
                   TAGS
                   )
                   elif [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF}" == refs/tags/v* ]]; then
@@ -76,19 +76,19 @@ jobs:
                     platforms="linux/amd64,linux/arm64"
                     tag_version="${GITHUB_REF_NAME#v}"
                     tags=$(cat <<TAGS
-                  4gray/iptvnator:${tag_version}
-                  4gray/iptvnator:v${tag_version}
+                  navixttv/navitv:${tag_version}
+                  navixttv/navitv:v${tag_version}
                   TAGS
                   )
                     if [[ "${tag_version}" != *-* ]]; then
-                      tags="${tags}"$'\n'"4gray/iptvnator:stable"
+                      tags="${tags}"$'\n'"navixttv/navitv:stable"
                     fi
                   elif [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" && "${{ inputs.push }}" == "true" ]]; then
                     publish="true"
                     platforms="linux/amd64,linux/arm64"
                     tags=$(cat <<TAGS
-                  4gray/iptvnator:manual-${short_sha}
-                  4gray/iptvnator:sha-${short_sha}
+                  navixttv/navitv:manual-${short_sha}
+                  navixttv/navitv:sha-${short_sha}
                   TAGS
                   )
                   fi
