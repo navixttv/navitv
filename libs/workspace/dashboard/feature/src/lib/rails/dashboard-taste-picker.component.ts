@@ -97,7 +97,6 @@ import {
     styles: `
         :host {
             display: block;
-            padding: 0 var(--rails-gutter, 24px);
         }
         .taste-picker {
             border-radius: 16px;

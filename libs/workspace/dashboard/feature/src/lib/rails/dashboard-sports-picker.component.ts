@@ -74,7 +74,6 @@ import {
     styles: `
         :host {
             display: block;
-            padding: 0 var(--rails-gutter, 24px);
         }
         .sports-picker {
             border-radius: 16px;

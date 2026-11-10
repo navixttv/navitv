@@ -82,6 +82,8 @@ interface NetworkRowView {
     `,
     styles: `
         :host {
+            --network-page-gutter: 28px;
+
             display: block;
             height: 100%;
             overflow-y: auto;
@@ -96,7 +98,7 @@ interface NetworkRowView {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 0 var(--rails-gutter, 24px);
+            padding: 0 var(--network-page-gutter);
         }
         .network-page__back {
             display: grid;
@@ -122,7 +124,7 @@ interface NetworkRowView {
             font-weight: 700;
         }
         .network-page__status {
-            padding: 0 var(--rails-gutter, 24px);
+            padding: 0 var(--network-page-gutter);
             opacity: 0.75;
         }
     `,

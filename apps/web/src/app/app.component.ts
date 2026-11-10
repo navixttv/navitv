@@ -3,12 +3,12 @@ import {
     Component,
     effect,
     inject,
+    Injector,
     OnInit,
     signal,
     ChangeDetectionStrategy,
 } from '@angular/core';
 import { LazySnackBar } from '@iptvnator/services/lazy-snack-bar';
-import { RemoteSourceIntakeService } from './services/remote-source-intake.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
         ParentalLockEnforcementService
     );
     private playlistOpenRequests = inject(PlaylistOpenRequestService);
-    private readonly remoteSourceIntake = inject(RemoteSourceIntakeService);
+    private readonly injector = inject(Injector);
     private runtime = inject(RuntimeCapabilitiesService);
     private readonly workspaceShellActions = inject(WORKSPACE_SHELL_ACTIONS);
     private readonly contextDrawer = inject(WorkspaceShellContextDrawerService);
@@ -133,8 +133,21 @@ export class AppComponent implements OnInit {
         // as possible so a first-launch file is not delayed behind app init.
         this.playlistOpenRequests.start();
 
-        // NaviTV "Add from phone": sources a phone sends to the TV app.
-        this.remoteSourceIntake.start();
+        // NaviTV "Add from phone": sources a phone sends to the TV app. Only
+        // the TV app (its layer defines openPairing) can send one, so the
+        // handler loads there alone and stays out of the startup bundle.
+        if (
+            typeof (
+                window as unknown as {
+                    __tvShell?: { openPairing?: unknown };
+                }
+            ).__tvShell?.openPairing === 'function'
+        ) {
+            void import('./services/remote-source-intake.service').then(
+                ({ RemoteSourceIntakeService }) =>
+                    this.injector.get(RemoteSourceIntakeService).start()
+            );
+        }
 
         // Keep the display awake while a built-in player is playing video
         // (Electron powerSaveBlocker / PWA Screen Wake Lock, issue #1095).
