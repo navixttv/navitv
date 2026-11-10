@@ -94,8 +94,12 @@ for (const theme of ['Light', 'Dark'] as const) {
         page,
     }) => {
         await openSection(page);
-        await page.getByRole('radio', { name: theme, exact: true }).click();
-        await page.locator('[data-test-id="save-settings"]').click();
+        const option = page.getByRole('radio', { name: theme, exact: true });
+        // NaviTV starts in Dark: choosing the theme already set changes nothing.
+        if (!(await option.isChecked())) {
+            await option.click();
+            await page.locator('[data-test-id="save-settings"]').click();
+        }
         await page.locator('[data-test-id="settings-section-backup"]').click();
         const importButton = page.getByRole('button', {
             name: 'Import',

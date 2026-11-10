@@ -83,8 +83,9 @@ async function useLanguage(page: Page, locale: Locale) {
  * the locale's own labels proves the translation loaded before measuring.
  */
 async function openUnsavedDialog(page: Page, locale: Locale): Promise<Locator> {
+    // NaviTV starts in Dark: Light is the staged edit.
     await page
-        .locator('[data-test-id="select-theme"] [data-test-id="DARK_THEME"]')
+        .locator('[data-test-id="select-theme"] [data-test-id="LIGHT_THEME"]')
         .click();
     await expect(
         page.locator('[data-test-id="settings-unsaved-bar"]')
