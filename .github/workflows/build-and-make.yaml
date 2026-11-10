@@ -393,19 +393,7 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    # macOS builds - separate runners to avoid native module conflicts
-                    - os: macos
-                      runner: macos-15-intel
-                      arch: x64
-                      embedded_mpv_platform: darwin
-                      embedded_mpv_arch: x64
-                      embedded_mpv_build_runtime: true
-                    - os: macos
-                      runner: macos-latest
-                      arch: arm64
-                      embedded_mpv_platform: darwin
-                      embedded_mpv_arch: arm64
-                      embedded_mpv_build_runtime: true
+                    # NaviTV: macOS builds are deferred (no Apple signing yet).
                     - os: windows
                       runner: windows-2022
                       arch: x64
