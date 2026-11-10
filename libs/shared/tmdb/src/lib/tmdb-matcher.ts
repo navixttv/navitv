@@ -129,7 +129,9 @@ export function buildSearchLookupKey(
     // v5: a tie within the strongest year tier is ambiguous. Popularity
     // cannot identify same-title, same-year namesakes; v4 positive rows
     // may point at the wrong title for another 30 days otherwise.
-    return `title:${searchQueryIdentity(query)}|year:${year ?? ''}|v5`;
+    // v6: a tie is settled by an overwhelming vote lead (`dominantNamesake`);
+    // v5 negative rows for such titles must not block the retry for 7 days.
+    return `title:${searchQueryIdentity(query)}|year:${year ?? ''}|v6`;
 }
 
 export function buildDetailsLookupKey(tmdbId: number): string {
@@ -249,6 +251,41 @@ export function detailsMatchProviderTitle(
     });
 }
 
+/** Vote lead that settles a same-title, same-year tie. */
+const DOMINANT_VOTE_RATIO = 10;
+const DOMINANT_MIN_VOTES = 50;
+
+/**
+ * Same-title, same-year namesakes are ambiguous unless one is a long-running
+ * hit and the others are obscure ("Heartland" 2007: the Canadian series has
+ * hundreds of votes, the short-lived US one a handful). The leader must
+ * carry the wanted title in its ORIGINAL language too, so a localized
+ * namesake of another country's show can never win on popularity alone.
+ */
+function dominantNamesake(
+    tied: readonly TmdbSearchResult[],
+    wantedTitle: string,
+    mediaType: TmdbMediaType
+): TmdbSearchResult | null {
+    const ranked = [...tied].sort(
+        (a, b) => (b.vote_count ?? 0) - (a.vote_count ?? 0)
+    );
+    const [leader, runnerUp] = ranked;
+    const leaderVotes = leader?.vote_count ?? 0;
+    const runnerUpVotes = runnerUp?.vote_count ?? 0;
+    const original =
+        mediaType === 'movie' ? leader?.original_title : leader?.original_name;
+    if (
+        !leader ||
+        leaderVotes < DOMINANT_MIN_VOTES ||
+        leaderVotes < runnerUpVotes * DOMINANT_VOTE_RATIO ||
+        normalizeTitle(original ?? '') !== wantedTitle
+    ) {
+        return null;
+    }
+    return leader;
+}
+
 function resultTitles(result: TmdbSearchResult, mediaType: TmdbMediaType) {
     return mediaType === 'movie'
         ? [result.title, result.original_title]
@@ -366,7 +403,14 @@ export function pickConfidentMatch(
         const strongest = ranked.filter(
             (candidate) => candidate.tier === bestTier
         );
-        return strongest.length === 1 ? strongest[0].result : null;
+        if (strongest.length === 1) {
+            return strongest[0].result;
+        }
+        return dominantNamesake(
+            strongest.map((candidate) => candidate.result),
+            wantedTitle,
+            mediaType
+        );
     }
 
     // Without a year the title must be unambiguous

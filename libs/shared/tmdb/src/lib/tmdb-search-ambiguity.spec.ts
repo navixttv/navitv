@@ -70,7 +70,7 @@ it('ignores a fresh v4 wrong match, caches the ambiguous verdict and never fetch
     expect(
         await cache.get(
             'tv',
-            'title:синтетический сериал альфа|year:2026|v5',
+            'title:синтетический сериал альфа|year:2026|v6',
             'ru-RU'
         )
     ).toMatchObject({ tmdbId: null });

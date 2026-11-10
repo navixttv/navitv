@@ -84,10 +84,10 @@ describe('extractYear', () => {
 describe('lookup keys', () => {
     it('builds stable search and details keys', () => {
         expect(buildSearchLookupKey('Synthetic Movie Alpha', 1999)).toBe(
-            'title:synthetic movie alpha|year:1999|v5'
+            'title:synthetic movie alpha|year:1999|v6'
         );
         expect(buildSearchLookupKey('Synthetic Movie Alpha', null)).toBe(
-            'title:synthetic movie alpha|year:|v5'
+            'title:synthetic movie alpha|year:|v6'
         );
     });
 
@@ -96,7 +96,7 @@ describe('lookup keys', () => {
         // searches with different answers; a verdict cached for one must
         // never be read back for the other.
         expect(buildSearchLookupKey('Лейка', 2026)).toBe(
-            'title:лейка|year:2026|v5'
+            'title:лейка|year:2026|v6'
         );
         expect(buildSearchLookupKey('Леика', 2026)).not.toBe(
             buildSearchLookupKey('Лейка', 2026)
@@ -427,6 +427,48 @@ describe('pickConfidentMatch', () => {
                     )
                 ).toBeNull();
             }
+        }
+    );
+
+    it.each(['movie', 'tv'] as const)(
+        'settles a same-year %s tie for the namesake with an overwhelming vote lead',
+        (mediaType) => {
+            const hit: TmdbSearchResult = {
+                id: 900201,
+                title: 'Synthetic Ranch',
+                name: 'Synthetic Ranch',
+                original_title: 'Synthetic Ranch',
+                original_name: 'Synthetic Ranch',
+                release_date: '2007-10-14',
+                first_air_date: '2007-10-14',
+                vote_count: 700,
+            };
+            const obscure: TmdbSearchResult = {
+                ...hit,
+                id: 900202,
+                release_date: '2007-04-02',
+                first_air_date: '2007-04-02',
+                vote_count: 12,
+            };
+            for (const results of [
+                [obscure, hit],
+                [hit, obscure],
+            ]) {
+                expect(
+                    pickConfidentMatch(
+                        results,
+                        { title: 'EN - Synthetic Ranch (2007)', year: 2007 },
+                        mediaType
+                    )
+                ).toBe(hit);
+            }
+            expect(
+                pickConfidentMatch(
+                    [obscure, { ...hit, vote_count: 100 }],
+                    { title: 'Synthetic Ranch', year: 2007 },
+                    mediaType
+                )
+            ).toBeNull();
         }
     );
 
