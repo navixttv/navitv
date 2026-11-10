@@ -449,8 +449,7 @@ test('keeps non-Linux builds independent from the Linux runtime prerequisite', (
             arch,
         })),
         [
-            { os: 'macos', arch: 'x64' },
-            { os: 'macos', arch: 'arm64' },
+            // NaviTV: macOS builds are deferred.
             { os: 'windows', arch: 'x64' },
         ]
     );
