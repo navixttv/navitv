@@ -31,7 +31,9 @@ jobs:
               run: |
                   set -euo pipefail
                   gh api -X POST "repos/$GITHUB_REPOSITORY/git/refs" \
-                    -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA"
+                    -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA" ||
+                    gh api -X PATCH "repos/$GITHUB_REPOSITORY/git/refs/tags/$TAG" \
+                      -f sha="$GITHUB_SHA" -F force=true
                   gh workflow run build-and-make.yaml -R "$GITHUB_REPOSITORY" --ref "$TAG"
             - name: Publish draft
               if: inputs.action == 'publish'

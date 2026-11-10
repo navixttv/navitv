@@ -22,8 +22,6 @@ name: Build and Make Electron App
 # prerelease of 4gray/iptvnator-nightly instead of the rolling test-master
 # draft. Contract: docs/architecture/release-pipeline.md ("Nightly channel").
 on:
-    # NaviTV: release builds are started from navitv-release.yml on a tag.
-    workflow_dispatch:
     push:
         branches:
             - master
