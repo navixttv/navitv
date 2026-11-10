@@ -1,0 +1,47 @@
+# NaviTV releases: tag a commit and start its desktop build, or publish the
+# finished draft so installed apps pick up the update.
+name: NaviTV release
+
+on:
+    workflow_dispatch:
+        inputs:
+            action:
+                description: 'tag (create the tag and build) or publish (undraft)'
+                required: true
+                default: tag
+                type: choice
+                options: [tag, publish]
+            version:
+                description: 'Version, e.g. 1.0.0'
+                required: true
+
+permissions:
+    contents: write
+    actions: write
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Tag and build
+              if: inputs.action == 'tag'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAG: v${{ inputs.version }}
+              run: |
+                  set -euo pipefail
+                  gh api -X POST "repos/$GITHUB_REPOSITORY/git/refs" \
+                    -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA"
+                  gh workflow run build-and-make.yaml -R "$GITHUB_REPOSITORY" --ref "$TAG"
+            - name: Publish draft
+              if: inputs.action == 'publish'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAG: v${{ inputs.version }}
+              run: |
+                  set -euo pipefail
+                  id=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=50" \
+                    --jq "[.[] | select(.tag_name == \"$TAG\" and .draft)][0].id")
+                  test -n "$id"
+                  gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$id" \
+                    -F draft=false -F prerelease=false -F make_latest=true --jq .html_url
