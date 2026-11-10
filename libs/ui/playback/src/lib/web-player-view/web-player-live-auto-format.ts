@@ -64,7 +64,15 @@ export class WebPlayerLiveAutoFormat {
     private readonly useTs = computed(() => this.state().useTs);
     readonly playback = computed(() => {
         const playback = this.deps.playback();
-        return this.useTs() && playback?.liveAutoTsUrl
+        // NaviTV: Embedded MPV reports no HTTP status to fall back on, and
+        // many providers advertise HLS they do not serve. MPV plays MPEG-TS
+        // natively, so in Auto it starts live channels on TS.
+        const mpvPrefersTs =
+            this.deps.player() === VideoPlayer.EmbeddedMpv &&
+            this.deps.autoEnabled() &&
+            playback?.isLive === true &&
+            !playback.drm;
+        return (this.useTs() || mpvPrefersTs) && playback?.liveAutoTsUrl
             ? {
                   ...playback,
                   streamUrl: playback.liveAutoTsUrl,

@@ -70,6 +70,16 @@ describe('Auto live source-format attempt lifecycle', () => {
         fixture.detectChanges();
     }
 
+    it('starts Embedded MPV live channels on TS in Auto, and only in Auto', () => {
+        player.set(VideoPlayer.EmbeddedMpv);
+        expect(controller.playback()?.streamUrl).toBe(source.liveAutoTsUrl);
+        autoEnabled.set(false);
+        expect(controller.playback()).toBe(playback());
+        autoEnabled.set(true);
+        playback.set({ ...source, isLive: false });
+        expect(controller.playback()?.streamUrl).toBe(source.streamUrl);
+    });
+
     it('waits for the old transport render, preserves the whole payload and consumes only one attempt', async () => {
         expect(controller.tryFallback(failure)).toBe(true);
         expect(controller.pending()).toBe(true);
