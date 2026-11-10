@@ -92,8 +92,9 @@ test('keeps an unseen native close guarded until install IPC arrives @electron @
     try {
         await openSettings(app.mainWindow);
         await openSettingsSection(app.mainWindow, 'appearance');
+        // NaviTV starts in Dark: Light is the unsaved change.
         await app.mainWindow
-            .getByRole('radio', { name: 'Dark', exact: true })
+            .getByRole('radio', { name: 'Light', exact: true })
             .click();
         await installUpdateFixture(app, 'downloaded', true);
         await app.mainWindow
@@ -154,8 +155,9 @@ for (const entry of ['panel', 'about'] as const) {
             const page = app.mainWindow;
             await openSettings(page);
             await openSettingsSection(page, 'appearance');
+            // NaviTV starts in Dark: Light is the unsaved change.
             await page
-                .getByRole('radio', { name: 'Dark', exact: true })
+                .getByRole('radio', { name: 'Light', exact: true })
                 .click();
             await expect(page.getByTestId('save-settings')).toBeVisible();
             await installUpdateFixture(app, 'downloaded');
@@ -213,7 +215,10 @@ for (const entry of ['panel', 'about'] as const) {
             await openSettings(app.mainWindow);
             await openSettingsSection(app.mainWindow, 'appearance');
             await expect(
-                app.mainWindow.getByRole('radio', { name: 'Dark', exact: true })
+                app.mainWindow.getByRole('radio', {
+                    name: 'Light',
+                    exact: true,
+                })
             ).toBeChecked();
         } finally {
             await closeElectronApp(app);

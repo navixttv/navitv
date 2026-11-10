@@ -121,11 +121,12 @@ test.describe('Settings', () => {
         const themeGroup = page.locator(
             '[data-test-id="select-theme"][role="radiogroup"]'
         );
+        // NaviTV starts in Dark.
         await expect(
-            themeGroup.getByRole('radio', { name: 'System', exact: true })
+            themeGroup.getByRole('radio', { name: 'Dark', exact: true })
         ).toHaveAttribute('aria-checked', 'true');
         await themeGroup
-            .getByRole('radio', { name: 'Dark', exact: true })
+            .getByRole('radio', { name: 'Light', exact: true })
             .click();
 
         await saveSettings(page);
@@ -134,7 +135,7 @@ test.describe('Settings', () => {
         await openSettingsSection(page, 'appearance');
 
         await expect(
-            themeGroup.getByRole('radio', { name: 'Dark', exact: true })
+            themeGroup.getByRole('radio', { name: 'Light', exact: true })
         ).toHaveAttribute('aria-checked', 'true');
     });
 
@@ -206,7 +207,7 @@ test.describe('Settings', () => {
             '[data-test-id="select-theme"][role="radiogroup"]'
         );
         await themeGroup
-            .getByRole('radio', { name: 'Dark', exact: true })
+            .getByRole('radio', { name: 'Light', exact: true })
             .click();
         await expect(unsavedBar).toBeVisible();
 
@@ -237,7 +238,7 @@ test.describe('Settings', () => {
 
         await openSettingsSection(page, 'appearance');
         await expect(
-            themeGroup.getByRole('radio', { name: 'System', exact: true })
+            themeGroup.getByRole('radio', { name: 'Dark', exact: true })
         ).toHaveAttribute('aria-checked', 'true');
     });
 
@@ -245,7 +246,9 @@ test.describe('Settings', () => {
         await openSettings(page);
         await openSettingsSection(page, 'appearance');
         await page
-            .locator('[data-test-id="select-theme"] [data-test-id="DARK_THEME"]')
+            .locator(
+                '[data-test-id="select-theme"] [data-test-id="LIGHT_THEME"]'
+            )
             .click();
         const unsavedBar = page.locator(
             '[data-test-id="settings-unsaved-bar"]'
@@ -261,7 +264,7 @@ test.describe('Settings', () => {
         await expect(
             page
                 .locator('[data-test-id="select-theme"]')
-                .getByRole('radio', { name: 'Dark', exact: true })
+                .getByRole('radio', { name: 'Light', exact: true })
         ).toHaveAttribute('aria-checked', 'true');
     });
 
@@ -339,7 +342,9 @@ test.describe('Settings', () => {
             page.locator('.settings-nav__group[data-group="app"]')
         ).toContainText('General');
         await expect(
-            page.locator('.settings-nav__footer [data-test-id="settings-section-about"]')
+            page.locator(
+                '.settings-nav__footer [data-test-id="settings-section-about"]'
+            )
         ).toBeVisible();
 
         // The rail link's tooltip is still up after the click that opened
@@ -362,7 +367,7 @@ test.describe('Settings', () => {
             '[data-test-id="select-theme"][role="radiogroup"]'
         );
         await themeGroup
-            .getByRole('radio', { name: 'Dark', exact: true })
+            .getByRole('radio', { name: 'Light', exact: true })
             .click();
 
         // Trying to leave the settings area surfaces the dialog.
@@ -395,7 +400,7 @@ test.describe('Settings', () => {
         await openSettings(page);
         await openSettingsSection(page, 'appearance');
         await expect(
-            themeGroup.getByRole('radio', { name: 'System', exact: true })
+            themeGroup.getByRole('radio', { name: 'Dark', exact: true })
         ).toHaveAttribute('aria-checked', 'true');
     });
 
@@ -409,7 +414,7 @@ test.describe('Settings', () => {
             '[data-test-id="select-theme"][role="radiogroup"]'
         );
         await themeGroup
-            .getByRole('radio', { name: 'Dark', exact: true })
+            .getByRole('radio', { name: 'Light', exact: true })
             .click();
 
         await page
@@ -426,7 +431,7 @@ test.describe('Settings', () => {
         await openSettings(page);
         await openSettingsSection(page, 'appearance');
         await expect(
-            themeGroup.getByRole('radio', { name: 'Dark', exact: true })
+            themeGroup.getByRole('radio', { name: 'Light', exact: true })
         ).toHaveAttribute('aria-checked', 'true');
     });
 
@@ -519,11 +524,15 @@ test.describe('Settings', () => {
         // "subtitles" is a keyword of the "Show subtitles" row, which lives
         // on the Playback page: the result leads there from General.
         await search.fill('subtitles');
-        await expect(page).toHaveURL(/\/workspace\/settings\/general\?q=subtitles$/);
+        await expect(page).toHaveURL(
+            /\/workspace\/settings\/general\?q=subtitles$/
+        );
         await expect(
             page.locator('[data-test-id="settings-search-results"]')
         ).toBeVisible();
-        await expect(page.locator('app-settings-general-section')).toHaveCount(0);
+        await expect(page.locator('app-settings-general-section')).toHaveCount(
+            0
+        );
         await expect(
             page.locator('[data-test-id="settings-section-matches-playback"]')
         ).toHaveText('1');
